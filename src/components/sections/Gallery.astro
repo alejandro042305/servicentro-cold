@@ -1,0 +1,31 @@
+---
+// Galería de fotos REALES: muestra los archivos de src/assets/img cuyo nombre empieza por `prefijo`.
+// Sin fotos, la sección no se renderiza (nunca se rellenan con imágenes de stock).
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+interface Props { id: string; eyebrow?: string; titulo: string; prefijo: string; alt: string }
+const { id, eyebrow, titulo, prefijo, alt } = Astro.props;
+const files = import.meta.glob<{ default: ImageMetadata }>('/src/assets/img/**/*.{jpg,jpeg,png,webp,avif}', { eager: true });
+const fotos = Object.entries(files)
+  .filter(([p]) => p.split('/').pop()!.startsWith(prefijo) && !p.includes('-hero'))
+  .map(([p, m]) => ({ name: p.split('/').pop()!, img: m.default }));
+---
+{fotos.length > 0 && (
+  <section class="section" id={id} aria-labelledby={`${id}-h`}>
+    <div class="container">
+      <SectionHeading id={`${id}-h`} eyebrow={eyebrow} title={titulo} />
+      <ul class="gal">
+        {fotos.map((f, i) => (
+          <li><Picture src={f.img} alt={`${alt} ${i + 1}`} formats={['avif', 'webp']} widths={[360, 720]} sizes="(min-width: 981px) 340px, 50vw" loading="lazy" class="gal__img" /></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}
+
+<style>
+  .gal { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; list-style: none; }
+  @media (min-width: 981px) { .gal { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
+  .gal :global(.gal__img), .gal :global(img) { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--r-card); }
+</style>

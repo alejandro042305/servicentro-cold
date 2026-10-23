@@ -1,0 +1,83 @@
+---
+// 3.17 CaseStudies: Problema → Solución → Resultado + chips de datos. Con 3+ casos en escritorio: carrusel (4.11).
+// Solo casos reales (colección "casos" sin borrador). Sin casos, no se renderiza.
+import Photo from '../ui/Photo.astro';
+import Icon from '../ui/Icon.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import home from '../../content/home.json';
+export interface Caso { slug: string; titulo: string; sector: string; ubicacion?: string; problema: string; solucion: string; resultado: string; datos: string[]; foto: string; fotoAlt: string }
+interface Props { casos: Caso[]; heading?: boolean; max?: number; links?: boolean }
+const { casos, heading = true, max = 3, links = true } = Astro.props;
+const list = casos.slice(0, max);
+const carousel = list.length >= 3;
+---
+{list.length > 0 && (
+  <section class="section dot-grid" aria-labelledby={heading ? 'casos-h' : undefined} aria-label={heading ? undefined : 'Casos'}>
+    <div class="container">
+      {heading && <SectionHeading id="casos-h" eyebrow={home.casos.eyebrow} title={home.casos.titulo} intro={home.casos.intro} />}
+      <div class:list={['cs', { 'cs--carousel': carousel }]} data-carousel={carousel ? '' : undefined}>
+        <div class="cs__track" data-track-el tabindex="0" aria-label="Casos de éxito">
+          {list.map((c) => (
+            <article class="case">
+              <div class="case__img"><Photo name={c.foto} alt={c.fotoAlt} ratio="3/2" sizes="(min-width: 981px) 440px, 100vw" widths={[440, 700, 880]} /></div>
+              <div class="case__body">
+                <p class="case__meta">{c.sector}{c.ubicacion && ` · ${c.ubicacion}`}</p>
+                <h3 class="case__title">{links ? <a href={`/proyectos/${c.slug}/`}>{c.titulo}</a> : c.titulo}</h3>
+                <dl class="case__pr">
+                  <div><dt><Icon name="lucide:triangle-alert" size={18} class="i-p" />Problema</dt><dd>{c.problema}</dd></div>
+                  <div><dt><Icon name="lucide:wrench" size={18} class="i-s" />Solución</dt><dd>{c.solucion}</dd></div>
+                  <div><dt><Icon name="lucide:circle-check" size={18} class="i-r" />Resultado</dt><dd>{c.resultado}</dd></div>
+                </dl>
+                {c.datos.length > 0 && <ul class="chips">{c.datos.map((d) => <li class="chip">{d}</li>)}</ul>}
+              </div>
+            </article>
+          ))}
+        </div>
+        {carousel && (
+          <div class="cs__nav">
+            <button type="button" class="cs__arrow" data-prev aria-label="Caso anterior"><Icon name="lucide:chevron-left" size={24} /></button>
+            <button type="button" class="cs__arrow" data-next aria-label="Caso siguiente"><Icon name="lucide:chevron-right" size={24} /></button>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+)}
+
+<script>
+  import { initCarousel } from '../../scripts/carousel';
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((el) => initCarousel(el, '(min-width: 981px)'));
+</script>
+
+<style>
+  .cs__track { display: grid; gap: 24px; }
+  .case {
+    display: grid; background: #FFF; border-radius: var(--r-card); overflow: hidden; box-shadow: var(--shadow-btn);
+    transition: transform .3s, box-shadow .3s;
+  }
+  .case:hover { transform: translateY(var(--lift)); box-shadow: var(--shadow-card-hover); }
+  @media (min-width: 768px) { .case { grid-template-columns: 42% 1fr; } }
+  .case__img :global(.photo) { height: 100%; }
+  .case__body { padding: 24px; display: grid; gap: 12px; align-content: start; }
+  @media (min-width: 981px) { .case__body { padding: 32px; } }
+  .case__meta { margin: 0; font-size: .875rem; font-weight: 600; color: var(--c-text-muted); text-transform: uppercase; letter-spacing: 1px; }
+  .case__title { margin: 0; font-size: 1.375rem; color: var(--c-primary-900); }
+  .case__title a { color: inherit; text-decoration: none; }
+  .case__title a:hover { text-decoration: underline; }
+  .case__pr { display: grid; gap: 10px; margin: 0; }
+  .case__pr dt { display: flex; align-items: center; gap: 8px; font-family: var(--font-heading); font-weight: 600; font-size: .9375rem; color: var(--c-heading); }
+  .case__pr dd { margin: 2px 0 0 26px; font-size: 1rem; line-height: 1.5; }
+  .case :global(.i-p) { color: var(--c-urgent); }
+  .case :global(.i-s) { color: var(--c-primary-600); }
+  .case :global(.i-r) { color: var(--c-success); }
+  @media (min-width: 981px) {
+    .cs--carousel .cs__track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 24px; }
+    .cs--carousel .cs__track::-webkit-scrollbar { display: none; }
+    .cs--carousel .case { flex: 0 0 100%; scroll-snap-align: start; }
+    .cs--carousel .case:hover { transform: none; }
+  }
+  .cs__nav { display: none; }
+  @media (min-width: 981px) { .cs__nav { display: flex; justify-content: center; gap: 12px; margin-top: 20px; } }
+  .cs__arrow { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; border: 0; background: var(--c-primary-600); color: #FFF; transition: background-color .3s; }
+  .cs__arrow:hover { background: var(--c-accent-hover); }
+</style>

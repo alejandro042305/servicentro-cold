@@ -1,0 +1,59 @@
+{
+  "sectores": {
+    "seo": { "title": "Sectores: climatización y refrigeración | Serviaires", "description": "Aire acondicionado, cuartos fríos y chillers para restaurantes, supermercados, clínicas, farmacéutico, alimentos, floricultura, oficinas y hogares en Bogotá." },
+    "h1": "Climatización y refrigeración para tu sector",
+    "sub": "Cada sector tiene un riesgo distinto. Diseñamos y mantenemos pensando en el tuyo."
+  },
+  "proyectos": {
+    "seo": { "title": "Proyectos y casos de éxito | Serviaires", "description": "Casos reales de aire acondicionado, cuartos fríos, chillers y mantenimiento en Bogotá: problema, solución y resultado." },
+    "h1": "Proyectos y casos de éxito",
+    "sub": "Problema, solución y resultado medible. Filtra por tipo de trabajo.",
+    "filtros": ["Todos", "Aire", "Cuarto frío", "Chiller", "Mantenimiento"],
+    "vacio": "Estamos documentando nuestros proyectos con autorización de cada cliente. Mientras tanto, pídenos referencias por WhatsApp.",
+    "vacioCta": "Pedir referencias"
+  },
+  "nosotros": {
+    "seo": { "title": "Nosotros: técnicos e ingenieros en Bogotá | Serviaires", "description": "Conoce a Serviaires: técnicos e ingenieros en aire acondicionado, refrigeración, cuartos fríos y chillers en Bogotá. Cumplimiento y transparencia." },
+    "h1": "Somos Serviaires",
+    "sub": "Climatización y refrigeración con método, transparencia y respaldo.",
+    "historiaTitulo": "Nuestra historia",
+    "historia": [],
+    "mision": "Mantener funcionando el aire acondicionado y la refrigeración de hogares y empresas, con diagnósticos claros, precios por escrito y trabajos que duran.",
+    "vision": "Ser la empresa de climatización y refrigeración a la que los negocios de Bogotá llaman primero, porque cumple lo que promete.",
+    "valores": [
+      { "icon": "lucide:calendar-check", "titulo": "Cumplimiento", "texto": "Llegamos a la hora acordada y entregamos en la fecha prometida." },
+      { "icon": "lucide:eye", "titulo": "Transparencia", "texto": "Te mostramos la falla y el precio antes de empezar." },
+      { "icon": "lucide:hard-hat", "titulo": "Seguridad", "texto": "Trabajamos con protocolos para las personas, los equipos y tu espacio." },
+      { "icon": "lucide:graduation-cap", "titulo": "Mejora técnica", "texto": "Nos capacitamos para trabajar con la tecnología que usan tus equipos." }
+    ],
+    "equipoTitulo": "Nuestro equipo",
+    "equipoPrefijo": "equipo-persona-",
+    "certTitulo": "Certificaciones",
+    "ctaTitulo": "¿Hablamos de tu equipo o tu proyecto?",
+    "ctaTexto": "Escríbenos y te respondemos con una persona, no con un bot."
+  },
+  "contacto": {
+    "seo": { "title": "Contacto: aire acondicionado en Bogotá | Serviaires", "description": "Llámanos, escríbenos por WhatsApp o deja tus datos. Atendemos reparación, instalación, cuartos fríos y chillers en Bogotá y alrededores." },
+    "h1": "Contacto",
+    "sub": "Elige el canal que te quede más cómodo. Si es urgente, llama o escribe por WhatsApp."
+  },
+  "gracias": {
+    "seo": { "title": "Solicitud recibida | Serviaires", "description": "Recibimos tu solicitud. Te contactamos pronto." },
+    "titulo": "¡Listo{nombre}! Ya recibimos tu solicitud.",
+    "intro": "Esto es lo que pasa ahora:",
+    "pasos": [
+      { "titulo": "Revisamos tu solicitud", "texto": "Una persona del equipo lee tus datos y el servicio que necesitas." },
+      { "titulo": "Te contactamos", "texto": "Te llamamos o escribimos en {tiempoRespuestaWhatsApp} en horario hábil.", "alt": "Te llamamos o escribimos en horario hábil." },
+      { "titulo": "Agendamos la visita", "texto": "Acordamos el día y la hora que te sirvan." }
+    ],
+    "urgente": "¿Es urgente? Escríbenos por WhatsApp",
+    "enlaces": "Mientras tanto, puede servirte:"
+  },
+  "error404": {
+    "seo": { "title": "Página no encontrada | Serviaires", "description": "La página que buscas no existe." },
+    "titulo": "Esta página se quedó sin refrigerante",
+    "texto": "No encontramos lo que buscabas. Vuelve al inicio o escríbenos y te ayudamos.",
+    "inicio": "Ir al inicio",
+    "whatsapp": "Escribir por WhatsApp"
+  }
+}

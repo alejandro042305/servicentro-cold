@@ -1,0 +1,24 @@
+---
+// Página propia de cada caso publicado: /proyectos/<archivo>/
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/sections/PageHero.astro';
+import CaseStudies from '../../components/sections/CaseStudies.astro';
+import ContactSection from '../../components/sections/ContactSection.astro';
+import { toCaso } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const casos = await getCollection('casos', (e) => !e.data.borrador);
+  return casos.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const c = toCaso(entry);
+---
+<BaseLayout title={`${c.titulo} | Proyectos Serviaires`} description={`${c.problema} ${c.resultado}`.slice(0, 155)}>
+  <PageHero title={c.titulo} subtitle={`${c.sector}${c.ubicacion ? ` · ${c.ubicacion}` : ''}`} photo={c.foto} photoAlt={c.fotoAlt}
+    crumbs={[{ label: 'Proyectos', href: '/proyectos/' }, { label: c.titulo }]} />
+  <CaseStudies casos={[c]} heading={false} links={false} />
+  <section class="section"><div class="container prose"><Content /></div></section>
+  <ContactSection servicioOrigen="proyecto-detalle" />
+</BaseLayout>

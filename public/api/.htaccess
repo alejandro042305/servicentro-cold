@@ -1,0 +1,20 @@
+# Serviaires · protección de la carpeta /api
+Options -Indexes
+
+# Solo se pueden ejecutar los dos endpoints públicos
+<FilesMatch "\.php$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "^(contacto|token)\.php$">
+  Require all granted
+</FilesMatch>
+
+# Bloquea configuración, ejemplos, licencias y archivos ocultos
+<FilesMatch "^(config(\.sample)?\.php|\..*|LICENSE)$">
+  Require all denied
+</FilesMatch>
+
+<IfModule mod_headers.c>
+  Header always set Cache-Control "no-store"
+  Header always set X-Robots-Tag "noindex, nofollow"
+</IfModule>

@@ -1,0 +1,94 @@
+---
+// Footer [CLIENTE] #0047B9 + marquesina de clientes sobre franja blanca [BTO].
+import Logo from '../ui/Logo.astro';
+import Icon from '../ui/Icon.astro';
+import LogoMarquee from '../sections/LogoMarquee.astro';
+import { SITE } from '../../config/site';
+import { SERVICIOS, SERVICIOS_ORDEN, WA_MSG_GENERAL } from '../../config/servicios';
+import { LEGALES } from '../../config/nav';
+import { has, waHref, telVisible, telHref, emailVisible, redes } from '../../lib/data';
+import footer from '../../content/footer.json';
+
+interface Props { minimal?: boolean }
+const { minimal = false } = Astro.props;
+const year = new Date().getFullYear();
+---
+{!minimal && SITE.clientesLogos.length > 0 && (
+  <div class="foot-clients"><LogoMarquee items={SITE.clientesLogos} duration={25} label="Clientes" /></div>
+)}
+<footer class="footer on-dark" data-ubicacion="footer">
+  {!minimal && (
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <Logo variant="blanco" width={180} height={72} />
+        <p>{footer.descripcion}</p>
+        {redes.length > 0 && (
+          <ul class="footer__social">
+            {redes.map(([red, url]) => (
+              <li><a href={url} target="_blank" rel="noopener" aria-label={red}><Icon name={`lucide:${red === 'tiktok' ? 'music-2' : red}`} size={20} /></a></li>
+            ))}
+          </ul>
+        )}
+      </div>
+      <div>
+        <h2 class="footer__h">Servicios</h2>
+        <ul class="footer__list">
+          {SERVICIOS_ORDEN.map((s) => <li><a href={SERVICIOS[s].href}>{SERVICIOS[s].nombre}</a></li>)}
+        </ul>
+      </div>
+      <div>
+        <h2 class="footer__h">Empresa</h2>
+        <ul class="footer__list">
+          <li><a href="/nosotros/">Nosotros</a></li>
+          <li><a href="/proyectos/">Proyectos</a></li>
+          <li><a href="/sectores/">Sectores</a></li>
+          <li><a href="/contacto/">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="footer__h">Contacto</h2>
+        <ul class="footer__list footer__list--icons">
+          {telVisible && <li><a href={telHref}><Icon name="lucide:phone" size={18} />{telVisible}</a></li>}
+          <li><a href={waHref(WA_MSG_GENERAL)} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} />WhatsApp</a></li>
+          {emailVisible && <li><a href={`mailto:${emailVisible}`}><Icon name="lucide:mail" size={18} />{emailVisible}</a></li>}
+          {has(SITE.direccion) && <li><span><Icon name="lucide:map-pin" size={18} />{SITE.direccion}, {SITE.ciudad}</span></li>}
+          <li><span><Icon name="lucide:clock" size={18} />Lun–vie {SITE.horario.lunVie}<br />Sáb {SITE.horario.sab}{has(SITE.horario.urgencias) && <><br />Urgencias {SITE.horario.urgencias}</>}</span></li>
+        </ul>
+      </div>
+    </div>
+  )}
+  <div class="footer__legal">
+    <div class="container footer__legal-in">
+      <p>
+        {has(SITE.razonSocial) && <>{SITE.razonSocial} · </>}
+        {has(SITE.nit) && <>NIT {SITE.nit} · </>}
+        © {year} {SITE.nombre} · Bogotá, Colombia
+      </p>
+      <ul>
+        {LEGALES.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        <li><a href="#cookies" data-consent-open>Preferencias de cookies</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .foot-clients { background: #FFF; border-top: 1px solid #EEE; }
+  .footer { background: var(--c-primary-900); color: var(--c-footer-link); font-size: var(--fs-small); line-height: 1.6; }
+  .footer a { color: var(--c-footer-link); text-decoration: none; }
+  .footer a:hover { color: #FFF; text-decoration: underline; }
+  .footer__grid { display: grid; gap: 32px; padding-block: 48px; }
+  @media (min-width: 768px) { .footer__grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 981px) { .footer__grid { grid-template-columns: 1.4fr 1fr 1fr 1.3fr; } }
+  .footer__brand p { margin-top: 16px; color: rgba(255, 255, 255, .85); }
+  .footer__h { font-size: 1.0625rem; color: #FFF; letter-spacing: 0; margin-bottom: 14px; }
+  .footer__list { list-style: none; display: grid; gap: 8px; }
+  .footer__list--icons a, .footer__list--icons span { display: inline-flex; align-items: flex-start; gap: 10px; }
+  .footer__list--icons :global(.icon) { margin-top: 3px; }
+  .footer__social { display: flex; gap: 10px; list-style: none; margin-top: 16px; }
+  .footer__social a { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, .12); color: #FFF; }
+  .footer__legal { border-top: 1px solid rgba(255, 255, 255, .15); }
+  .footer__legal-in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-block: 20px; }
+  .footer__legal p { margin: 0; color: rgba(255, 255, 255, .85); }
+  .footer__legal ul { display: flex; flex-wrap: wrap; gap: 4px 18px; list-style: none; }
+</style>

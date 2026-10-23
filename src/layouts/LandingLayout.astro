@@ -1,0 +1,30 @@
+---
+// Landing de Google Ads: header simplificado (logo sin enlace + Llamar + WhatsApp),
+// sin menú ni footer de navegación, noindex/follow y canónica a la página de servicio.
+import BaseLayout from './BaseLayout.astro';
+import Logo from '../components/ui/Logo.astro';
+import Button from '../components/ui/Button.astro';
+import { waHref, telHref, telVisible } from '../lib/data';
+interface Props { title: string; description: string; canonical: string; servicio: string; waMsg: string; schema?: object[] }
+const { title, description, canonical, servicio, waMsg, schema } = Astro.props;
+---
+<BaseLayout {title} {description} {canonical} {servicio} {waMsg} {schema} noindex landing>
+  <header slot="header" class="lp-head" data-ubicacion="header">
+    <div class="container container--wide lp-head__in">
+      <span class="lp-head__logo"><Logo eager width={160} height={64} /></span>
+      <div class="lp-head__ctas">
+        <Button href={telHref} variant="outline" size="sm" icon="lucide:phone" class="lp-head__tel">{telVisible || 'Llamar'}</Button>
+        <Button href={waHref(waMsg)} variant="whatsapp" size="sm" icon="whatsapp">WhatsApp</Button>
+      </div>
+    </div>
+  </header>
+  <slot />
+</BaseLayout>
+
+<style>
+  .lp-head { position: sticky; top: 0; z-index: 50; background: #FFF; box-shadow: var(--shadow-header-scrolled); }
+  .lp-head__in { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 72px; }
+  @media (min-width: 981px) { .lp-head__in { height: 88px; } }
+  .lp-head__ctas { display: flex; gap: 10px; }
+  @media (max-width: 767.98px) { .lp-head__ctas { display: none; } }
+</style>

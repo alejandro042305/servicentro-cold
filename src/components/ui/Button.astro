@@ -1,0 +1,105 @@
+---
+// 3.1 Button [CLIENTE + BTO + CONVERSIÓN]
+import Icon from './Icon.astro';
+type Variant = 'primary' | 'white' | 'outline' | 'outline-light' | 'whatsapp' | 'urgent' | 'phone' | 'link';
+interface Props {
+  href?: string;
+  variant?: Variant;
+  icon?: string;
+  size?: 'md' | 'sm';
+  full?: boolean;
+  bob?: boolean;
+  track?: string;
+  servicio?: string;
+  ubicacion?: string;
+  intent?: string;
+  type?: 'button' | 'submit';
+  class?: string;
+  target?: string;
+  [key: string]: unknown;
+}
+const {
+  href, variant = 'primary', icon, size = 'md', full = false, bob = false,
+  track, servicio, ubicacion, intent, type = 'button', class: cls, target, ...rest
+} = Astro.props;
+const external = href?.startsWith('http');
+const attrs = {
+  'data-track': track, 'data-servicio': servicio, 'data-ubicacion': ubicacion, 'data-intent': intent, ...rest,
+};
+const classes = ['btn', `btn--${variant}`, `btn--${size}`, { 'btn--full': full, 'btn--icon': icon && variant !== 'link', 'btn--bob': bob }, cls];
+---
+{href ? (
+  <a href={href} class:list={classes} target={target ?? (external ? '_blank' : undefined)} rel={external ? 'noopener' : undefined} {...attrs}>
+    {icon && variant !== 'link' && <Icon name={icon} size={size === 'sm' ? 20 : 24} class="btn__icon" />}
+    <span class="btn__label"><slot /></span>
+    {variant === 'link' && <Icon name="lucide:arrow-right" size={18} class="btn__arrow" />}
+  </a>
+) : (
+  <button type={type} class:list={classes} {...attrs}>
+    {icon && <Icon name={icon} size={size === 'sm' ? 20 : 24} class="btn__icon" />}
+    <span class="btn__label"><slot /></span>
+    <span class="btn__spinner" aria-hidden="true"></span>
+    <Icon name="lucide:check" size={24} class="btn__done" />
+  </button>
+)}
+
+<style is:global>
+  .btn {
+    --btn-bg: var(--c-primary-600); --btn-fg: #FFF; --btn-shadow: var(--shadow-btn);
+    position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    min-height: 56px; padding: 12px 40px;
+    font-family: var(--font-heading); font-weight: 600; font-size: var(--fs-btn); line-height: var(--lh-btn);
+    color: var(--btn-fg); background: var(--btn-bg); border: 0; border-radius: var(--r-btn);
+    box-shadow: var(--btn-shadow); text-decoration: none; text-align: center;
+    transition: background-color .3s, color .3s, transform .3s, box-shadow .3s, border-color .3s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn:hover { color: var(--btn-fg); transform: translateY(var(--lift)); }
+  .btn:active { transform: translateY(-1px) scale(.98); }
+  .btn--icon { padding-left: 64px; }
+  .btn__icon { position: absolute; left: 28px; top: 50%; translate: 0 -50%; transition: transform .3s; }
+  .btn--icon:hover .btn__icon { transform: translateX(-4px); }
+  .btn--sm { min-height: 44px; padding: 10px 20px; font-size: 1rem; line-height: 1.5; }
+  .btn--sm.btn--icon { padding-left: 48px; }
+  .btn--sm .btn__icon { left: 18px; }
+  .btn--full { width: 100%; }
+
+  .btn--primary:hover { --btn-bg: var(--c-accent-hover); --btn-shadow: var(--shadow-btn-hover); }
+  .btn--white { --btn-bg: #FFF; --btn-fg: var(--c-primary-800); --btn-shadow: var(--shadow-btn-white); }
+  .btn--white:hover { --btn-bg: var(--c-bg-soft); --btn-fg: #0777DE; }
+  .btn--outline { --btn-bg: transparent; --btn-fg: var(--c-link); --btn-shadow: none; border: 1.5px solid var(--c-primary-600); }
+  .btn--outline:hover { --btn-bg: var(--c-primary-600); --btn-fg: #FFF; }
+  .btn--outline-light { --btn-bg: transparent; --btn-fg: #FFF; --btn-shadow: none; border: 1.5px solid #FFF; }
+  .btn--outline-light:hover { --btn-bg: #FFF; --btn-fg: var(--c-primary-800); }
+  .btn--whatsapp { --btn-bg: var(--c-whatsapp-btn); --btn-shadow: 0 12px 18px -6px rgba(31, 175, 84, .35); }
+  .btn--whatsapp:hover { --btn-bg: var(--c-whatsapp-btn-hover); }
+  .btn--urgent { --btn-bg: var(--c-urgent); --btn-shadow: 0 12px 18px -6px rgba(255, 106, 19, .35); }
+  .btn--urgent:hover { --btn-bg: var(--c-urgent-hover); }
+  .btn--phone { --btn-bg: var(--c-phone-btn); }
+  .btn--phone:hover { --btn-bg: var(--c-phone-btn-hover); }
+  .btn--link {
+    --btn-bg: transparent; --btn-fg: var(--c-link); --btn-shadow: none;
+    min-height: 0; padding: 4px 0; font-size: 1.0625rem; line-height: 1.4;
+  }
+  .btn--link:hover { transform: none; text-decoration: underline; color: var(--c-primary-900); }
+  .btn__arrow { transition: transform .3s; }
+  .btn--link:hover .btn__arrow { transform: translateX(4px); }
+
+  /* 4.8 Bob [BTO] solo en el CTA principal */
+  @media (prefers-reduced-motion: no-preference) {
+    .btn--bob:hover { animation: bob-float .3s ease-out forwards, bob 1.5s ease-in-out .3s infinite; }
+  }
+
+  /* Estados de envío */
+  .btn__spinner, .btn__done { display: none; }
+  .btn[data-state="loading"] .btn__label, .btn[data-state="success"] .btn__label { opacity: .0; }
+  .btn[data-state="loading"] .btn__icon, .btn[data-state="success"] .btn__icon { opacity: 0; }
+  .btn[data-state="loading"] .btn__spinner {
+    display: block; position: absolute; inset: 0; margin: auto; width: 24px; height: 24px;
+    border: 3px solid rgba(255, 255, 255, .4); border-top-color: #FFF; border-radius: 50%;
+    animation: spin .8s linear infinite;
+  }
+  .btn[data-state="success"] { --btn-bg: var(--c-whatsapp-btn); }
+  .btn[data-state="success"] .btn__done { display: block; position: absolute; inset: 0; margin: auto; }
+  .btn:disabled { cursor: progress; transform: none; }
+</style>

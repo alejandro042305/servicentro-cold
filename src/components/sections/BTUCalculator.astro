@@ -1,0 +1,108 @@
+---
+// BTUCalculator: estimación orientativa (reciprocidad + compromiso + lead calificado).
+// Factores en src/config/btu.ts (validar con el responsable técnico).
+import Icon from '../ui/Icon.astro';
+import Button from '../ui/Button.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import { BTU } from '../../config/btu';
+import { SITE } from '../../config/site';
+---
+<section class="section" id="calculadora" aria-labelledby="btu-h" data-ubicacion="card" data-servicio="instalacion">
+  <div class="container">
+    <SectionHeading id="btu-h" eyebrow="Calculadora" title="¿Cuántos BTU necesitas?" intro="Responde 5 datos y obtén una capacidad orientativa. Después la confirmamos en una visita técnica." />
+    <div class="btu" data-btu={JSON.stringify(BTU)} data-wa={SITE.whatsapp}>
+      <form class="btu__form" novalidate>
+        <div class="field">
+          <label class="field__label" for="btu-area">Área del espacio (m²)</label>
+          <input class="field__input" id="btu-area" name="area" type="number" inputmode="decimal" min="4" max="500" step="1" value="20" required />
+        </div>
+        <div class="field">
+          <label class="field__label" for="btu-alto">Altura del techo (m)</label>
+          <input class="field__input" id="btu-alto" name="alto" type="number" inputmode="decimal" min="2" max="8" step="0.1" value="2.5" required />
+        </div>
+        <fieldset class="btu__sol">
+          <legend class="field__label">Sol que recibe el espacio</legend>
+          <div class="btu__radios">
+            {[['baja', 'Poco'], ['media', 'Medio'], ['alta', 'Mucho']].map(([v, l]) => (
+              <label class="btu__radio"><input type="radio" name="sol" value={v} checked={v === 'media'} /><span>{l}</span></label>
+            ))}
+          </div>
+        </fieldset>
+        <div class="field">
+          <label class="field__label" for="btu-pers">Personas que suelen estar</label>
+          <input class="field__input" id="btu-pers" name="personas" type="number" inputmode="numeric" min="1" max="100" step="1" value="2" required />
+        </div>
+        <div class="field">
+          <label class="field__label" for="btu-eq">Equipos que generan calor (PC, TV, nevera…)</label>
+          <input class="field__input" id="btu-eq" name="equipos" type="number" inputmode="numeric" min="0" max="50" step="1" value="1" required />
+        </div>
+        <Button type="submit" variant="primary" full icon="lucide:calculator">Calcular mis BTU</Button>
+      </form>
+      <div class="btu__out" aria-live="polite">
+        <p class="btu__label">Capacidad recomendada</p>
+        <p class="btu__value"><span data-btu-value>—</span> <span class="btu__unit">BTU/h</span></p>
+        <p class="btu__detail" data-btu-detail>Ingresa los datos y presiona calcular.</p>
+        <p class="btu__note"><Icon name="lucide:info" size={18} /> Es una estimación orientativa. Ventanas, aislamiento y uso real cambian el resultado.</p>
+        <a class="btn btn--whatsapp btn--full btn--icon" data-btu-cta href="#" target="_blank" rel="noopener" hidden>
+          <Icon name="whatsapp" size={24} class="btn__icon" /><span class="btn__label">Confirmar con una visita técnica</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { track } from '../../scripts/tracking';
+  document.querySelectorAll<HTMLElement>('[data-btu]').forEach((root) => {
+    const cfg = JSON.parse(root.dataset.btu!);
+    const form = root.querySelector('form')!;
+    const out = root.querySelector<HTMLElement>('[data-btu-value]')!;
+    const det = root.querySelector<HTMLElement>('[data-btu-detail]')!;
+    const cta = root.querySelector<HTMLAnchorElement>('[data-btu-cta]')!;
+    const fmt = (n: number) => new Intl.NumberFormat('es-CO').format(n);
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const d = new FormData(form);
+      const area = Math.max(1, Number(d.get('area')) || 0);
+      const alto = Math.max(2, Number(d.get('alto')) || 2.5);
+      const sol = String(d.get('sol') || 'media');
+      const pers = Math.max(1, Number(d.get('personas')) || 1);
+      const eq = Math.max(0, Number(d.get('equipos')) || 0);
+      const base = area * alto * cfg.porM3 * (cfg.sol[sol] ?? 1);
+      const total = base + Math.max(0, pers - cfg.personasIncluidas) * cfg.porPersonaExtra + eq * cfg.porEquipo;
+      const cap: number[] = cfg.capacidades;
+      const rec = cap.find((c) => c >= total);
+      if (rec) {
+        out.textContent = fmt(rec);
+        det.textContent = `Cálculo: ${fmt(Math.round(total))} BTU/h. Redondeamos a la capacidad comercial siguiente.`;
+      } else {
+        out.textContent = `+${fmt(cap[cap.length - 1])}`;
+        det.textContent = `Cálculo: ${fmt(Math.round(total))} BTU/h. Necesitas varios equipos o un sistema por ductos: te asesoramos.`;
+      }
+      const msg = `Hola, usé la calculadora: ${area} m², techo de ${alto} m, sol ${sol}, ${pers} personas, ${eq} equipos. Resultado: ${out.textContent} BTU/h. Quiero confirmarlo con una visita.`;
+      cta.href = `https://wa.me/${root.dataset.wa}?text=${encodeURIComponent(msg)}`;
+      cta.hidden = false;
+      track('btu_calculator_use', { resultado: rec ?? 'mayor' });
+    });
+  });
+</script>
+
+<style>
+  .btu { display: grid; gap: 24px; max-width: 980px; margin-inline: auto; }
+  @media (min-width: 981px) { .btu { grid-template-columns: 1.2fr 1fr; gap: 32px; } }
+  .btu__form { display: grid; gap: 16px; padding: 28px 24px; border: 1px solid #E6E6E6; border-radius: var(--r-card); background: #FFF; }
+  @media (min-width: 640px) { .btu__form { grid-template-columns: 1fr 1fr; } .btu__sol, .btu__form > :global(.btn) { grid-column: 1 / -1; } }
+  .btu__sol { border: 0; padding: 0; margin: 0; display: grid; gap: 6px; }
+  .btu__radios { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .btu__radio { position: relative; }
+  .btu__radio input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+  .btu__radio span { display: grid; place-items: center; height: 50px; border: 1px solid var(--c-neutral-200); border-radius: var(--r-input); font-weight: 600; transition: all .2s; }
+  .btu__radio input:checked + span { background: var(--c-primary-600); border-color: var(--c-primary-600); color: #FFF; }
+  .btu__radio input:focus-visible + span { outline: 3px solid var(--c-accent); outline-offset: 2px; }
+  .btu__out { display: grid; align-content: center; gap: 10px; padding: 28px 24px; border-radius: var(--r-card); background: var(--c-primary-900); color: #FFF; text-align: center; }
+  .btu__label { margin: 0 auto; font-family: var(--font-heading); font-weight: 600; letter-spacing: 2px; text-transform: uppercase; font-size: .8125rem; }
+  .btu__value { margin: 0 auto; font-family: var(--font-heading); font-weight: 700; font-size: var(--fs-stat); line-height: 1; letter-spacing: -1px; }
+  .btu__unit { font-size: 1.25rem; font-weight: 600; }
+  .btu__detail { margin: 0 auto; font-size: 1rem; }
+  .btu__note { display: flex; gap: 8px; align-items: flex-start; margin: 4px auto 6px; font-size: .9375rem; line-height: 1.45; text-align: left; color: rgba(255, 255, 255, .92); }
+</style>

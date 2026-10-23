@@ -1,0 +1,37 @@
+---
+// 3.19 StatsBand [BTO]: fondo #0B1B3F, contadores con borde #0052FF y fondo tintado,
+// SVG decorativos que rotan y se desplazan con el scroll (4.6). Solo datos reales; si no hay, no se renderiza.
+import Counter from '../ui/Counter.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import { get, has } from '../../lib/data';
+import home from '../../content/home.json';
+const items = home.stats.items
+  .map((i) => ({ value: get(i.campo) as number | null, label: i.label, prefix: i.prefix ?? '', suffix: i.suffix ?? '' }))
+  .filter((i) => has(i.value));
+---
+{items.length > 0 && (
+  <section class="section section--ink stats on-dark" aria-labelledby="stats-h">
+    <svg class="stats__deco stats__deco--a" data-parallax data-y="40" data-r="45" viewBox="0 0 100 100" aria-hidden="true">
+      <g stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"><path d="M50 6v88M12 28l76 44M12 72l76-44" /><path d="M42 12l8 8 8-8M42 88l8-8 8 8M14 38l11-3-3-11M86 62l-11 3 3 11M14 62l11 3-3 11M86 38l-11-3 3-11" /></g>
+    </svg>
+    <svg class="stats__deco stats__deco--b" data-parallax data-y="30" data-r="-45" viewBox="0 0 100 100" aria-hidden="true">
+      <g fill="none" stroke="currentColor" stroke-width="2"><circle cx="50" cy="50" r="7" /><path d="M50 43c-4-14-2-30 8-34 9 4 6 22-8 34zM57 50c14-4 30-2 34 8-4 9-22 6-34-8zM50 57c4 14 2 30-8 34-9-4-6-22 8-34zM43 50c-14 4-30 2-34-8 4-9 22-6 34 8z" /></g>
+    </svg>
+    <div class="container">
+      <SectionHeading id="stats-h" eyebrow={home.stats.eyebrow} title={home.stats.titulo} tone="dark" />
+      <div class="stats__grid" data-reveal-stagger="100">
+        {items.map((i) => <div data-reveal="up"><Counter value={i.value} label={i.label} prefix={i.prefix} suffix={i.suffix} tone="dark" /></div>)}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .stats { overflow: hidden; }
+  .stats__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  @media (min-width: 981px) { .stats__grid { grid-template-columns: repeat(4, 1fr); } }
+  .stats__deco { position: absolute; color: rgba(255, 255, 255, .12); pointer-events: none; }
+  .stats__deco--a { width: 220px; left: -40px; top: 10%; }
+  .stats__deco--b { width: 180px; right: -20px; bottom: 6%; }
+  @media (max-width: 980px) { .stats__deco { display: none; } }
+</style>

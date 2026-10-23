@@ -1,0 +1,19 @@
+---
+// Estrellas de valoración #FFCB00 (decorativas; el valor va en texto accesible).
+interface Props { value?: number; size?: number }
+const { value = 5, size = 18 } = Astro.props;
+const full = Math.round(value);
+---
+<span class="stars" role="img" aria-label={`${value.toLocaleString('es-CO')} de 5 estrellas`}>
+  {Array.from({ length: 5 }, (_, i) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true" class={i < full ? 'on' : 'off'}>
+      <path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z" />
+    </svg>
+  ))}
+</span>
+
+<style>
+  .stars { display: inline-flex; gap: 2px; }
+  .on { fill: var(--c-star); }
+  .off { fill: rgba(0, 0, 0, .15); }
+</style>

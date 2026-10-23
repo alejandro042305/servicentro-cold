@@ -1,0 +1,43 @@
+---
+// 3.10 Tarjetas de beneficio [CLIENTE]: fondo azul, radio 20, padding 40/32, icono (Lucide en círculo, ver DECISIONES).
+// Los ítems con `requiere` se ocultan si falta el dato en SITE.
+import Icon from '../ui/Icon.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import TechLead from './TechLead.astro';
+import { fill, cumple } from '../../lib/data';
+import home from '../../content/home.json';
+interface Item { icon: string; titulo: string; texto: string; requiere?: string | string[] }
+interface Props { eyebrow?: string; titulo?: string; intro?: string; items?: Item[]; techLead?: boolean; tone?: 'soft' | 'white'; id?: string }
+const { eyebrow = home.porque.eyebrow, titulo = home.porque.titulo, intro = home.porque.intro, items = home.porque.items as Item[], techLead = true, tone = 'soft', id = 'porque' } = Astro.props;
+const list = items
+  .filter((i) => cumple(i.requiere))
+  .map((i) => ({ icon: i.icon, titulo: fill(i.titulo), texto: fill(i.texto) }))
+  .filter((i) => i.titulo && i.texto);
+---
+<section class:list={['section', { 'dot-grid': tone === 'soft' }]} aria-labelledby={`${id}-h`}>
+  <div class="container">
+    <SectionHeading id={`${id}-h`} eyebrow={eyebrow} title={titulo} intro={intro} />
+    <ul class:list={['grid-3', 'why']} data-reveal-stagger="120">
+      {list.map((i) => (
+        <li class="ben">
+          <span class="ben__icon" data-reveal="top"><Icon name={i.icon} size={48} /></span>
+          <h3 class="ben__title">{i.titulo}</h3>
+          <p class="ben__text">{i.texto}</p>
+        </li>
+      ))}
+    </ul>
+    {techLead && <TechLead />}
+  </div>
+</section>
+
+<style>
+  .why { list-style: none; }
+  .ben {
+    display: grid; justify-items: center; align-content: start; gap: 12px; padding: 40px 32px; text-align: center;
+    background: var(--c-primary-600); color: #FFF; border-radius: var(--r-card-lg); transition: transform .3s, box-shadow .3s;
+  }
+  .ben:hover { transform: translateY(var(--lift)); box-shadow: var(--shadow-card-hover); }
+  .ben__icon { display: grid; place-items: center; width: 88px; height: 88px; border-radius: 50%; background: rgba(255, 255, 255, .15); color: #FFF; margin-bottom: 6px; }
+  .ben__title { margin: 0; font-size: var(--fs-h3); color: var(--c-on-primary-soft); }
+  .ben__text { margin: 0; font-size: var(--fs-card); line-height: 1.55; color: #FFF; }
+</style>

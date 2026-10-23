@@ -1,0 +1,74 @@
+[
+  {
+    "slug": "restaurantes-hoteles",
+    "icon": "lucide:utensils",
+    "nombre": "Restaurantes y hoteles",
+    "problema": "Un cuarto frío que falla un viernes es mercancía perdida y clientes sin servicio.",
+    "solucion": "Mantenimiento preventivo de cuartos fríos, neveras industriales y aire acondicionado de salones y habitaciones, con atención de urgencias.",
+    "servicio": "cuartos-frios",
+    "cta": "Proteger mi cocina"
+  },
+  {
+    "slug": "supermercados-retail",
+    "icon": "lucide:shopping-cart",
+    "nombre": "Supermercados y retail",
+    "problema": "Vitrinas y cuartos fríos que no mantienen la temperatura dañan producto a la vista del cliente.",
+    "solucion": "Cuartos fríos de conservación y congelación, climatización de salas de venta y contratos de mantenimiento.",
+    "servicio": "cuartos-frios",
+    "cta": "Cotizar para mi tienda"
+  },
+  {
+    "slug": "clinicas-laboratorios",
+    "icon": "lucide:stethoscope",
+    "nombre": "Clínicas y laboratorios",
+    "problema": "Medicamentos, muestras y reactivos exigen temperatura estable y registro para auditorías.",
+    "solucion": "Climatización de consultorios y áreas técnicas, cuartos fríos con registro de temperatura y alarma remota.",
+    "servicio": "cuartos-frios",
+    "cta": "Hablar con ingeniería"
+  },
+  {
+    "slug": "farmaceutico",
+    "icon": "lucide:pill",
+    "nombre": "Farmacéutico",
+    "problema": "Una desviación de temperatura puede invalidar un lote completo.",
+    "solucion": "Cuartos fríos y chillers con control preciso, registro continuo y mantenimiento programado.",
+    "servicio": "chillers",
+    "cta": "Solicitar visita técnica"
+  },
+  {
+    "slug": "alimentos-carnicos",
+    "icon": "lucide:beef",
+    "nombre": "Industria de alimentos y cárnicos",
+    "problema": "La cadena de frío no puede romperse entre recepción, proceso y despacho.",
+    "solucion": "Cuartos de conservación y congelación, chillers para proceso y mantenimiento con informes.",
+    "servicio": "cuartos-frios",
+    "cta": "Diseñar mi cuarto frío"
+  },
+  {
+    "slug": "floricultura-agro",
+    "icon": "lucide:flower-2",
+    "nombre": "Floricultura y agro",
+    "problema": "Las flores y los productos frescos pierden vida útil con cada grado de más.",
+    "solucion": "Cuartos fríos de poscosecha dimensionados para tu volumen de producción.",
+    "servicio": "cuartos-frios",
+    "cta": "Cotizar cuarto de poscosecha"
+  },
+  {
+    "slug": "oficinas-data-centers",
+    "icon": "lucide:server",
+    "nombre": "Oficinas y data centers",
+    "problema": "El calor baja la productividad y un cuarto de servidores caliente apaga la operación.",
+    "solucion": "Aire acondicionado por ductos, cassette o piso techo, y climatización de precisión para equipos.",
+    "servicio": "aire-acondicionado",
+    "cta": "Climatizar mi oficina"
+  },
+  {
+    "slug": "hogares",
+    "icon": "lucide:house",
+    "nombre": "Hogares",
+    "problema": "Un equipo mal dimensionado no enfría o dispara el recibo de luz.",
+    "solucion": "Cálculo de BTU, instalación de mini split inverter y mantenimiento preventivo.",
+    "servicio": "instalacion",
+    "cta": "Cotizar para mi casa"
+  }
+]

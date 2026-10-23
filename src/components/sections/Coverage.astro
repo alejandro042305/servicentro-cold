@@ -1,0 +1,69 @@
+---
+// Coverage: mapa real de Google Maps (Bogotá y alrededores, o la dirección/coordenadas de site.ts)
+// + chips de zonas. El iframe se inyecta cuando la sección se acerca a la pantalla, para no afectar la carga inicial.
+import Icon from '../ui/Icon.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import { SITE } from '../../config/site';
+import { has } from '../../lib/data';
+import home from '../../content/home.json';
+interface Props { heading?: boolean }
+const { heading = true } = Astro.props;
+const c = home.cobertura;
+const municipios = ['Chía', 'Cajicá', 'Cota', 'Funza', 'Mosquera', 'Soacha', 'La Calera', 'Madrid', 'Sopó', 'Tocancipá', 'Zipaquirá', 'Facatativá'];
+const zonasMun = SITE.cobertura.filter((z) => municipios.includes(z));
+const zonasBog = SITE.cobertura.filter((z) => !municipios.includes(z));
+// Con dirección o coordenadas reales se centra en la sede; si no, en Bogotá con zoom para ver los municipios.
+const exacto = SITE.geo.lat && SITE.geo.lng ? `${SITE.geo.lat},${SITE.geo.lng}` : has(SITE.direccion) ? `${SITE.direccion}, ${SITE.ciudad}` : '';
+const q = exacto || 'Bogotá, Colombia';
+const zoom = exacto ? 14 : 10;
+const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(q)}&z=${zoom}&hl=es&output=embed`;
+---
+<section class="section" aria-labelledby={heading ? 'cob-h' : undefined} aria-label={heading ? undefined : 'Cobertura'}>
+  <div class="container">
+    {heading && <SectionHeading id="cob-h" eyebrow={c.eyebrow} title={c.titulo} intro={c.intro} />}
+    <div class="cov">
+      <div class="cov__map" data-gmap={mapSrc}>
+        <div class="cov__ph">
+          <Icon name="lucide:map-pin" size={36} />
+          <button type="button" class="btn btn--outline btn--sm">{c.mapaBoton}</button>
+        </div>
+      </div>
+      <div>
+        {zonasBog.length > 0 && <><h3 class="cov__h">Bogotá</h3><ul class="chips">{zonasBog.map((z) => <li class="chip chip--plain">{z}</li>)}</ul></>}
+        {zonasMun.length > 0 && <><h3 class="cov__h">Municipios</h3><ul class="chips">{zonasMun.map((z) => <li class="chip chip--plain">{z}</li>)}</ul></>}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-gmap]').forEach((box) => {
+    let done = false;
+    const load = () => {
+      if (done) return;
+      done = true;
+      const f = document.createElement('iframe');
+      f.src = box.dataset.gmap!;
+      f.title = 'Mapa de cobertura en Google Maps';
+      f.loading = 'lazy';
+      f.referrerPolicy = 'no-referrer-when-downgrade';
+      f.className = 'cov__iframe';
+      box.replaceChildren(f);
+    };
+    box.querySelector('button')?.addEventListener('click', load);
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { io.disconnect(); load(); } }, { rootMargin: '300px' });
+      io.observe(box);
+    }
+  });
+</script>
+
+<style>
+  .cov { display: grid; gap: 32px; align-items: center; }
+  @media (min-width: 981px) { .cov { grid-template-columns: 1.2fr 1fr; gap: 48px; } }
+  .cov__map { position: relative; width: 100%; aspect-ratio: 4 / 3; border-radius: var(--r-card); overflow: hidden; background: var(--c-bg-muted); border: 1px solid var(--c-border); }
+  .cov__ph { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 12px; color: var(--c-primary-600); }
+  .cov__map :global(.cov__iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .cov__h { font-size: 1.125rem; margin: 0 0 10px; color: var(--c-primary-900); }
+  .cov .chips + .cov__h { margin-top: 22px; }
+</style>

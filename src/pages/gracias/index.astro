@@ -1,0 +1,62 @@
+---
+// 5.8 Gracias: baja la ansiedad posterior y dispara generate_lead (conversión de formulario en GTM).
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Button from '../../components/ui/Button.astro';
+import Icon from '../../components/ui/Icon.astro';
+import { SERVICIOS, SERVICIOS_ORDEN } from '../../config/servicios';
+import { waHref, txt } from '../../lib/data';
+import p from '../../content/paginas.json';
+const g = p.gracias;
+const pasos = g.pasos.map((s) => ({ titulo: s.titulo, texto: txt(s) }));
+---
+<BaseLayout title={g.seo.title} description={g.seo.description} noindex>
+  <section class="section dot-grid thanks">
+    <div class="container">
+      <div class="thanks__card">
+        <span class="thanks__ok"><Icon name="lucide:circle-check" size={56} /></span>
+        <h1 class="thanks__t" data-thanks-title data-tpl={g.titulo}>{g.titulo.replace('{nombre}', '')}</h1>
+        <p class="lead">{g.intro}</p>
+        <ol class="thanks__steps">
+          {pasos.map((s, i) => <li><span>{i + 1}</span><div><strong>{s.titulo}</strong><p>{s.texto}</p></div></li>)}
+        </ol>
+        <div class="thanks__urg" data-ubicacion="contact">
+          <Button href={waHref('Hola, acabo de enviar el formulario y es urgente. ')} variant="whatsapp" icon="whatsapp">{g.urgente}</Button>
+        </div>
+        <p class="thanks__links-t">{g.enlaces}</p>
+        <ul class="thanks__links">
+          {SERVICIOS_ORDEN.map((s) => <li><a href={SERVICIOS[s].href}>{SERVICIOS[s].nombre}</a></li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import { track } from '../../scripts/tracking';
+  let lead: Record<string, string> | null = null;
+  try { lead = JSON.parse(sessionStorage.getItem('sa_lead') || 'null'); } catch { /* */ }
+  const h = document.querySelector<HTMLElement>('[data-thanks-title]');
+  if (h && lead?.nombre) h.textContent = h.dataset.tpl!.replace('{nombre}', `, ${lead.nombre}`);
+  const servicio = lead?.servicio || new URLSearchParams(location.search).get('s') || 'general';
+  if (lead) {
+    // Conversiones mejoradas: user_data solo existe si el usuario aceptó publicidad (ver form.ts).
+    const user_data = lead.email || lead.phone ? { email: lead.email || undefined, phone_number: lead.phone || undefined } : undefined;
+    track('generate_lead', { form: lead.form, servicio, ...(user_data ? { user_data } : {}) });
+    try { sessionStorage.removeItem('sa_lead'); } catch { /* */ }
+  }
+</script>
+
+<style>
+  .thanks__card { max-width: 720px; margin-inline: auto; padding: 40px 24px; background: #FFF; border-radius: var(--r-card-lg); text-align: center; box-shadow: 0 20px 40px -18px rgba(var(--c-primary-shadow), .35); }
+  @media (min-width: 768px) { .thanks__card { padding: 56px 48px; } }
+  .thanks__ok { display: inline-grid; color: #15803D; }
+  .thanks__t { color: var(--c-primary-800); margin: 12px 0; }
+  .thanks .lead { margin-inline: auto; }
+  .thanks__steps { list-style: none; display: grid; gap: 14px; text-align: left; margin: 20px 0 28px; }
+  .thanks__steps li { display: flex; gap: 14px; }
+  .thanks__steps li > span { display: grid; place-items: center; flex: none; width: 36px; height: 36px; border-radius: 50%; background: var(--c-primary-600); color: #FFF; font-family: var(--font-heading); font-weight: 600; }
+  .thanks__steps strong { font-family: var(--font-heading); color: var(--c-heading); }
+  .thanks__steps p { margin: 2px 0 0; font-size: 1rem; }
+  .thanks__links-t { margin: 28px auto 8px; font-weight: 600; }
+  .thanks__links { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; list-style: none; font-size: 1rem; }
+</style>

@@ -1,0 +1,8 @@
+[
+  { "q": "¿Qué incluye la visita de diagnóstico?", "a": "Revisamos el equipo completo, medimos presiones, consumo eléctrico y temperaturas, y te explicamos la falla con fotos. Recibes la cotización antes de cualquier reparación." },
+  { "q": "¿Atienden urgencias fuera del horario?", "a": "Nuestro horario de urgencias es {horario.urgencias}. Escríbenos por WhatsApp o llámanos y coordinamos la visita.", "requiere": "horario.urgencias" },
+  { "q": "¿Cuánto dura un mantenimiento preventivo?", "a": "Un mini split de hogar u oficina toma en promedio entre 1 y 2 horas. Equipos grandes, cuartos fríos y chillers dependen del tamaño y te lo confirmamos al agendar." },
+  { "q": "¿Qué pasa si la reparación no vale la pena?", "a": "Te lo decimos con honestidad. Si reparar cuesta casi lo mismo que un equipo nuevo, te mostramos las dos opciones con números para que decidas." },
+  { "q": "¿Recargan gas refrigerante?", "a": "Solo si hay una causa. El refrigerante no se gasta: si falta, hay una fuga. Primero la encontramos y la reparamos; después cargamos lo necesario." },
+  { "q": "¿Hacen mantenimiento a cuartos fríos de otra marca o instalador?", "a": "Sí. Revisamos y mantenemos cuartos fríos y chillers sin importar quién los instaló." }
+]

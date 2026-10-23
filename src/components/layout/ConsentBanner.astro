@@ -1,0 +1,40 @@
+---
+// Banner de cookies propio (sin librerías). Consent Mode v2: ver src/scripts/consent.ts.
+import content from '../../content/cookies.json';
+---
+<div id="consent" class="consent" role="region" aria-label="Preferencias de cookies" hidden>
+  <p class="consent__text">{content.texto} <a href="/politica-de-privacidad/#cookies">{content.enlace}</a></p>
+  <div class="consent__panel" data-consent-panel hidden>
+    <label class="consent__opt"><input type="checkbox" checked disabled /> <span><strong>Necesarias.</strong> {content.necesarias}</span></label>
+    <label class="consent__opt"><input type="checkbox" name="c_analytics" /> <span><strong>Analítica.</strong> {content.analitica}</span></label>
+    <label class="consent__opt"><input type="checkbox" name="c_ads" /> <span><strong>Publicidad.</strong> {content.publicidad}</span></label>
+    <div class="consent__btns">
+      <button type="button" class="consent__btn consent__btn--ghost" data-consent="reject">Solo necesarias</button>
+      <button type="button" class="consent__btn" data-consent="save">Guardar preferencias</button>
+    </div>
+  </div>
+  <div class="consent__btns">
+    <button type="button" class="consent__btn consent__btn--ghost" data-consent="config">Configurar</button>
+    <button type="button" class="consent__btn" data-consent="accept">Aceptar</button>
+  </div>
+</div>
+
+<style>
+  .consent {
+    position: fixed; z-index: 45; left: 12px; right: 12px; bottom: 12px; max-width: 440px;
+    padding: 16px 18px; background: #FFF; border-radius: var(--r-card); box-shadow: 0 10px 40px rgba(11, 27, 63, .22);
+    font-size: .9375rem; line-height: 1.5;
+  }
+  @media (max-width: 767.98px) { .consent { bottom: calc(var(--mab-h) + 8px); } }
+  @media (min-width: 768px) { .consent { left: 24px; bottom: 24px; right: auto; } }
+  .consent__text { margin: 0 0 12px; }
+  .consent__panel { display: grid; gap: 10px; margin-bottom: 12px; padding-top: 4px; border-top: 1px solid var(--c-border); }
+  .consent__opt { display: flex; gap: 10px; align-items: flex-start; padding-top: 8px; }
+  .consent__opt input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--c-primary-600); flex: none; }
+  .consent__btns { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+  .consent__btn {
+    min-height: 44px; padding: 8px 18px; border-radius: var(--r-btn); border: 1.5px solid var(--c-primary-600);
+    background: var(--c-primary-600); color: #FFF; font-family: var(--font-heading); font-weight: 600; font-size: .9375rem;
+  }
+  .consent__btn--ghost { background: #FFF; color: var(--c-link); }
+</style>

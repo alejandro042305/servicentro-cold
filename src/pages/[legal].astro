@@ -1,0 +1,16 @@
+---
+// Legales: /politica-de-privacidad/, /terminos-y-condiciones/, /politica-de-garantia/ desde src/content/legales/*.md.
+// Son plantillas: los datos faltantes quedan visibles como [PENDIENTE: …] para la revisión legal del cliente.
+import { getCollection, render } from 'astro:content';
+import LegalLayout from '../layouts/LegalLayout.astro';
+
+export async function getStaticPaths() {
+  const docs = await getCollection('legales');
+  return docs.map((entry) => ({ params: { legal: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+<LegalLayout title={entry.data.titulo} description={entry.data.descripcion} actualizado={entry.data.actualizado}>
+  <Content />
+</LegalLayout>

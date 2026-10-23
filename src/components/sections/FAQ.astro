@@ -1,0 +1,24 @@
+---
+// FAQ: acordeón [CLIENTE] con preguntas que resuelven objeciones. Plantillas {campo} se rellenan con SITE;
+// las preguntas cuyo dato falta se ocultan.
+import Accordion from '../ui/Accordion.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import { cumple, fill } from '../../lib/data';
+import home from '../../content/home.json';
+interface Item { q: string; a: string; requiere?: string | string[] }
+interface Props { items: Item[]; titulo?: string; eyebrow?: string; tone?: 'soft' | 'white'; max?: number }
+const { items, titulo = home.faq.titulo, eyebrow = home.faq.eyebrow, tone = 'soft', max = 10 } = Astro.props;
+const list = items
+  .filter((i) => cumple(i.requiere))
+  .map((i) => ({ q: fill(i.q)!, a: fill(i.a)! }))
+  .filter((i) => i.q && i.a)
+  .slice(0, max);
+---
+{list.length > 0 && (
+  <section class:list={['section', { 'dot-grid': tone === 'soft' }]} id="faq" aria-labelledby="faq-h">
+    <div class="container">
+      <SectionHeading id="faq-h" eyebrow={eyebrow} title={titulo} />
+      <Accordion items={list} />
+    </div>
+  </section>
+)}

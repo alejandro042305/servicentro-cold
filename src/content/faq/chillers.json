@@ -1,0 +1,7 @@
+[
+  { "q": "¿Qué datos necesitan para dimensionar un chiller?", "a": "El caudal de agua (GPM o L/min), la temperatura de entrada y de salida, o la referencia de la máquina que vas a enfriar. Con eso calculamos la capacidad." },
+  { "q": "¿Cuántos BTU tiene una tonelada de refrigeración?", "a": "Una tonelada de refrigeración (TR) equivale a 12.000 BTU/h, o 3,517 kW de capacidad de enfriamiento." },
+  { "q": "¿Chiller enfriado por aire o por agua?", "a": "El enfriado por aire es más simple y no necesita torre. El enfriado por agua es más eficiente en capacidades grandes, pero requiere torre de enfriamiento y tratamiento de agua." },
+  { "q": "¿Reparan chillers de cualquier marca?", "a": "Sí. Hacemos diagnóstico, mantenimiento y reparación de chillers de diferentes marcas y capacidades." },
+  { "q": "¿Qué mantenimiento necesita un chiller?", "a": "Revisión de presiones, limpieza de condensador e intercambiador, análisis eléctrico, revisión de bombas y del agua del circuito. La frecuencia depende de las horas de uso." }
+]

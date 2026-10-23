@@ -1,0 +1,71 @@
+---
+// 5.3 Instalación y sustitución (eficiencia + garantía · perfil B).
+import { getEntry } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PageHero from '../../../components/sections/PageHero.astro';
+import Button from '../../../components/ui/Button.astro';
+import Photo from '../../../components/ui/Photo.astro';
+import SectionHeading from '../../../components/ui/SectionHeading.astro';
+import BTUCalculator from '../../../components/sections/BTUCalculator.astro';
+import FeatureList from '../../../components/sections/FeatureList.astro';
+import LogoMarquee from '../../../components/sections/LogoMarquee.astro';
+import Gallery from '../../../components/sections/Gallery.astro';
+import ProcessSteps from '../../../components/sections/ProcessSteps.astro';
+import FAQ from '../../../components/sections/FAQ.astro';
+import ContactSection from '../../../components/sections/ContactSection.astro';
+import RelatedServices from '../../../components/sections/RelatedServices.astro';
+import { SERVICIOS } from '../../../config/servicios';
+import { SITE } from '../../../config/site';
+import { waHref, txt } from '../../../lib/data';
+import { serviceLd } from '../../../lib/schema';
+import faq from '../../../content/faq/instalacion.json';
+
+const slug = 'instalacion';
+const entry = await getEntry('servicios', slug);
+const d = entry!.data as Record<string, any>;
+const svc = SERVICIOS[slug];
+const sub = txt({ texto: d.hero.sub, alt: d.hero.subAlt });
+---
+<BaseLayout title={d.seo.title} description={d.seo.description} servicio={slug} readProgress
+  schema={[serviceLd(Astro.site!, 'Instalación de aire acondicionado', d.seo.description, svc.href)]}>
+  <PageHero title={d.hero.h1} subtitle={sub ?? undefined} eyebrow={d.hero.eyebrow} photo={d.hero.foto} photoAlt={d.hero.fotoAlt}
+    crumbs={[{ label: 'Servicios' }, { label: svc.nombre }]}>
+    <span data-ubicacion="hero" class="hero-ctas">
+      <Button href={waHref(svc.waMsg)} variant="whatsapp" icon="whatsapp" bob>Cotizar instalación</Button>
+      <Button href="#calculadora" variant="white" icon="lucide:calculator">Calcular mis BTU</Button>
+    </span>
+  </PageHero>
+
+  <BTUCalculator />
+  <FeatureList id="incluye" tone="soft" eyebrow={d.incluye.eyebrow} titulo={d.incluye.titulo} intro={d.incluye.intro} items={d.incluye.items} />
+
+  <section class="section" id="inverter" aria-labelledby="inv-h">
+    <div class="container split">
+      <div data-reveal="up">
+        <SectionHeading id="inv-h" eyebrow={d.inverter.eyebrow} title={d.inverter.titulo} align="left" />
+        {d.inverter.parrafos.map((p: string) => <p>{p}</p>)}
+      </div>
+      <div class="inv__img" data-reveal="top"><Photo name={d.inverter.foto} alt={d.inverter.fotoAlt} ratio="4/3" /></div>
+    </div>
+  </section>
+
+  {SITE.marcas.length > 0 && (
+    <section class="section dot-grid" aria-labelledby="marcas-h">
+      <div class="container">
+        <SectionHeading id="marcas-h" eyebrow="Marcas" title="Marcas que instalamos" />
+        <LogoMarquee items={SITE.marcas} label="Marcas que instalamos" />
+      </div>
+    </section>
+  )}
+
+  <Gallery id="galeria" eyebrow={d.galeria.eyebrow} titulo={d.galeria.titulo} prefijo={d.galeria.prefijo} alt="Instalación de aire acondicionado realizada por Serviaires" />
+  <ProcessSteps tone="soft" />
+  <FAQ items={faq} tone="white" titulo="Preguntas sobre instalación" />
+  <ContactSection id="cotizar" servicioOrigen={slug} servicio="Instalación de aire acondicionado" waMsg={svc.waMsg} />
+  <RelatedServices actual={slug} />
+</BaseLayout>
+
+<style>
+  .hero-ctas { display: contents; }
+  .inv__img { border-radius: var(--r-card); overflow: hidden; }
+</style>

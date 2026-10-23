@@ -1,0 +1,33 @@
+---
+// 3.18 UrgencyBand: rescata al perfil A que siguió bajando. Fondo #0777DD [CLIENTE] + dot-grid blanco 8 %.
+import Icon from '../ui/Icon.astro';
+import Button from '../ui/Button.astro';
+import { waHref, telHref, txt } from '../../lib/data';
+import { WA_MSG_URGENTE } from '../../config/servicios';
+import home from '../../content/home.json';
+const u = home.urgencia;
+const linea = txt({ texto: u.texto, alt: u.alt });
+---
+<section class="section section--blue dot-grid--light urg on-blue" aria-labelledby="urg-h" data-ubicacion="band" data-servicio="reparacion-mantenimiento">
+  <div class="container urg__in" data-reveal="up">
+    <span class="urg__icon"><Icon name="lucide:siren" size={36} /></span>
+    <div class="urg__text">
+      <h2 id="urg-h" class="urg__title">{u.titulo}</h2>
+      {linea && <p>{linea}</p>}
+    </div>
+    <div class="urg__ctas">
+      <Button href={telHref} variant="urgent" icon="lucide:phone">{u.llamar}</Button>
+      <Button href={waHref(WA_MSG_URGENTE)} variant="white" icon="whatsapp">{u.whatsapp}</Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .urg__in { display: grid; gap: 20px; justify-items: center; text-align: center; }
+  @media (min-width: 981px) { .urg__in { grid-template-columns: auto 1fr auto; text-align: left; justify-items: start; gap: 28px; align-items: center; } }
+  .urg__icon { display: grid; place-items: center; width: 76px; height: 76px; border-radius: 50%; background: rgba(255, 255, 255, .15); color: #FFF; }
+  .urg__title { margin: 0 0 6px; font-size: var(--fs-h2); }
+  .urg__text p { margin: 0; font-size: 1.1875rem; }
+  .urg__ctas { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+  @media (max-width: 767.98px) { .urg__ctas { flex-direction: column; width: 100%; } }
+</style>

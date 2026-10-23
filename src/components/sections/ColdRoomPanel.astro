@@ -1,0 +1,23 @@
+---
+// Panel de la pestaña Conservación / Congelación en /servicios/cuartos-frios/.
+import Icon from '../ui/Icon.astro';
+interface Props { t: { descripcion: string; productos: string[]; sectores: string[]; componentes: string[] } }
+const { t } = Astro.props;
+---
+<div class="cft">
+  <p class="cft__desc">{t.descripcion}</p>
+  <div class="cft__cols">
+    <div><h3 class="cft__h"><Icon name="lucide:package" size={20} />Productos</h3><ul class="checks checks--blue">{t.productos.map((x) => <li>{x}</li>)}</ul></div>
+    <div><h3 class="cft__h"><Icon name="lucide:building-2" size={20} />Sectores</h3><ul class="checks checks--blue">{t.sectores.map((x) => <li>{x}</li>)}</ul></div>
+    <div><h3 class="cft__h"><Icon name="lucide:settings" size={20} />Componentes</h3><ul class="checks checks--blue">{t.componentes.map((x) => <li>{x}</li>)}</ul></div>
+  </div>
+</div>
+
+<style>
+  .cft { background: #FFF; border-radius: var(--r-card); padding: 28px 24px; border: 1px solid #E6E6E6; }
+  .cft__desc { font-size: 1.125rem; }
+  .cft__cols { display: grid; gap: 24px; }
+  @media (min-width: 768px) { .cft__cols { grid-template-columns: repeat(3, 1fr); } }
+  .cft__h { display: flex; align-items: center; gap: 8px; font-size: 1.125rem; color: var(--c-primary-900); letter-spacing: -.5px; }
+  .cft .checks { font-size: 1rem; }
+</style>

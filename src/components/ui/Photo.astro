@@ -1,0 +1,47 @@
+---
+// Foto real desde src/assets/img/<name>.(jpg|png|webp|avif) con <Picture> AVIF/WebP.
+// Si la foto no existe todavía: marcador neutro "Foto pendiente" con la proporción definitiva.
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  name: string;
+  alt: string;
+  ratio?: string;           // "1/1", "3/2", "16/9"
+  widths?: number[];
+  sizes?: string;
+  eager?: boolean;
+  class?: string;
+  fit?: 'cover' | 'contain';
+}
+const { name, alt, ratio = '3/2', widths = [480, 800, 1200, 1600], sizes = '(min-width: 981px) 540px, 100vw', eager = false, class: cls, fit = 'cover' } = Astro.props;
+
+const files = import.meta.glob<{ default: ImageMetadata }>('/src/assets/img/**/*.{jpg,jpeg,png,webp,avif}', { eager: true });
+const match = Object.entries(files).find(([p]) => p.split('/').pop()!.replace(/\.\w+$/, '') === name);
+const img = match?.[1].default;
+---
+{img ? (
+  <Picture
+    src={img}
+    alt={alt}
+    formats={['avif', 'webp']}
+    widths={widths.filter((w) => w <= img.width)}
+    sizes={sizes}
+    loading={eager ? 'eager' : 'lazy'}
+    fetchpriority={eager ? 'high' : 'auto'}
+    decoding={eager ? 'sync' : 'async'}
+    class:list={['photo', cls]}
+    style={`aspect-ratio:${ratio};object-fit:${fit}`}
+  />
+) : (
+  <div class:list={['ph', 'photo', cls]} style={`aspect-ratio:${ratio}`} role="img" aria-label={`Foto pendiente: ${alt}`} data-photo-pending={name}>
+    <Icon name="lucide:image" size={40} />
+    <span>Foto pendiente</span>
+  </div>
+)}
+
+<style is:global>
+  .photo { width: 100%; height: auto; }
+  picture.photo, .photo img { width: 100%; height: 100%; object-fit: cover; }
+</style>

@@ -1,0 +1,37 @@
+---
+// TechLead: foto, nombre y frase firmada del responsable técnico. Se oculta si faltan nombre o frase.
+import Photo from '../ui/Photo.astro';
+import Icon from '../ui/Icon.astro';
+import { SITE } from '../../config/site';
+import { has } from '../../lib/data';
+import home from '../../content/home.json';
+const r = SITE.responsableTecnico;
+const show = has(r.nombre) && has(r.frase);
+---
+{show && (
+  <aside class="tl" aria-label={home.techLead.eyebrow} data-reveal="up">
+    <div class="tl__photo">
+      {has(r.foto) ? <Photo name={r.foto} alt={`${r.nombre}, ${r.cargo}`} ratio="1/1" widths={[160, 320]} sizes="160px" /> : <span class="tl__init" aria-hidden="true">{r.nombre.split(' ').map((p) => p[0]).slice(0, 2).join('')}</span>}
+    </div>
+    <div>
+      <p class="tl__eyebrow">{home.techLead.eyebrow}</p>
+      <blockquote class="tl__quote"><Icon name="lucide:quote" size={22} /><p>{r.frase}</p></blockquote>
+      <p class="tl__name">{r.nombre}</p>
+      <p class="tl__role">{r.cargo} · {SITE.nombre}</p>
+    </div>
+  </aside>
+)}
+
+<style>
+  .tl { display: grid; gap: 20px; align-items: center; margin-top: 40px; padding: 28px; background: #FFF; border-radius: var(--r-card-lg); border: .8px solid var(--c-neutral-300); }
+  @media (min-width: 768px) { .tl { grid-template-columns: 160px 1fr; gap: 32px; padding: 32px 40px; } }
+  .tl__photo { width: 120px; aspect-ratio: 1; border-radius: 50%; overflow: hidden; }
+  @media (min-width: 768px) { .tl__photo { width: 160px; } }
+  .tl__init { display: grid; place-items: center; width: 100%; height: 100%; background: var(--c-primary-600); color: #FFF; font-family: var(--font-heading); font-weight: 600; font-size: 2.5rem; }
+  .tl__eyebrow { margin: 0 0 6px; font-family: var(--font-heading); font-weight: 600; font-size: .8125rem; letter-spacing: 3px; text-transform: uppercase; color: var(--c-primary-900); }
+  .tl__quote { margin: 0; }
+  .tl__quote :global(.icon) { color: var(--c-primary-600); }
+  .tl__quote p { margin: 6px 0 12px; font-size: 1.1875rem; line-height: 1.55; color: var(--c-heading); font-style: italic; }
+  .tl__name { margin: 0; font-family: var(--font-heading); font-weight: 600; color: var(--c-heading); }
+  .tl__role { margin: 0; font-size: var(--fs-small); color: var(--c-text-muted); }
+</style>

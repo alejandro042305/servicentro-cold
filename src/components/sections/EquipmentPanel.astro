@@ -1,0 +1,23 @@
+---
+// Panel de EquipmentTypes: tarjetas de los equipos que sirven para un tipo de espacio.
+import Photo from '../ui/Photo.astro';
+import Button from '../ui/Button.astro';
+import { waHref } from '../../lib/data';
+interface Item { nombre: string; rango: string; foto: string; ideal: string; ventajas: string[] }
+interface Props { items: Item[] }
+const { items } = Astro.props;
+---
+<div class="grid-3">
+  {items.map((i) => (
+    <article class="eq">
+      <Photo name={i.foto} alt={`Equipo de aire acondicionado tipo ${i.nombre}`} ratio="4/3" sizes="(min-width: 981px) 338px, 100vw" widths={[338, 676]} />
+      <div class="eq__body">
+        <h3 class="eq__name">{i.nombre}</h3>
+        <p class="eq__range">{i.rango}</p>
+        <p class="eq__ideal"><strong>Ideal para:</strong> {i.ideal}</p>
+        <ul class="checks checks--blue eq__list">{i.ventajas.map((v) => <li>{v}</li>)}</ul>
+        <Button href={waHref(`Hola, quiero cotizar un aire acondicionado tipo ${i.nombre}. El espacio es: `)} variant="whatsapp" size="sm" icon="whatsapp" full>Cotizar este equipo</Button>
+      </div>
+    </article>
+  ))}
+</div>

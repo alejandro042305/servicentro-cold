@@ -1,0 +1,88 @@
+---
+// 5.5 Cuartos fríos (ROI + precisión + autoridad · perfil C).
+import { getEntry } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PageHero from '../../../components/sections/PageHero.astro';
+import Button from '../../../components/ui/Button.astro';
+import Tabs from '../../../components/ui/Tabs.astro';
+import Icon from '../../../components/ui/Icon.astro';
+import SectionHeading from '../../../components/ui/SectionHeading.astro';
+import ProcessSteps from '../../../components/sections/ProcessSteps.astro';
+import FeatureList from '../../../components/sections/FeatureList.astro';
+import CaseStudies from '../../../components/sections/CaseStudies.astro';
+import CTASection from '../../../components/sections/CTASection.astro';
+import FAQ from '../../../components/sections/FAQ.astro';
+import ProjectForm from '../../../components/forms/ProjectForm.astro';
+import RelatedServices from '../../../components/sections/RelatedServices.astro';
+import ColdRoomPanel from '../../../components/sections/ColdRoomPanel.astro';
+import { SERVICIOS } from '../../../config/servicios';
+import { waHref } from '../../../lib/data';
+import { serviceLd } from '../../../lib/schema';
+import { getCasos } from '../../../lib/content';
+import faq from '../../../content/faq/cuartos-frios.json';
+
+const slug = 'cuartos-frios';
+const entry = await getEntry('servicios', slug);
+const d = entry!.data as Record<string, any>;
+const svc = SERVICIOS[slug];
+const casos = await getCasos({ tipo: 'Cuarto frío' });
+type Tab = { nombre: string; descripcion: string; productos: string[]; sectores: string[]; componentes: string[] };
+---
+<BaseLayout title={d.seo.title} description={d.seo.description} servicio={slug} readProgress
+  schema={[serviceLd(Astro.site!, 'Diseño y montaje de cuartos fríos', d.seo.description, svc.href)]}>
+  <PageHero title={d.hero.h1} subtitle={d.hero.sub} eyebrow={d.hero.eyebrow} photo={d.hero.foto} photoAlt={d.hero.fotoAlt} deco="snowflake"
+    crumbs={[{ label: 'Servicios' }, { label: svc.nombre }]}>
+    <span data-ubicacion="hero" style="display:contents">
+      <Button href="#proyecto" variant="white" icon="lucide:calendar" bob>Agendar visita de ingeniería</Button>
+      <Button href={waHref(svc.waMsg)} variant="whatsapp" icon="whatsapp">WhatsApp</Button>
+    </span>
+  </PageHero>
+
+  <section class="section dot-grid" id="tipos" aria-labelledby="tipos-h">
+    <div class="container">
+      <SectionHeading id="tipos-h" eyebrow={d.tipos.eyebrow} title={d.tipos.titulo} />
+      <Tabs id="cf" tabs={d.tipos.tabs.map((t: Tab) => t.nombre)}>
+        <ColdRoomPanel slot="panel-0" t={d.tipos.tabs[0]} />
+        <ColdRoomPanel slot="panel-1" t={d.tipos.tabs[1]} />
+      </Tabs>
+    </div>
+  </section>
+
+  <ProcessSteps id="ingenieria" data={d.proceso} />
+  <FeatureList id="componentes" tone="soft" cols={3} eyebrow={d.componentes.eyebrow} titulo={d.componentes.titulo} items={d.componentes.items} />
+
+  <section class="section" id="sanitario" aria-labelledby="san-h">
+    <div class="container san" data-reveal="up">
+      <span class="san__icon"><Icon name="lucide:clipboard-check" size={40} /></span>
+      <div>
+        <SectionHeading id="san-h" eyebrow={d.sanitario.eyebrow} title={d.sanitario.titulo} align="left" />
+        <p>{d.sanitario.texto}</p>
+        <ul class="checks checks--blue">{d.sanitario.bullets.map((b: string) => <li>{b}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  <CaseStudies casos={casos} />
+  <CTASection id="mantenimiento-cf" titulo={d.mantenimiento.titulo} texto={d.mantenimiento.texto}>
+    <Button href={waHref('Hola, necesito mantenimiento para mi cuarto frío. ')} variant="whatsapp" icon="whatsapp">{d.mantenimiento.cta}</Button>
+  </CTASection>
+
+  <section class="section dot-grid" id="proyecto" aria-labelledby="pf-h" data-ubicacion="contact">
+    <div class="container">
+      <SectionHeading id="pf-h" eyebrow="Visita de ingeniería" title="Cuéntanos tu proyecto de cuarto frío" intro="Con estos datos preparamos la visita. Recibes respuesta de un ingeniero, no de un vendedor." />
+      <div class="pf-card"><ProjectForm id="pf-cf" servicioOrigen={slug} tipo="Cuarto frío de conservación" /></div>
+    </div>
+  </section>
+
+  <FAQ items={faq} tone="white" titulo="Preguntas sobre cuartos fríos" />
+  <RelatedServices actual={slug} />
+</BaseLayout>
+
+<style>
+  #tipos :global(.tabs__list) { margin-inline: auto; }
+  .san { display: grid; gap: 24px; max-width: 900px; }
+  @media (min-width: 768px) { .san { grid-template-columns: 96px 1fr; } }
+  .san__icon { display: grid; place-items: center; width: 96px; height: 96px; border-radius: 24px; background: var(--c-primary-600); color: #FFF; }
+  .pf-card { max-width: 820px; margin-inline: auto; background: #FFF; border-radius: var(--r-card); padding: 28px 22px; box-shadow: 0 20px 40px -18px rgba(var(--c-primary-shadow), .35); }
+  @media (min-width: 981px) { .pf-card { padding: 40px; } }
+</style>

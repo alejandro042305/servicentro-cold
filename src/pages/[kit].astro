@@ -1,0 +1,145 @@
+---
+// /_kit/ — catálogo interno de componentes y estados para validación visual con el cliente.
+// noindex y excluido del sitemap. (Astro no enruta archivos que empiezan por "_", por eso la ruta dinámica.)
+// Los datos marcados DEMO son ficticios y SOLO aparecen aquí.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+import Badge from '../components/ui/Badge.astro';
+import Counter from '../components/ui/Counter.astro';
+import Stars from '../components/ui/Stars.astro';
+import Tabs from '../components/ui/Tabs.astro';
+import Accordion from '../components/ui/Accordion.astro';
+import SectionHeading from '../components/ui/SectionHeading.astro';
+import Photo from '../components/ui/Photo.astro';
+import Logo from '../components/ui/Logo.astro';
+import Card from '../components/ui/Card.astro';
+import QuickForm from '../components/forms/QuickForm.astro';
+import ProjectForm from '../components/forms/ProjectForm.astro';
+import LogoMarquee from '../components/sections/LogoMarquee.astro';
+import CaseStudies from '../components/sections/CaseStudies.astro';
+import Testimonials from '../components/sections/Testimonials.astro';
+import ServicesGrid from '../components/sections/ServicesGrid.astro';
+import WhyUs from '../components/sections/WhyUs.astro';
+import ProcessSteps from '../components/sections/ProcessSteps.astro';
+import UrgencyBand from '../components/sections/UrgencyBand.astro';
+import BTUCalculator from '../components/sections/BTUCalculator.astro';
+import { getCasos } from '../lib/content';
+
+export function getStaticPaths() { return [{ params: { kit: '_kit' } }]; }
+
+const casosDemo = await getCasos({ incluirBorradores: true });
+const testimoniosDemo = [
+  { nombre: 'DEMO Ana Gómez', sector: 'Restaurante', barrio: 'Chapinero', texto: 'DEMO · Texto de ejemplo de una reseña. Se reemplaza por reseñas reales de Google.', estrellas: 5 },
+  { nombre: 'DEMO Carlos Ruiz', sector: 'Clínica', barrio: 'Usaquén', texto: 'DEMO · Otra reseña de ejemplo para ver la grilla 3 + 2.', estrellas: 5 },
+  { nombre: 'DEMO Laura Díaz', sector: 'Oficina', barrio: 'Teusaquillo', texto: 'DEMO · Reseña de ejemplo.', estrellas: 4 },
+  { nombre: 'DEMO Jorge Peña', sector: 'Supermercado', barrio: 'Suba', texto: 'DEMO · Reseña de ejemplo.', estrellas: 5 },
+  { nombre: 'DEMO Marta León', sector: 'Hogar', barrio: 'Chía', texto: 'DEMO · Reseña de ejemplo.', estrellas: 5 },
+];
+const colores = [
+  ['--c-primary-900', '#0047B9'], ['--c-primary-800', '#0047BF'], ['--c-primary-600', '#0774E2'], ['--c-primary-500', '#0775DB'],
+  ['--c-link', '#0066CC'], ['--c-accent', '#0052FF'], ['--c-accent-hover', '#4D80FF'], ['--c-ink', '#0B1B3F'],
+  ['--c-bg-soft', '#F9F9F9'], ['--c-bg-muted', '#F4F4F4'], ['--c-border', '#D9D9D9'], ['--c-text', '#444444'],
+  ['--c-urgent', '#C2410C'], ['--c-whatsapp-btn', '#15803D'], ['--c-phone-btn', '#1565C0'], ['--c-star', '#FFCB00'],
+];
+---
+<BaseLayout title="Kit de componentes | Serviaires" description="Catálogo interno de componentes." noindex>
+  <section class="section">
+    <div class="container kit">
+      <SectionHeading level="h1" eyebrow="Interno" title="Kit de componentes" intro="Todos los componentes y estados del sitio. Los datos marcados DEMO son ficticios y solo aparecen en esta página." />
+
+      <h2>Color</h2>
+      <ul class="sw">{colores.map(([n, h]) => <li><span style={`background:${h}`}></span><code>{n}</code><small>{h}</small></li>)}</ul>
+
+      <h2>Tipografía</h2>
+      <p class="kit-hero">Título hero 48/32 · Poppins 600</p>
+      <h1 class="kit-h">H1 44/36 · Poppins 600</h1>
+      <h2 class="kit-h">H2 36/28 · Poppins 600</h2>
+      <h3>H3 24 · Poppins 600</h3>
+      <h4>H4 22 · Poppins 600</h4>
+      <p>Párrafo 18/30,6 · Source Sans 3 500 · #444. Frases cortas, un beneficio por frase y cifras concretas solo si son reales.</p>
+      <p class="eyebrow">Eyebrow en píldora</p>
+      <hr class="divider divider--left" />
+
+      <h2>Logo</h2>
+      <div class="cluster"><Logo /><span class="kit-dark"><Logo variant="blanco" /></span></div>
+
+      <h2>Botones</h2>
+      <div class="cluster">
+        <Button href="#">Primario</Button>
+        <Button href="#" icon="whatsapp">Con icono</Button>
+        <Button href="#" variant="outline">Outline</Button>
+        <Button href="#" variant="whatsapp" icon="whatsapp" bob>WhatsApp (bob)</Button>
+        <Button href="#" variant="urgent" icon="lucide:triangle-alert">Urgente</Button>
+        <Button href="#" variant="phone" icon="lucide:phone">Llamar</Button>
+        <Button href="#" variant="link">Enlace con flecha</Button>
+        <Button href="#" size="sm" icon="whatsapp">Compacto</Button>
+      </div>
+      <div class="cluster kit-dark mt-32">
+        <Button href="#" variant="white" icon="whatsapp">Blanco</Button>
+        <Button href="#" variant="outline-light">Outline claro</Button>
+      </div>
+      <div class="cluster mt-32">
+        <button type="button" class="btn btn--primary btn--md" data-state="loading" disabled><span class="btn__label">Enviando</span><span class="btn__spinner"></span></button>
+        <button type="button" class="btn btn--primary btn--md" data-state="success" disabled><span class="btn__label">Listo</span><svg class="btn__done icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></button>
+      </div>
+
+      <h2>Badges, chips y estrellas</h2>
+      <div class="cluster">
+        <Badge>Ingeniería a medida</Badge><Badge tone="plain">Chapinero</Badge>
+        <span class="kit-blue"><Badge tone="onBlue" live>Disponibles hoy (solo si es real)</Badge></span>
+        <span class="chip">2 °C</span><Stars value={4.9} />
+      </div>
+
+      <h2>Contadores (DEMO)</h2>
+      <div class="grid-4">
+        <Counter value={4.9} decimals={1} suffix=" ★" label="DEMO en Google" />
+        <Counter value={12} label="DEMO años de experiencia" />
+        <Counter value={350} prefix="+" label="DEMO proyectos" />
+        <Counter value={1500} prefix="+" label="DEMO equipos atendidos" />
+      </div>
+
+      <h2>Marquesina (DEMO)</h2>
+      <LogoMarquee items={['Marca A', 'Marca B', 'Marca C', 'Marca D', 'Marca E', 'Marca F']} label="Marcas DEMO" />
+
+      <h2>Fotos</h2>
+      <div class="grid-3"><Photo name="no-existe" alt="ejemplo" ratio="1/1" /><Photo name="no-existe-2" alt="ejemplo" ratio="3/2" /><Photo name="no-existe-3" alt="ejemplo" ratio="16/9" /></div>
+
+      <h2>Tarjeta blanca</h2>
+      <div class="grid-3"><Card><h3>Tarjeta</h3><p>Hover: sube 3 px con sombra azul.</p></Card></div>
+
+      <h2>Pestañas</h2>
+      <Tabs id="kit-tabs" tabs={['Uno', 'Dos']}>
+        <p slot="panel-0">Contenido de la pestaña uno. Navegable con flechas.</p>
+        <p slot="panel-1">Contenido de la pestaña dos.</p>
+      </Tabs>
+
+      <h2>Acordeón</h2>
+      <Accordion schema={false} items={[{ q: 'Pregunta cerrada (#F4F4F4, #666)', a: 'Respuesta.' }, { q: 'Otra pregunta', a: 'Respuesta.' }]} />
+
+      <h2>Formularios</h2>
+      <div class="grid-2">
+        <Card hover={false}><QuickForm id="kit-qf" titulo="QuickForm" servicioOrigen="kit" /></Card>
+        <Card hover={false}><QuickForm id="kit-qm" titulo="QuickForm mínimo (urgencias)" servicioOrigen="kit" minimal /></Card>
+      </div>
+      <Card hover={false} class="mt-32"><ProjectForm id="kit-pf" titulo="ProjectForm" servicioOrigen="kit" /></Card>
+    </div>
+  </section>
+  <ServicesGrid />
+  <WhyUs />
+  <ProcessSteps />
+  <ProcessSteps variant="proyecto" tone="soft" />
+  <CaseStudies casos={[...casosDemo, ...casosDemo, ...casosDemo].map((c, i) => ({ ...c, slug: `${c.slug}-${i}`, titulo: `DEMO ${c.titulo}` }))} links={false} />
+  <Testimonials items={testimoniosDemo} />
+  <UrgencyBand />
+  <BTUCalculator />
+</BaseLayout>
+
+<style>
+  .kit > h2 { margin: 56px 0 20px; padding-top: 16px; border-top: 1px solid var(--c-border); font-size: 1.5rem; }
+  .sw { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; list-style: none; }
+  .sw li { display: grid; gap: 4px; font-size: .8125rem; }
+  .sw span { height: 56px; border-radius: 10px; border: 1px solid #DDD; }
+  .kit-hero { font-family: var(--font-heading); font-weight: 600; font-size: var(--fs-hero); letter-spacing: -1px; line-height: 1.2; color: var(--c-primary-900); margin: 0; }
+  .kit-dark { padding: 20px; background: var(--c-primary-900); border-radius: 12px; display: inline-flex; gap: 12px; flex-wrap: wrap; }
+  .kit-blue { padding: 8px; background: var(--c-primary-600); border-radius: 8px; }
+</style>

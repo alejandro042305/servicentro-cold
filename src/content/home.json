@@ -1,0 +1,228 @@
+{
+  "seo": {
+    "title": "Aire acondicionado y cuartos fríos en Bogotá | Serviaires",
+    "description": "Reparación, instalación y mantenimiento de aire acondicionado, cuartos fríos y chillers en Bogotá. Diagnóstico claro antes de cobrar. Escríbenos por WhatsApp."
+  },
+  "hero": {
+    "eyebrow": "Aire acondicionado · Cuartos fríos · Chillers",
+    "antes": "Tu",
+    "palabras": [
+      "aire acondicionado",
+      "cuarto frío",
+      "chiller"
+    ],
+    "despues": "funcionando como debe. Hoy.",
+    "subtitulo": "Reparamos, instalamos y diseñamos climatización y refrigeración en Bogotá y alrededores. Te explicamos la falla antes de cobrarte.",
+    "foto": "hero-tecnico",
+    "fotoAlt": "Técnico de Serviaires revisando una unidad de aire acondicionado",
+    "promesas": [
+      {
+        "icon": "lucide:timer",
+        "texto": "Respuesta en {tiempoRespuestaWhatsApp}",
+        "alt": "Atención por WhatsApp y teléfono"
+      },
+      {
+        "icon": "lucide:shield-check",
+        "texto": "Garantía escrita de {garantiaManoObra}",
+        "alt": null
+      },
+      {
+        "icon": "lucide:message-circle",
+        "texto": "Diagnóstico claro antes de reparar"
+      }
+    ]
+  },
+  "intro": {
+    "h1": "Serviaires: aire acondicionado, cuartos fríos y chillers en Bogotá",
+    "parrafo": "Atendemos hogares, comercios e industria. Reparamos equipos, instalamos aire acondicionado con el cálculo correcto y diseñamos cuartos fríos y chillers a la medida de tu operación.",
+    "bullets": [
+      "Visitas en Bogotá y municipios cercanos",
+      "Cotización por escrito antes de empezar",
+      "Te explicamos la falla con fotos y mediciones"
+    ],
+    "formTitulo": "Déjanos tu número y te contactamos"
+  },
+  "servicios": {
+    "eyebrow": "Lo que hacemos",
+    "titulo": "Una solución para cada momento de tu equipo",
+    "intro": "Elige según lo que te pasa hoy: una falla, un equipo nuevo o un proyecto de ingeniería.",
+    "items": [
+      {
+        "servicio": "reparacion-mantenimiento",
+        "titulo": "Reparación y mantenimiento",
+        "chip": "Urgente · {horario.urgencias}",
+        "chipAlt": "Atención urgente",
+        "texto": "Tu equipo dejó de enfriar o hace algo raro. Lo revisamos, te explicamos la falla y lo dejamos funcionando.",
+        "bullets": [
+          "Diagnóstico con medición de presiones y consumo",
+          "Repuestos originales",
+          "Todas las marcas",
+          "Contratos de mantenimiento preventivo"
+        ],
+        "cta": "Reportar una falla",
+        "ctaTipo": "whatsapp",
+        "foto": "mantenimiento-1",
+        "fotoAlt": "Técnico midiendo presiones de un equipo de aire acondicionado"
+      },
+      {
+        "servicio": "instalacion",
+        "titulo": "Instalación y sustitución",
+        "chip": "Eficiencia + garantía",
+        "texto": "Te ayudamos a elegir el equipo correcto para tu espacio y lo instalamos bien desde el primer día.",
+        "bullets": [
+          "Cálculo de BTU según tu espacio",
+          "Equipos inverter de bajo consumo",
+          "Instalación limpia y probada",
+          "Garantía escrita"
+        ],
+        "cta": "Cotizar instalación",
+        "ctaTipo": "whatsapp",
+        "foto": "instalacion-1",
+        "fotoAlt": "Unidad de aire acondicionado mini split recién instalada en una oficina"
+      },
+      {
+        "servicio": "cuartos-frios",
+        "titulo": "Cuartos fríos y chillers",
+        "chip": "Ingeniería a medida",
+        "texto": "Diseñamos con cálculo de carga térmica para que tu producto o proceso tenga la temperatura exacta.",
+        "bullets": [
+          "Cálculo de carga térmica",
+          "Conservación (0 a 8 °C) y congelación (−25 a −18 °C)",
+          "Chillers enfriados por aire o por agua",
+          "Montaje y puesta en marcha"
+        ],
+        "cta": "Agendar visita de ingeniería",
+        "ctaTipo": "link",
+        "href": "/servicios/cuartos-frios/#proyecto",
+        "foto": "cuarto-frio-1",
+        "fotoAlt": "Interior de un cuarto frío con estanterías y evaporador"
+      }
+    ]
+  },
+  "bigCards": [
+    {
+      "titulo": "Instalación con garantía",
+      "texto": "Calculamos el equipo que necesitas, lo instalamos con vacío y pruebas, y te entregamos garantía escrita.",
+      "cta": "Cotizar instalación",
+      "href": "/servicios/instalacion/",
+      "foto": "instalacion-2",
+      "fotoAlt": "Instalación de una unidad condensadora en una terraza"
+    },
+    {
+      "titulo": "Proyectos de cuartos fríos y chillers",
+      "texto": "Ingeniería, suministro, montaje y puesta en marcha. Recibes propuesta técnica y cronograma antes de empezar.",
+      "cta": "Ver ingeniería de proyectos",
+      "href": "/servicios/cuartos-frios/",
+      "foto": "chiller-1",
+      "fotoAlt": "Chiller industrial instalado en una planta"
+    }
+  ],
+  "porque": {
+    "eyebrow": "Por qué elegirnos",
+    "titulo": "Lo que te garantizamos en cada servicio",
+    "intro": "Compromisos concretos. Si no los cumplimos, nos lo puedes reclamar.",
+    "items": [
+      {
+        "icon": "lucide:timer",
+        "titulo": "Respuesta en {tiempoRespuestaWhatsApp}",
+        "texto": "Te contestamos y te damos una hora concreta para la visita.",
+        "requiere": "tiempoRespuestaWhatsApp"
+      },
+      {
+        "icon": "lucide:camera",
+        "titulo": "Diagnóstico con evidencia",
+        "texto": "Te mostramos fotos y mediciones. Sabes qué falla antes de aprobar nada."
+      },
+      {
+        "icon": "lucide:receipt",
+        "titulo": "Precio por escrito antes de empezar",
+        "texto": "Cotización clara con lo que incluye y lo que no. Sin cobros sorpresa."
+      },
+      {
+        "icon": "lucide:badge-check",
+        "titulo": "Repuestos originales y todas las marcas",
+        "texto": "Atendemos equipos de cualquier marca y usamos repuestos originales."
+      },
+      {
+        "icon": "lucide:shield-check",
+        "titulo": "Garantía escrita de {garantiaManoObra}",
+        "texto": "Si algo de nuestro trabajo falla en ese tiempo, volvemos sin costo.",
+        "requiere": "garantiaManoObra"
+      },
+      {
+        "icon": "lucide:hard-hat",
+        "titulo": "Técnicos certificados y asegurados",
+        "texto": "Certificaciones vigentes: {certificaciones}.",
+        "requiere": "certificaciones"
+      }
+    ]
+  },
+  "techLead": {
+    "eyebrow": "Quién te atiende",
+    "titulo": "Una persona responde por tu equipo"
+  },
+  "stats": {
+    "eyebrow": "En cifras",
+    "titulo": "Trabajo que se puede medir",
+    "items": [
+      {
+        "campo": "anosExperiencia",
+        "label": "años de experiencia",
+        "suffix": ""
+      },
+      {
+        "campo": "proyectosRealizados",
+        "label": "proyectos realizados",
+        "prefix": "+"
+      },
+      {
+        "campo": "clientesEmpresariales",
+        "label": "clientes empresariales",
+        "prefix": "+"
+      },
+      {
+        "campo": "numResenasGoogle",
+        "label": "reseñas en Google",
+        "suffix": ""
+      }
+    ]
+  },
+  "sectores": {
+    "eyebrow": "Sectores",
+    "titulo": "Sectores que atendemos",
+    "intro": "Cada negocio tiene su riesgo. Diseñamos y mantenemos pensando en el tuyo."
+  },
+  "casos": {
+    "eyebrow": "Casos de éxito",
+    "titulo": "Problemas reales, resueltos",
+    "intro": "Así trabajamos: problema, solución y resultado medible."
+  },
+  "testimonios": {
+    "eyebrow": "Reseñas",
+    "titulo": "Lo que dicen nuestros clientes"
+  },
+  "urgencia": {
+    "titulo": "¿Tu equipo falló ahora?",
+    "texto": "Llámanos o escríbenos. Visita técnica {tiempoVisitaUrgencia}.",
+    "alt": "Llámanos o escríbenos y coordinamos la visita técnica.",
+    "llamar": "Llamar ahora",
+    "whatsapp": "WhatsApp urgente"
+  },
+  "faq": {
+    "eyebrow": "Preguntas frecuentes",
+    "titulo": "Resolvemos tus dudas antes de que nos llames"
+  },
+  "cobertura": {
+    "eyebrow": "Cobertura",
+    "titulo": "Dónde trabajamos",
+    "intro": "Bogotá y municipios cercanos. Para proyectos de ingeniería, consúltanos por otras ciudades del país.",
+    "mapaBoton": "Cargar mapa"
+  },
+  "contacto": {
+    "eyebrow": "Contacto",
+    "titulo": "Hablemos de tu equipo o tu proyecto",
+    "intro": "Elige el canal que te quede más cómodo. Si es urgente, llama o escribe por WhatsApp.",
+    "tabServicio": "Servicio",
+    "tabProyecto": "Proyecto de ingeniería"
+  }
+}

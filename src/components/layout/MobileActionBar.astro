@@ -1,0 +1,50 @@
+---
+// 3.4 MobileActionBar (< 768 px) [CONVERSIÓN]: aparece tras 300 px de scroll y se oculta
+// cuando un formulario ([data-hide-mab]) está en pantalla.
+import Icon from '../ui/Icon.astro';
+import { waHref, telHref } from '../../lib/data';
+interface Props { waMsg: string; always?: boolean }
+const { waMsg, always = false } = Astro.props;
+---
+<div class:list={['mab', { 'is-visible': always }]} data-mab data-always={always ? '' : undefined} data-ubicacion="mobile_bar">
+  <a href={telHref} class="mab__btn mab__btn--call"><Icon name="lucide:phone" size={22} />Llamar</a>
+  <a href={waHref(waMsg)} class="mab__btn mab__btn--wa"><Icon name="whatsapp" size={22} />WhatsApp</a>
+</div>
+
+<script>
+  const bar = document.querySelector<HTMLElement>('[data-mab]');
+  if (bar) {
+    const always = bar.hasAttribute('data-always');
+    let formVisible = false;
+    const update = () => bar.classList.toggle('is-visible', (always || scrollY > 300) && !formVisible);
+    const forms = document.querySelectorAll('[data-hide-mab]');
+    if (forms.length && 'IntersectionObserver' in window) {
+      const seen = new Set<Element>();
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => (e.isIntersecting ? seen.add(e.target) : seen.delete(e.target)));
+        formVisible = seen.size > 0;
+        update();
+      }, { threshold: 0.25 });
+      forms.forEach((f) => io.observe(f));
+    }
+    addEventListener('scroll', update, { passive: true });
+    update();
+  }
+</script>
+
+<style>
+  .mab {
+    position: fixed; inset: auto 0 0; z-index: 40; height: var(--mab-h); display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    padding: 8px 10px calc(8px + env(safe-area-inset-bottom)); background: #FFF; box-shadow: 0 -4px 16px rgba(0, 0, 0, .08);
+    transform: translateY(110%); transition: transform .3s var(--ease-out-soft);
+  }
+  .mab.is-visible { transform: none; }
+  @media (min-width: 768px) { .mab { display: none; } }
+  .mab__btn {
+    display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: var(--r-btn);
+    font-family: var(--font-heading); font-weight: 600; font-size: 1.0625rem; color: #FFF; text-decoration: none;
+  }
+  .mab__btn:hover { color: #FFF; }
+  .mab__btn--call { background: var(--c-phone-btn); }
+  .mab__btn--wa { background: var(--c-whatsapp-btn); }
+</style>

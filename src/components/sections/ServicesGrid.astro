@@ -1,0 +1,57 @@
+---
+// 3.9 Tarjetas de servicio [CLIENTE]: fondo #0777E3, radio 16, foto 1:1 arriba, chip, H3, bullets y botón blanco.
+import Photo from '../ui/Photo.astro';
+import Button from '../ui/Button.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import { SERVICIOS, type ServicioSlug } from '../../config/servicios';
+import { fill, waHref } from '../../lib/data';
+import home from '../../content/home.json';
+
+interface Item { servicio: string; titulo: string; chip: string; chipAlt?: string; texto: string; bullets: string[]; cta: string; ctaTipo: string; href?: string; foto: string; fotoAlt: string }
+interface Props { items?: Item[]; heading?: boolean }
+const { items = home.servicios.items as Item[], heading = true } = Astro.props;
+const s = home.servicios;
+---
+<section class="section dot-grid" id="servicios" aria-labelledby="servicios-h">
+  <div class="container">
+    {heading && <SectionHeading id="servicios-h" eyebrow={s.eyebrow} title={s.titulo} intro={s.intro} />}
+    <div class="grid-3 svc-grid" data-reveal-stagger="120">
+      {items.map((i) => {
+        const svc = SERVICIOS[i.servicio as ServicioSlug];
+        const href = i.ctaTipo === 'whatsapp' ? waHref(svc.waMsg) : i.href!;
+        return (
+          <article class="svc" data-servicio={i.servicio} data-ubicacion="card">
+            <div class="svc__img" data-reveal="top"><Photo name={i.foto} alt={i.fotoAlt} ratio="1/1" sizes="(min-width: 981px) 338px, (min-width: 768px) 50vw, 100vw" widths={[338, 520, 676]} /></div>
+            <div class="svc__body">
+              <span class="svc__chip">{fill(i.chip) ?? i.chipAlt}</span>
+              <h3 class="svc__title"><a href={svc.href}>{i.titulo}</a></h3>
+              <p class="svc__text">{i.texto}</p>
+              <ul class="checks svc__list">{i.bullets.map((b) => <li>{b}</li>)}</ul>
+              <Button href={href} variant="white" size="sm" icon={i.ctaTipo === 'whatsapp' ? 'whatsapp' : 'lucide:calendar'} full>{i.cta}</Button>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style>
+  .svc-grid { align-items: stretch; }
+  .svc {
+    display: flex; flex-direction: column; background: var(--c-primary-600); color: #FFF; border-radius: var(--r-card); overflow: hidden;
+    transition: transform .3s, box-shadow .3s;
+  }
+  .svc:hover { transform: translateY(var(--lift)); box-shadow: var(--shadow-card-hover); }
+  .svc__img { overflow: hidden; }
+  .svc__img :global(img), .svc__img :global(.ph) { transition: transform .6s var(--ease-out-soft); }
+  .svc:hover .svc__img :global(img) { transform: scale(1.05); }
+  .svc__body { display: flex; flex-direction: column; gap: 12px; flex: 1; padding: 22px 22px 24px; }
+  .svc__chip { align-self: flex-start; padding: 5px 12px; border-radius: var(--r-pill); background: var(--c-chip-on-blue); font-family: var(--font-heading); font-weight: 500; font-size: .8125rem; line-height: 1.3; color: #FFF; }
+  .svc__title { margin: 0; font-size: var(--fs-h3); color: var(--c-on-primary-soft); }
+  .svc__title a { color: inherit; text-decoration: none; }
+  .svc__title a:hover { text-decoration: underline; }
+  .svc__text { margin: 0; font-size: var(--fs-card); line-height: 1.55; color: #FFF; }
+  .svc__list { font-size: 1rem; color: #FFF; margin-bottom: 8px; }
+  .svc :global(.btn) { margin-top: auto; }
+</style>

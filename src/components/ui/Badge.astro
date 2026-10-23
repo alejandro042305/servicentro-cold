@@ -1,0 +1,25 @@
+---
+// Chip/badge. `live` añade el punto verde pulsante (4.14) — usar solo si la disponibilidad es real.
+interface Props { tone?: 'accent' | 'plain' | 'onBlue' | 'onDark'; live?: boolean; class?: string }
+const { tone = 'accent', live = false, class: cls } = Astro.props;
+---
+<span class:list={['badge', `badge--${tone}`, cls]}>
+  {live && <span class="badge__dot" aria-hidden="true"></span>}
+  <slot />
+</span>
+
+<style is:global>
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: var(--r-pill);
+    font-family: var(--font-heading); font-weight: 500; font-size: .8125rem; line-height: 1.3;
+  }
+  .badge--accent { background: rgba(7, 119, 227, .08); color: var(--c-primary-900); border: .8px solid var(--c-accent); }
+  .badge--plain { background: #FFF; color: var(--c-text); border: 1px solid var(--c-border); }
+  .badge--onBlue { background: var(--c-chip-on-blue); color: #FFF; }
+  .badge--onDark { background: var(--c-accent-tint); color: #FFF; border: .8px solid var(--c-accent); }
+  .badge__dot { position: relative; width: 9px; height: 9px; border-radius: 50%; background: #22C55E; }
+  .badge__dot::after {
+    content: ""; position: absolute; inset: 0; border-radius: 50%; background: #22C55E;
+    animation: pulse-ring 2s ease-out infinite;
+  }
+</style>

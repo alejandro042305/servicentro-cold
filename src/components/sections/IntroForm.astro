@@ -1,0 +1,35 @@
+---
+// Bloque 2b de la Home: H1 SEO #0047BF centrado + divisor + párrafo, y QuickForm en tarjeta blanca.
+import QuickForm from '../forms/QuickForm.astro';
+import home from '../../content/home.json';
+const t = home.intro;
+---
+<section class="section dot-grid intro" aria-labelledby="home-h1">
+  <div class="container">
+    <header class="intro__head">
+      <h1 id="home-h1" class="intro__h1">{t.h1}</h1>
+      <hr class="divider" />
+    </header>
+    <div class="intro__grid">
+      <div class="intro__text">
+        <p class="lead">{t.parrafo}</p>
+        <ul class="checks checks--blue">
+          {t.bullets.map((b) => <li>{b}</li>)}
+        </ul>
+      </div>
+      <div class="intro__card" id="cotizar-rapido" data-ubicacion="hero">
+        <QuickForm id="qf-home" titulo={t.formTitulo} servicioOrigen="home" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .intro__head { text-align: center; }
+  .intro__h1 { color: var(--c-primary-800); font-size: var(--fs-h1); line-height: 1.1; max-width: 900px; margin: 0 auto 18px; }
+  .intro__grid { display: grid; gap: 32px; align-items: center; }
+  @media (min-width: 981px) { .intro__grid { grid-template-columns: 1fr 440px; gap: 56px; } }
+  .intro__text .checks { margin-top: 8px; font-weight: 600; color: var(--c-text); }
+  .intro__card { background: #FFF; border-radius: var(--r-card); padding: 28px 24px; box-shadow: 0 20px 40px -18px rgba(var(--c-primary-shadow), .35); }
+  @media (min-width: 981px) { .intro__card { padding: 32px; } }
+</style>

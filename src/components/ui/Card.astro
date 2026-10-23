@@ -1,0 +1,12 @@
+---
+// Tarjeta blanca genérica (radio 16, hover elevado [CLIENTE]).
+interface Props { class?: string; hover?: boolean; as?: 'div' | 'article' | 'li' }
+const { class: cls, hover = true, as: Tag = 'div' } = Astro.props;
+---
+<Tag class:list={['card', { 'card--hover': hover }, cls]}><slot /></Tag>
+
+<style is:global>
+  .card { background: #FFF; border-radius: var(--r-card); padding: 28px 24px; border: 1px solid #ECECEC; transition: transform .3s, box-shadow .3s; }
+  .card--hover:hover { transform: translateY(var(--lift)); box-shadow: var(--shadow-card-hover); }
+  .card h3 { color: var(--c-primary-900); }
+</style>

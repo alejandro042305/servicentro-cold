@@ -1,0 +1,52 @@
+---
+// Partes comunes de los formularios: campos ocultos de atribución, honeypot, Turnstile,
+// autorización Ley 1581, botón, estado y respaldo por WhatsApp.
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import { TURNSTILE_KEY } from '../../config/tracking';
+import { SITE } from '../../config/site';
+import { has } from '../../lib/data';
+interface Props { id: string; form: 'quick' | 'project'; cta: string; servicioOrigen: string }
+const { id, form, cta, servicioOrigen } = Astro.props;
+const microcopy = has(SITE.tiempoRespuestaWhatsApp)
+  ? `Te respondemos en horario hábil en ${SITE.tiempoRespuestaWhatsApp}. Tus datos solo se usan para contactarte.`
+  : 'Te respondemos en horario hábil. Tus datos solo se usan para contactarte.';
+---
+<input type="hidden" name="form" value={form} />
+<input type="hidden" name="servicio_origen" value={servicioOrigen} />
+<input type="hidden" name="pagina" value="" />
+<input type="hidden" name="form_token" value="" />
+{['gclid', 'gbraid', 'wbraid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].map((k) => <input type="hidden" name={k} value="" />)}
+<div class="hp" aria-hidden="true">
+  <label for={`${id}-hp`}>No llenes este campo</label>
+  <input id={`${id}-hp`} type="text" name="empresa_web" tabindex="-1" autocomplete="off" />
+</div>
+
+<div class="field field--full">
+  <label class="consent-chk">
+    <input type="checkbox" name="autorizacion" value="1" required aria-describedby={`${id}-auth-err`} />
+    <span>Autorizo el tratamiento de mis datos según la <a href="/politica-de-privacidad/" target="_blank">Política de privacidad</a> (Ley 1581 de 2012).</span>
+  </label>
+  <p id={`${id}-auth-err`} class="field__error" aria-live="polite"></p>
+</div>
+
+{TURNSTILE_KEY && <div class="cf-turnstile field--full" data-sitekey={TURNSTILE_KEY} data-language="es" data-size="flexible"></div>}
+
+<div class="field--full form__submit">
+  <Button type="submit" variant="primary" full>{cta}</Button>
+  <p class="microcopy form__micro">{microcopy}</p>
+  <p class="form__status" data-form-status role="status" aria-live="polite"></p>
+  <a class="btn btn--whatsapp btn--full btn--icon" data-form-fallback hidden href="#" target="_blank" rel="noopener" data-ubicacion="contact">
+    <Icon name="whatsapp" size={24} class="btn__icon" /><span class="btn__label">Enviar por WhatsApp</span>
+  </a>
+</div>
+
+<style is:global>
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .consent-chk { display: flex; gap: 10px; align-items: flex-start; font-size: .9375rem; line-height: 1.45; color: var(--c-text); }
+  .consent-chk input { width: 20px; height: 20px; margin-top: 2px; flex: none; accent-color: var(--c-primary-600); }
+  .form__submit { display: grid; gap: 10px; }
+  .form__micro { margin: 0; text-align: center; max-width: none; }
+  .form__status { margin: 0; font-weight: 600; color: var(--c-error); font-size: .9375rem; text-align: center; max-width: none; }
+  .form__status:empty { display: none; }
+</style>

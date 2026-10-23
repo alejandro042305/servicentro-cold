@@ -1,0 +1,75 @@
+---
+// Proyectos: grilla filtrable por tipo. Solo casos reales (sin borradores).
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/sections/PageHero.astro';
+import Photo from '../../components/ui/Photo.astro';
+import Button from '../../components/ui/Button.astro';
+import ContactSection from '../../components/sections/ContactSection.astro';
+import { getCasos } from '../../lib/content';
+import { waHref } from '../../lib/data';
+import p from '../../content/paginas.json';
+const t = p.proyectos;
+const casos = await getCasos();
+---
+<BaseLayout title={t.seo.title} description={t.seo.description}>
+  <PageHero title={t.h1} subtitle={t.sub} photo="proyectos-hero" photoAlt="Montaje de un cuarto frío" crumbs={[{ label: 'Proyectos' }]} />
+  <section class="section dot-grid" aria-label="Listado de proyectos">
+    <div class="container">
+      {casos.length > 0 ? (
+        <>
+          <div class="filters" role="group" aria-label="Filtrar por tipo" data-filters>
+            {t.filtros.map((f, i) => <button type="button" class="filter" aria-pressed={i === 0 ? 'true' : 'false'} data-f={i === 0 ? '' : f}>{f}</button>)}
+          </div>
+          <ul class="grid-3 pj" data-list>
+            {casos.map((c) => (
+              <li class="pj__item" data-tipo={c.tipo}>
+                <a href={`/proyectos/${c.slug}/`} class="pj__card">
+                  <Photo name={c.foto} alt={c.fotoAlt} ratio="3/2" sizes="(min-width: 981px) 338px, 100vw" widths={[338, 676]} />
+                  <span class="pj__body">
+                    <span class="pj__tipo">{c.tipo} · {c.sector}</span>
+                    <span class="pj__t">{c.titulo}</span>
+                    <span class="pj__r">{c.resultado}</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : (
+        <div class="empty" data-ubicacion="card">
+          <p>{t.vacio}</p>
+          <Button href={waHref('Hola, quisiera referencias de proyectos similares al mío. ')} variant="whatsapp" icon="whatsapp">{t.vacioCta}</Button>
+        </div>
+      )}
+    </div>
+  </section>
+  <ContactSection servicioOrigen="proyectos" />
+</BaseLayout>
+
+<script>
+  const box = document.querySelector<HTMLElement>('[data-filters]');
+  if (box) {
+    const items = document.querySelectorAll<HTMLElement>('[data-list] > li');
+    box.addEventListener('click', (e) => {
+      const b = (e.target as HTMLElement).closest<HTMLButtonElement>('button');
+      if (!b) return;
+      box.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      items.forEach((li) => { li.hidden = !!b.dataset.f && li.dataset.tipo !== b.dataset.f; });
+    });
+  }
+</script>
+
+<style>
+  .filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 28px; }
+  .filter { min-height: 44px; padding: 8px 18px; border-radius: var(--r-pill); border: 1px solid var(--c-border); background: #FFF; font-family: var(--font-heading); font-weight: 500; font-size: .9375rem; color: var(--c-text); }
+  .filter[aria-pressed="true"] { background: var(--c-primary-600); border-color: var(--c-primary-600); color: #FFF; }
+  .pj { list-style: none; }
+  .pj__card { display: flex; flex-direction: column; height: 100%; background: #FFF; border-radius: var(--r-card); overflow: hidden; text-decoration: none; color: var(--c-text); transition: transform .3s, box-shadow .3s; }
+  .pj__card:hover { transform: translateY(var(--lift)); box-shadow: var(--shadow-card-hover); color: var(--c-text); }
+  .pj__body { display: grid; gap: 6px; padding: 20px; }
+  .pj__tipo { font-size: .8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--c-text-muted); }
+  .pj__t { font-family: var(--font-heading); font-weight: 600; font-size: 1.25rem; letter-spacing: -.5px; color: var(--c-primary-900); }
+  .pj__r { font-size: 1rem; line-height: 1.5; }
+  .empty { display: grid; justify-items: center; gap: 16px; max-width: 640px; margin-inline: auto; padding: 40px 28px; text-align: center; background: #FFF; border-radius: var(--r-card); }
+  .empty p { margin: 0; font-size: 1.125rem; }
+</style>

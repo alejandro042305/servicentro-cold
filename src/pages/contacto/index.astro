@@ -1,0 +1,16 @@
+---
+// Contacto: canales grandes, horario, formulario con pestañas y mapa bajo demanda.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/sections/PageHero.astro';
+import ContactSection from '../../components/sections/ContactSection.astro';
+import Coverage from '../../components/sections/Coverage.astro';
+import UrgencyBand from '../../components/sections/UrgencyBand.astro';
+import p from '../../content/paginas.json';
+const t = p.contacto;
+---
+<BaseLayout title={t.seo.title} description={t.seo.description}>
+  <PageHero title={t.h1} subtitle={t.sub} crumbs={[{ label: 'Contacto' }]} />
+  <ContactSection id="formulario" servicioOrigen="contacto" />
+  <UrgencyBand />
+  <Coverage />
+</BaseLayout>

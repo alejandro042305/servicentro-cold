@@ -1,0 +1,64 @@
+---
+// Hero de landing (Ads): 2 columnas ≥ 981 px. Izquierda: foto con velo, eyebrow, H1 (intención de la palabra clave,
+// variable con ?kw= desde lista blanca), lead, 3 promesas y botones. Derecha: formulario visible en el primer pantallazo.
+import Photo from '../ui/Photo.astro';
+import Icon from '../ui/Icon.astro';
+import Button from '../ui/Button.astro';
+import { waHref, telHref, fill, txt, cumple } from '../../lib/data';
+interface Promesa { texto: string; alt?: string | null; requiere?: string }
+interface Props { eyebrow: string; h1: string; kw: Record<string, string>; lead: string; promesas: Promesa[]; foto: string; fotoAlt: string; waMsg: string; urgent?: boolean }
+const { eyebrow, h1, kw, lead, promesas, foto, fotoAlt, waMsg, urgent = false } = Astro.props;
+const proms = promesas.filter((p) => cumple(p.requiere)).map((p) => txt(p)).filter(Boolean);
+---
+<section class="lph on-dark" data-ubicacion="hero">
+  <div class="lph__bg"><Photo name={foto} alt={fotoAlt} ratio="16/9" eager sizes="100vw" widths={[640, 1280, 1920]} /></div>
+  <div class="container container--wide lph__grid">
+    <div class="lph__text">
+      <p class="lph__eyebrow">{fill(eyebrow) ?? eyebrow.replace(/\s*\{[^}]+\}/g, '')}</p>
+      <h1 class="lph__h1" data-kw={JSON.stringify(kw)}>{h1}</h1>
+      <p class="lph__lead">{lead}</p>
+      <ul class="lph__proms">{proms.map((p) => <li><Icon name="lucide:circle-check" size={20} />{p}</li>)}</ul>
+      <div class="lph__ctas">
+        {urgent
+          ? <Button href={telHref} variant="urgent" icon="lucide:phone">Llamar ahora</Button>
+          : <Button href={telHref} variant="outline-light" icon="lucide:phone">Llamar</Button>}
+        <Button href={waHref(waMsg)} variant="whatsapp" icon="whatsapp" bob>WhatsApp</Button>
+      </div>
+    </div>
+    <div class="lph__form" id="formulario"><slot /></div>
+  </div>
+</section>
+
+<script>
+  // H1 dinámico: solo claves de la lista blanca del contenido; nunca se inserta texto libre de la URL.
+  const h = document.querySelector<HTMLElement>('[data-kw]');
+  const k = new URLSearchParams(location.search).get('kw');
+  if (h && k) {
+    const map: Record<string, string> = JSON.parse(h.dataset.kw || '{}');
+    const key = k.toLowerCase().replace(/[^a-z0-9-]/g, '');
+    if (Object.prototype.hasOwnProperty.call(map, key)) h.textContent = map[key];
+  }
+</script>
+
+<style>
+  .lph { position: relative; isolation: isolate; overflow: hidden; padding-block: 32px 40px; background: var(--c-primary-900); color: #FFF; }
+  @media (min-width: 981px) { .lph { padding-block: 56px; } }
+  .lph__bg { position: absolute; inset: 0; z-index: -1; }
+  .lph__bg :global(.photo) { width: 100%; height: 100%; aspect-ratio: auto !important; }
+  .lph__bg :global(.ph) { display: none; }
+  .lph__bg::after { content: ""; position: absolute; inset: 0; background: var(--overlay-blue); }
+  .lph__grid { display: grid; gap: 28px; align-items: center; }
+  @media (min-width: 981px) { .lph__grid { grid-template-columns: 1fr 460px; gap: 56px; } }
+  .lph__eyebrow {
+    display: inline-block; margin: 0 0 14px; padding: 6px 16px; border: 1.5px solid rgba(255, 255, 255, .6); border-radius: var(--r-pill);
+    font-family: var(--font-heading); font-weight: 600; font-size: var(--fs-eyebrow); letter-spacing: 3px; text-transform: uppercase;
+  }
+  .lph__h1 { color: var(--c-on-primary-soft); font-size: clamp(1.875rem, 1.6rem + 1.3vw, 2.75rem); line-height: 1.12; margin-bottom: 14px; }
+  .lph__lead { font-size: 1.1875rem; color: #FFF; }
+  .lph__proms { list-style: none; display: grid; gap: 8px; margin-bottom: 22px; font-weight: 600; }
+  .lph__proms li { display: flex; gap: 10px; align-items: center; }
+  .lph__ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+  @media (max-width: 767.98px) { .lph__ctas { display: grid; grid-template-columns: 1fr 1fr; } .lph__ctas :global(.btn) { padding-inline: 12px 12px; padding-left: 48px; font-size: 1rem; } .lph__ctas :global(.btn__icon) { left: 14px; } }
+  .lph__form { background: #FFF; color: var(--c-text); border-radius: var(--r-card); padding: 24px 20px; box-shadow: 0 24px 48px -24px rgba(0, 0, 0, .45); }
+  @media (min-width: 981px) { .lph__form { padding: 32px; } }
+</style>

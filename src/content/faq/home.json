@@ -1,0 +1,12 @@
+[
+  { "q": "¿Cada cuánto se le hace mantenimiento a un aire acondicionado?", "a": "En hogares y oficinas, como referencia, cada 6 meses. En comercios con uso intenso, cada 3 meses. Cuartos fríos y chillers requieren revisiones mensuales o trimestrales según la carga de trabajo." },
+  { "q": "¿Cuántos BTU necesito para mi espacio?", "a": "Depende del área, la altura, el sol que recibe el espacio, las personas y los equipos que generan calor. Usa nuestra calculadora en la página de instalación para una estimación y confírmala con una visita técnica." },
+  { "q": "¿Atienden cualquier marca?", "a": "Sí. Reparamos y mantenemos equipos de las marcas más usadas en Colombia. Si tu equipo es poco común, te lo decimos desde la primera llamada." },
+  { "q": "¿Cuánto cuesta la visita de diagnóstico?", "a": "Te informamos el valor antes de agendar, para que no haya sorpresas. Te explicamos la falla con fotos y te cotizamos antes de reparar. Si no apruebas la reparación, solo pagas la visita." },
+  { "q": "¿Qué garantía dan?", "a": "Damos garantía escrita de {garantiaManoObra} sobre la mano de obra. Los equipos nuevos tienen además la garantía del fabricante.", "requiere": "garantiaManoObra" },
+  { "q": "¿En cuánto tiempo llegan?", "a": "En urgencias, la visita es {tiempoVisitaUrgencia}. Para mantenimientos e instalaciones agendamos el día y la hora que te sirvan.", "requiere": "tiempoVisitaUrgencia" },
+  { "q": "¿Diseñan cuartos fríos en un espacio que ya existe?", "a": "Sí. Visitamos el espacio, medimos y calculamos la carga térmica. Con eso definimos paneles, puerta y equipos para adaptarlo a tu producto." },
+  { "q": "¿Chiller enfriado por aire o por agua?", "a": "El enfriado por aire es más simple de instalar y mantener. El enfriado por agua es más eficiente en capacidades grandes, pero necesita torre de enfriamiento. Lo definimos con el cálculo de tu proceso." },
+  { "q": "¿Hacen contratos de mantenimiento para empresas?", "a": "Sí. Ofrecemos planes mensuales, trimestrales o semestrales, con visitas programadas e informe escrito de cada visita." },
+  { "q": "¿Emiten factura electrónica?", "a": "Sí. Emitimos factura electrónica a nombre de {razonSocial}, NIT {nit}.", "requiere": ["razonSocial", "nit"] }
+]

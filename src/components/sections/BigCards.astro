@@ -1,0 +1,48 @@
+---
+// 3.11 Tarjetas grandes con foto [CLIENTE] dentro de la banda azul #0777DD con parallax (4.12).
+import Photo from '../ui/Photo.astro';
+import Button from '../ui/Button.astro';
+import home from '../../content/home.json';
+interface Card { titulo: string; texto: string; cta: string; href: string; foto: string; fotoAlt: string }
+interface Props { cards?: Card[]; bg?: string }
+const { cards = home.bigCards as Card[] } = Astro.props;
+---
+<section class="section section--blue bigband on-blue" aria-label="Instalación y proyectos">
+  <div class="bigband__tex" aria-hidden="true"></div>
+  <div class="container grid-2 bigband__grid" data-reveal-stagger="120">
+    {cards.map((c) => (
+      <article class="big" data-reveal="up">
+        <div class="big__bg"><Photo name={c.foto} alt={c.fotoAlt} ratio="4/3" sizes="(min-width: 981px) 524px, 100vw" widths={[524, 800, 1048]} /></div>
+        <div class="big__in">
+          <h3 class="big__title">{c.titulo}</h3>
+          <p class="big__text">{c.texto}</p>
+          <Button href={c.href} variant="white" size="sm">{c.cta}</Button>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .bigband { overflow: hidden; }
+  .bigband__tex { position: absolute; inset: 0; background-image: radial-gradient(rgba(255, 255, 255, .08) 1.4px, transparent 1.4px); background-size: 20px 20px; }
+  @supports (background-attachment: fixed) {
+    @media (min-width: 1024px) and (hover: hover) and (prefers-reduced-motion: no-preference) {
+      .bigband__tex { background-attachment: fixed; }
+    }
+  }
+  .bigband__grid { position: relative; }
+  .big {
+    position: relative; isolation: isolate; overflow: hidden; display: flex; align-items: flex-end; min-height: 340px;
+    border-radius: var(--r-card-lg); background: var(--c-primary-900); transition: transform .3s, box-shadow .3s;
+  }
+  .big:hover { transform: translateY(var(--lift)); box-shadow: 0 14px 20px -6px rgba(0, 0, 0, .3); }
+  .big__bg { position: absolute; inset: 0; z-index: -1; }
+  .big__bg :global(.photo) { width: 100%; height: 100%; aspect-ratio: auto !important; }
+  .big__bg :global(.ph) { display: none; }
+  .big__bg::after { content: ""; position: absolute; inset: 0; background: rgba(0, 71, 185, .75); }
+  .big__in { padding: 40px 28px; }
+  @media (min-width: 981px) { .big__in { padding: 72px 48px; } }
+  .big__title { font-size: var(--fs-h3-lg); color: var(--c-on-primary-soft); }
+  .big__text { color: #FFF; font-size: 1.0625rem; }
+</style>

@@ -1,0 +1,8 @@
+[
+  { "q": "¿Qué diferencia hay entre conservación y congelación?", "a": "La conservación mantiene el producto entre 0 °C y 8 °C (frutas, lácteos, carnes frescas). La congelación trabaja entre −25 °C y −18 °C (cárnicos, helados, congelados)." },
+  { "q": "¿Qué espesor de panel necesito?", "a": "Depende de la temperatura interior y del ambiente exterior. Conservación suele usar paneles más delgados que congelación. Lo definimos con el cálculo de carga térmica." },
+  { "q": "¿Pueden instalar el cuarto frío dentro de una bodega existente?", "a": "Sí. Es lo más común. Medimos el espacio, revisamos piso, ventilación y punto eléctrico, y diseñamos sobre eso." },
+  { "q": "¿El cuarto frío queda con registro de temperatura?", "a": "Podemos incluir controladores con registro continuo y alarma remota. Es útil para auditorías sanitarias y para reaccionar antes de perder producto." },
+  { "q": "¿Cuánto tarda el proyecto?", "a": "Depende del tamaño y de la disponibilidad de equipos. Te entregamos un cronograma con la propuesta técnica." },
+  { "q": "¿Hacen mantenimiento a cuartos fríos que no instalaron ustedes?", "a": "Sí. Revisamos y mantenemos cuartos fríos de cualquier marca o instalador." }
+]

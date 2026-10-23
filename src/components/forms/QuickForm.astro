@@ -1,0 +1,36 @@
+---
+// QuickForm: Nombre · Celular (+57) · Servicio + autorización. `minimal` = 2 campos (urgencias).
+import FormField from './FormField.astro';
+import FormShared from './FormShared.astro';
+import { OPCIONES_SERVICIO } from '../../config/servicios';
+import { SITE } from '../../config/site';
+interface Props {
+  id?: string;
+  servicio?: string;
+  servicioOrigen?: string;
+  titulo?: string;
+  minimal?: boolean;
+  cta?: string;
+}
+const { id = 'qf', servicio, servicioOrigen = 'general', titulo, minimal = false, cta = 'Quiero que me contacten' } = Astro.props;
+---
+<form class="form" data-form="quick" data-wa={SITE.whatsapp} data-hide-mab novalidate action="/api/contacto.php" method="post" aria-labelledby={titulo ? `${id}-title` : undefined} aria-label={titulo ? undefined : 'Formulario de contacto'}>
+  {titulo && <h3 id={`${id}-title`} class="form__title">{titulo}</h3>}
+  <div class="form__grid">
+    <FormField label="Nombre" name="nombre" id={`${id}-nombre`} required autocomplete="name" maxlength={80} full />
+    <FormField label="Celular" name="telefono" id={`${id}-tel`} type="tel" required autocomplete="tel-national" inputmode="tel" prefix="+57" placeholder="300 000 0000" maxlength={14} full />
+    {minimal ? (
+      <input type="hidden" name="servicio" value={servicio ?? 'Reparación urgente'} />
+    ) : (
+      <FormField label="Servicio" name="servicio" id={`${id}-serv`} type="select" required options={OPCIONES_SERVICIO} selected={servicio} full />
+    )}
+    <FormShared id={id} form="quick" cta={cta} servicioOrigen={servicioOrigen} />
+  </div>
+</form>
+
+<style is:global>
+  .form { position: relative; }
+  .form__title { font-size: 1.375rem; color: var(--c-primary-900); margin-bottom: 18px; }
+  .form__grid { display: grid; gap: 16px; }
+  @media (min-width: 640px) { .form__grid--2 { grid-template-columns: 1fr 1fr; } .form__grid--2 .field--full { grid-column: 1 / -1; } }
+</style>

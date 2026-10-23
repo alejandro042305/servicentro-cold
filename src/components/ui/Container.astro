@@ -1,0 +1,5 @@
+---
+interface Props { wide?: boolean; class?: string; as?: 'div' | 'section' | 'header' }
+const { wide = false, class: cls, as: Tag = 'div' } = Astro.props;
+---
+<Tag class:list={['container', { 'container--wide': wide }, cls]}><slot /></Tag>

@@ -1,0 +1,39 @@
+---
+// Eyebrow en píldora [BTO] + H2 + divisor punteado de 100 px [CLIENTE] + intro.
+interface Props {
+  eyebrow?: string;
+  title: string;
+  intro?: string;
+  align?: 'center' | 'left';
+  tone?: 'light' | 'dark';
+  level?: 'h1' | 'h2';
+  id?: string;
+}
+const { eyebrow, title, intro, align = 'center', tone = 'light', level = 'h2', id } = Astro.props;
+const Tag = level;
+---
+<header class:list={['sh', `sh--${align}`, `sh--${tone}`]} data-reveal="up">
+  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+  <Tag id={id} class="sh__title">{title}</Tag>
+  <hr class:list={['divider', { 'divider--left': align === 'left', 'divider--white': tone === 'dark' }]} />
+  {intro && <p class="sh__intro">{intro}</p>}
+  <slot />
+</header>
+
+<style is:global>
+  .sh { margin-bottom: 40px; }
+  .sh--center { text-align: center; }
+  .sh--center .sh__intro { margin-inline: auto; }
+  .sh__title { margin-bottom: 18px; }
+  .sh--dark .sh__title { color: var(--c-on-primary-soft); }
+  .sh__intro { font-size: var(--fs-body); margin-bottom: 0; }
+  .sh--dark .sh__intro { color: #FFF; }
+  .eyebrow {
+    display: inline-block; margin: 0 0 16px; padding: 6px 16px;
+    font-family: var(--font-heading); font-weight: 600; font-size: var(--fs-eyebrow);
+    line-height: 1.2; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--c-primary-900); background: #FFF;
+    border: 1.5px solid var(--c-accent); border-radius: var(--r-pill);
+  }
+  .sh--dark .eyebrow { color: #FFF; background: transparent; border-color: rgba(255, 255, 255, .6); }
+</style>

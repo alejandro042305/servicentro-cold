@@ -1,0 +1,49 @@
+---
+// 3.8 TrustBar: 4 tarjetas de contador [BTO] con datos reales + marquesina de marcas.
+// Sin datos ni marcas, la sección no se renderiza.
+import Counter from '../ui/Counter.astro';
+import LogoMarquee from './LogoMarquee.astro';
+import { SITE } from '../../config/site';
+import { has } from '../../lib/data';
+interface Props { compact?: boolean }
+const { compact = false } = Astro.props;
+const garantia = has(SITE.garantiaManoObra) ? SITE.garantiaManoObra : '';
+const tiles = [
+  has(SITE.ratingGoogle) && { value: SITE.ratingGoogle, label: has(SITE.numResenasGoogle) ? `en Google (${SITE.numResenasGoogle} reseñas)` : 'en Google', decimals: 1, suffix: ' ★' },
+  has(SITE.anosExperiencia) && { value: SITE.anosExperiencia, label: 'años de experiencia' },
+  has(SITE.proyectosRealizados) && { value: SITE.proyectosRealizados, label: 'proyectos realizados', prefix: '+' },
+].filter(Boolean) as { value: number; label: string; decimals?: number; prefix?: string; suffix?: string }[];
+const show = tiles.length > 0 || garantia || SITE.marcas.length > 0;
+---
+{show && (
+  <section class:list={['trust', { 'trust--compact': compact }]} aria-label="Respaldo">
+    <div class="container">
+      {(tiles.length > 0 || garantia) && (
+        <div class="trust__grid" data-reveal-stagger="80">
+          {tiles.map((t) => <div data-reveal="up"><Counter {...t} /></div>)}
+          {garantia && (
+            <div data-reveal="up" class="counter">
+              <p class="counter__num trust__text">{garantia}</p>
+              <p class="counter__label">de garantía escrita</p>
+            </div>
+          )}
+        </div>
+      )}
+      {SITE.marcas.length > 0 && (
+        <div class="trust__brands">
+          <p class="trust__label">Marcas que atendemos</p>
+          <LogoMarquee items={SITE.marcas} label="Marcas que atendemos" />
+        </div>
+      )}
+    </div>
+  </section>
+)}
+
+<style>
+  .trust { padding-block: 32px; background: #FFF; }
+  .trust__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  @media (min-width: 981px) { .trust__grid { grid-template-columns: repeat(4, 1fr); } }
+  .trust__text { font-size: clamp(1.75rem, 1.5rem + 1vw, 2.5rem); }
+  .trust__brands { margin-top: 24px; }
+  .trust__label { margin: 0 auto 4px; text-align: center; font-family: var(--font-heading); font-weight: 500; font-size: .875rem; color: var(--c-text-muted); }
+</style>

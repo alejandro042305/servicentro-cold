@@ -1,0 +1,6 @@
+---
+// Sección clara con textura dot-grid [CLIENTE].
+interface Props { id?: string; class?: string; labelledby?: string }
+const { id, class: cls, labelledby } = Astro.props;
+---
+<section id={id} class:list={['section', 'dot-grid', cls]} aria-labelledby={labelledby}><slot /></section>

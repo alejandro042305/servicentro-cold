@@ -1,0 +1,20 @@
+---
+// Tabla comparativa accesible (primera columna = encabezado de fila).
+import SectionHeading from '../ui/SectionHeading.astro';
+interface Props { id: string; eyebrow?: string; titulo: string; intro?: string; columnas: string[]; filas: string[][]; tone?: 'white' | 'soft' }
+const { id, eyebrow, titulo, intro, columnas, filas, tone = 'white' } = Astro.props;
+---
+<section class:list={['section', { 'dot-grid': tone === 'soft' }]} id={id} aria-labelledby={`${id}-h`}>
+  <div class="container">
+    <SectionHeading id={`${id}-h`} eyebrow={eyebrow} title={titulo} intro={intro} />
+    <div class="table-wrap" data-reveal="up" tabindex="0" role="region" aria-labelledby={`${id}-h`}>
+      <table>
+        <thead><tr>{columnas.map((c, i) => <th scope="col">{c || <span class="sr-only">Aspecto</span>}</th>)}</tr></thead>
+        <tbody>
+          {filas.map((f) => <tr><th scope="row">{f[0]}</th>{f.slice(1).map((c) => <td>{c}</td>)}</tr>)}
+        </tbody>
+      </table>
+    </div>
+    <slot />
+  </div>
+</section>

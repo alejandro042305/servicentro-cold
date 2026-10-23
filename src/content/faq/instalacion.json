@@ -1,0 +1,8 @@
+[
+  { "q": "¿La calculadora de BTU reemplaza la visita técnica?", "a": "No. Es una estimación orientativa. En la visita revisamos ventanas, aislamiento, orientación y uso real del espacio para confirmar la capacidad." },
+  { "q": "¿Qué es un equipo inverter y por qué conviene?", "a": "Es un equipo que ajusta su velocidad según lo que necesita el espacio, en vez de prenderse y apagarse. Así gasta menos energía y mantiene la temperatura más estable." },
+  { "q": "¿Ustedes venden el equipo o solo lo instalan?", "a": "Podemos suministrarlo o instalar uno que ya tengas. En ambos casos revisamos que la capacidad sea la correcta para tu espacio." },
+  { "q": "¿Cuánto tarda una instalación?", "a": "Una instalación estándar de mini split suele hacerse en un día. Equipos por ductos o varios equipos requieren más tiempo y te damos el cronograma con la cotización." },
+  { "q": "¿Qué garantía tiene la instalación?", "a": "La mano de obra tiene garantía escrita de {garantiaManoObra}. El equipo tiene la garantía del fabricante.", "requiere": "garantiaManoObra" },
+  { "q": "¿Necesito obra civil o permisos?", "a": "Depende del sitio. En conjuntos y edificios a veces se requiere autorización de la administración para la unidad exterior. Te lo indicamos en la visita." }
+]

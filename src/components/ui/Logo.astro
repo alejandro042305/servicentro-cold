@@ -1,0 +1,36 @@
+---
+// Logo del cliente desde src/assets/logo/logo.(svg|png) y logo-blanco.(svg|png).
+// Mientras no llegue el archivo real: logotipo tipográfico provisional (ver PENDIENTES.md).
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { SITE } from '../../config/site';
+import Icon from './Icon.astro';
+
+interface Props { variant?: 'color' | 'blanco'; width?: number; height?: number; eager?: boolean }
+const { variant = 'color', width = 220, height = 88, eager = false } = Astro.props;
+const files = import.meta.glob<{ default: ImageMetadata }>('/src/assets/logo/*.{svg,png,webp}', { eager: true });
+const want = variant === 'blanco' ? 'logo-blanco' : 'logo';
+const found = Object.entries(files).find(([p]) => p.split('/').pop()!.replace(/\.\w+$/, '') === want)?.[1].default;
+---
+{found ? (
+  <Image src={found} alt={SITE.nombre} width={width} height={height} loading={eager ? 'eager' : 'lazy'} class="logo-img" style={`width:${width}px;height:auto;max-height:${height}px;object-fit:contain`} />
+) : (
+  <span class:list={['wordmark', `wordmark--${variant}`]} style={`--h:${height}px`}>
+    <span class="wordmark__mark" aria-hidden="true"><Icon name="lucide:snowflake" size={Math.round(height * 0.42)} /></span>
+    <span class="wordmark__text">{SITE.nombre}</span>
+  </span>
+)}
+
+<style is:global>
+  .wordmark { display: inline-flex; align-items: center; gap: calc(var(--h) * .12); height: var(--h); }
+  .wordmark__mark {
+    display: grid; place-items: center; width: calc(var(--h) * .62); aspect-ratio: 1; border-radius: 28%;
+    background: var(--c-primary-600); color: #FFF; transition: inherit;
+  }
+  .wordmark__text {
+    font-family: var(--font-heading); font-weight: 600; letter-spacing: -1px; line-height: 1;
+    font-size: calc(var(--h) * .36); color: var(--c-primary-900);
+  }
+  .wordmark--blanco .wordmark__mark { background: #FFF; color: var(--c-primary-900); }
+  .wordmark--blanco .wordmark__text { color: #FFF; }
+</style>

@@ -1,0 +1,52 @@
+---
+// 3.14 LogoMarquee [BTO]: lista duplicada, translateX(-50%), 50 s lineal, fundidos blancos, pausa al hover.
+// `items`: nombres de marca (texto) o { nombre, logo } con archivo en src/assets/img/logos/.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+interface Props { items: (string | { nombre: string; logo: string })[]; duration?: number; label: string }
+const { items, duration = 50, label } = Astro.props;
+const files = import.meta.glob<{ default: ImageMetadata }>('/src/assets/img/logos/*.{svg,png,webp}', { eager: true });
+const logoFor = (name: string) => {
+  const key = name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  return Object.entries(files).find(([p]) => p.split('/').pop()!.replace(/\.\w+$/, '').toLowerCase() === key)?.[1].default;
+};
+const list = items.map((i) => (typeof i === 'string' ? { nombre: i, src: logoFor(i) } : { nombre: i.nombre, src: logoFor(i.logo || i.nombre) }));
+---
+{list.length > 0 && (
+  <div class="mq" style={`--mq-dur:${duration}s`} role="region" aria-label={label}>
+    <div class="mq__track">
+      {[0, 1].map((copy) => (
+        <ul class="mq__list" aria-hidden={copy === 1 ? 'true' : undefined}>
+          {list.map((l) => (
+            <li class="mq__item">
+              {l.src
+                ? <Image src={l.src} alt={copy === 0 ? l.nombre : ''} height={56} width={Math.round((l.src.width / l.src.height) * 56)} class="mq__img" />
+                : <span class="mq__name">{l.nombre}</span>}
+            </li>
+          ))}
+        </ul>
+      ))}
+    </div>
+  </div>
+)}
+
+<style>
+  .mq { position: relative; overflow: hidden; padding-block: 16px; }
+  .mq::before, .mq::after { content: ""; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 1; pointer-events: none; }
+  .mq::before { left: 0; background: var(--fade-marquee-l); }
+  .mq::after { right: 0; background: var(--fade-marquee-r); }
+  .mq__track { display: flex; width: max-content; animation: marquee var(--mq-dur) linear infinite; }
+  .mq:hover .mq__track { animation-play-state: paused; }
+  .mq__list { display: flex; gap: 30px; padding-right: 30px; list-style: none; }
+  .mq__item { display: grid; place-items: center; height: 56px; min-width: 140px; }
+  @media (max-width: 767.98px) { .mq__item { height: 40px; min-width: 120px; } }
+  .mq__img { height: 100%; width: auto; opacity: .75; filter: grayscale(1); transition: opacity .3s, filter .3s; }
+  .mq__item:hover .mq__img { opacity: 1; filter: none; }
+  .mq__name { font-family: var(--font-heading); font-weight: 600; font-size: 1.25rem; letter-spacing: -.5px; color: #555; white-space: nowrap; transition: color .3s; }
+  .mq__item:hover .mq__name { color: var(--c-primary-900); }
+  @media (prefers-reduced-motion: reduce) {
+    .mq { overflow-x: auto; }
+    .mq__track { animation: none; }
+    .mq__list[aria-hidden] { display: none; }
+  }
+</style>

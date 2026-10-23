@@ -1,0 +1,35 @@
+---
+// Lista de características en tarjetas blancas con icono (o numeradas si no hay icono).
+import Icon from '../ui/Icon.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+interface Item { icon?: string; titulo: string; texto: string }
+interface Props { id: string; eyebrow?: string; titulo: string; intro?: string; items: Item[]; cols?: 2 | 3 | 4; tone?: 'white' | 'soft' }
+const { id, eyebrow, titulo, intro, items, cols = 4, tone = 'white' } = Astro.props;
+---
+<section class:list={['section', { 'dot-grid': tone === 'soft' }]} id={id} aria-labelledby={`${id}-h`}>
+  <div class="container">
+    <SectionHeading id={`${id}-h`} eyebrow={eyebrow} title={titulo} intro={intro} />
+    <ul class:list={['fl', `fl--${cols}`]} data-reveal-stagger="70">
+      {items.map((i, n) => (
+        <li class="fl__item" data-reveal="up">
+          <span class="fl__icon">{i.icon ? <Icon name={i.icon} size={26} /> : <span class="fl__n">{n + 1}</span>}</span>
+          <h3 class="fl__t">{i.titulo}</h3>
+          <p class="fl__d">{i.texto}</p>
+        </li>
+      ))}
+    </ul>
+    <slot />
+  </div>
+</section>
+
+<style>
+  .fl { display: grid; gap: 16px; list-style: none; }
+  @media (min-width: 640px) { .fl { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 981px) { .fl--3 { grid-template-columns: repeat(3, 1fr); } .fl--4 { grid-template-columns: repeat(4, 1fr); } }
+  .fl__item { display: grid; align-content: start; gap: 8px; padding: 24px 22px; background: #FFF; border: 1px solid #E8E8E8; border-radius: var(--r-card); transition: transform .3s, box-shadow .3s; }
+  .fl__item:hover { transform: translateY(var(--lift)); box-shadow: var(--shadow-card-hover); }
+  .fl__icon { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--c-primary-600); color: #FFF; margin-bottom: 4px; }
+  .fl__n { font-family: var(--font-heading); font-weight: 600; font-size: 1.25rem; }
+  .fl__t { margin: 0; font-size: 1.125rem; letter-spacing: -.5px; color: var(--c-heading); }
+  .fl__d { margin: 0; font-size: 1rem; line-height: 1.55; }
+</style>

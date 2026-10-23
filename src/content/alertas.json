@@ -1,0 +1,28 @@
+{
+  "eyebrow": "Señales de alerta",
+  "titulo": "¿Tu equipo está haciendo esto?",
+  "intro": "Son avisos tempranos. Atenderlos hoy cuesta menos que una reparación mayor mañana.",
+  "grupos": [
+    {
+      "nombre": "Aire acondicionado",
+      "items": [
+        { "icon": "lucide:thermometer", "titulo": "No enfría", "texto": "Puede ser un filtro tapado o una fuga de refrigerante." },
+        { "icon": "lucide:droplets", "titulo": "Gotea agua", "texto": "Suele ser un drenaje obstruido. Si sigue, daña paredes y techos." },
+        { "icon": "lucide:volume-2", "titulo": "Hace ruido", "texto": "Un ruido nuevo avisa de piezas flojas o un motor que se desgasta." },
+        { "icon": "lucide:wind", "titulo": "Huele mal", "texto": "Hongos o suciedad en el serpentín. Afecta el aire que respiras." },
+        { "icon": "lucide:zap", "titulo": "Sube el recibo de luz", "texto": "Un equipo sucio o con poca carga trabaja más y consume más." },
+        { "icon": "lucide:power", "titulo": "Se apaga solo", "texto": "Puede ser un sensor, la tarjeta o un problema eléctrico." }
+      ]
+    },
+    {
+      "nombre": "Cuartos fríos",
+      "items": [
+        { "icon": "lucide:thermometer-snowflake", "titulo": "No baja de temperatura", "texto": "Tu producto está en riesgo. Revisa que la puerta cierre y llámanos." },
+        { "icon": "lucide:snowflake", "titulo": "Hielo en el evaporador", "texto": "El deshielo no funciona bien y el equipo pierde capacidad." },
+        { "icon": "lucide:door-open", "titulo": "La puerta no sella", "texto": "Entra calor y humedad: más consumo y más hielo." }
+      ]
+    }
+  ],
+  "cierre": "Cada uno tiene solución si se atiende a tiempo.",
+  "cta": "Contar mi caso por WhatsApp"
+}

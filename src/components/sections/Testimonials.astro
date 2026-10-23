@@ -1,0 +1,78 @@
+---
+// 3.16 Testimonials [CLIENTE]: grilla 3+2 en escritorio, carrusel con scroll-snap en móvil (autoplay 5 s).
+// Sin testimonios reales en src/content/testimonios.json la sección no se renderiza.
+import Stars from '../ui/Stars.astro';
+import Icon from '../ui/Icon.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import { SITE } from '../../config/site';
+import { has } from '../../lib/data';
+import home from '../../content/home.json';
+import data from '../../content/testimonios.json';
+export interface Testimonio { nombre: string; sector: string; barrio?: string; texto: string; estrellas?: number }
+interface Props { items?: Testimonio[]; max?: number }
+const { items = data as Testimonio[], max = 5 } = Astro.props;
+const list = items.slice(0, max);
+const ini = (n: string) => n.split(' ').map((p) => p[0]).slice(0, 2).join('').toUpperCase();
+---
+{list.length > 0 && (
+  <section class="section dot-grid" aria-labelledby="testi-h">
+    <div class="container">
+      <SectionHeading id="testi-h" eyebrow={home.testimonios.eyebrow} title={home.testimonios.titulo} />
+      <div class="ts" data-carousel>
+        <ul class="ts__track" data-track-el tabindex="0" aria-label="Reseñas de clientes">
+          {list.map((t) => (
+            <li class="tcard">
+              <Stars value={t.estrellas ?? 5} />
+              <blockquote class="tcard__q"><p>{t.texto}</p></blockquote>
+              <div class="tcard__who">
+                <span class="tcard__av" aria-hidden="true">{ini(t.nombre)}</span>
+                <div>
+                  <p class="tcard__name">{t.nombre}</p>
+                  <p class="tcard__meta">{t.sector}{t.barrio && ` · ${t.barrio}`}</p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <div class="ts__dots">
+          {list.map((_, i) => <button type="button" data-dot aria-label={`Reseña ${i + 1}`} aria-current={i === 0 ? 'true' : 'false'}></button>)}
+        </div>
+      </div>
+      {has(SITE.urlResenasGoogle) && (
+        <p class="ts__more"><a href={SITE.urlResenasGoogle} target="_blank" rel="noopener">Ver todas las reseñas en Google <Icon name="lucide:arrow-right" size={16} /></a></p>
+      )}
+    </div>
+  </section>
+)}
+
+<script>
+  import { initCarousel } from '../../scripts/carousel';
+  document.querySelectorAll<HTMLElement>('.ts[data-carousel]').forEach((el) => initCarousel(el, '(max-width: 767.98px)'));
+</script>
+
+<style>
+  .ts__track { list-style: none; display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 4px; }
+  .ts__track::-webkit-scrollbar { display: none; }
+  .tcard {
+    flex: 0 0 100%; scroll-snap-align: start; display: grid; align-content: start; gap: 14px;
+    background: #FFF; border: .8px solid var(--c-neutral-300); border-radius: var(--r-card-sm); padding: 32px;
+  }
+  @media (min-width: 768px) {
+    .ts__track { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--gap-grid); overflow: visible; }
+    .tcard { grid-column: span 2; }
+    .tcard:nth-child(4):nth-last-child(2) { grid-column: 2 / span 2; }
+  }
+  .tcard__q { margin: 0; }
+  .tcard__q p { margin: 0; font-size: 1.0625rem; line-height: 1.6; }
+  .tcard__who { display: flex; gap: 12px; align-items: center; }
+  .tcard__av { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--c-primary-600); color: #FFF; font-family: var(--font-heading); font-weight: 600; }
+  .tcard__name { margin: 0; font-family: var(--font-heading); font-weight: 600; font-size: 1.0625rem; color: #000; }
+  .tcard__meta { margin: 0; font-size: var(--fs-small); color: var(--c-text-muted); }
+  .ts__dots { display: flex; justify-content: center; gap: 4px; margin-top: 12px; }
+  .ts__dots button { width: 24px; height: 24px; border: 0; background: none; padding: 0; display: grid; place-items: center; }
+  .ts__dots button::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: #C4C4C4; }
+  .ts__dots button[aria-current="true"]::before { background: var(--c-primary-600); }
+  @media (min-width: 768px) { .ts__dots { display: none; } }
+  .ts__more { text-align: center; margin: 28px auto 0; font-family: var(--font-heading); font-weight: 600; }
+  .ts__more a { display: inline-flex; align-items: center; gap: 6px; }
+</style>

@@ -1,0 +1,56 @@
+---
+// AlertSigns: aversión a la pérdida. Síntomas en tarjetas pequeñas con icono + cierre con WhatsApp.
+import Icon from '../ui/Icon.astro';
+import Button from '../ui/Button.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import { waHref } from '../../lib/data';
+import { SERVICIOS } from '../../config/servicios';
+import alertas from '../../content/alertas.json';
+interface Props { grupos?: string[]; tone?: 'white' | 'soft' }
+const { grupos, tone = 'white' } = Astro.props;
+const list = grupos ? alertas.grupos.filter((g) => grupos.includes(g.nombre)) : alertas.grupos;
+---
+<section class:list={['section', { 'dot-grid': tone === 'soft' }]} aria-labelledby="alertas-h" data-ubicacion="band" data-servicio="reparacion-mantenimiento">
+  <div class="container">
+    <SectionHeading id="alertas-h" eyebrow={alertas.eyebrow} title={alertas.titulo} intro={alertas.intro} />
+    {list.map((g) => (
+      <div class="al__group">
+        {list.length > 1 && <h3 class="al__gname">{g.nombre}</h3>}
+        <ul class="al__grid" data-reveal-stagger="60">
+          {g.items.map((i) => (
+            <li class="al__item" data-reveal="up">
+              <span class="al__icon"><Icon name={i.icon} size={26} /></span>
+              <div>
+                <p class="al__t">{i.titulo}</p>
+                <p class="al__d">{i.texto}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+    <div class="al__close" data-reveal="up">
+      <p class="al__cierre">{alertas.cierre}</p>
+      <Button href={waHref(SERVICIOS['reparacion-mantenimiento'].waMsg)} variant="whatsapp" icon="whatsapp">{alertas.cta}</Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .al__group + .al__group { margin-top: 32px; }
+  .al__gname { font-size: 1.25rem; color: var(--c-primary-900); margin-bottom: 14px; }
+  .al__grid { display: grid; gap: 12px; list-style: none; }
+  @media (min-width: 640px) { .al__grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 981px) { .al__grid { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
+  .al__item {
+    display: flex; gap: 14px; align-items: flex-start; padding: 16px 18px; background: #FFF;
+    border: 1px solid #E6E6E6; border-left: 4px solid var(--c-urgent-bright); border-radius: var(--r-card-sm);
+    transition: transform .3s, box-shadow .3s;
+  }
+  .al__item:hover { transform: translateY(var(--lift)); box-shadow: var(--shadow-card-hover); }
+  .al__icon { display: grid; place-items: center; flex: none; width: 46px; height: 46px; border-radius: 50%; background: #FFF1E8; color: var(--c-urgent); }
+  .al__t { margin: 0; font-family: var(--font-heading); font-weight: 600; font-size: 1.0625rem; line-height: 1.3; color: var(--c-heading); }
+  .al__d { margin: 4px 0 0; font-size: 1rem; line-height: 1.5; }
+  .al__close { display: grid; justify-items: center; gap: 16px; margin-top: 36px; text-align: center; }
+  .al__cierre { margin: 0; font-family: var(--font-heading); font-weight: 600; font-size: 1.25rem; color: var(--c-heading); letter-spacing: -.5px; }
+</style>

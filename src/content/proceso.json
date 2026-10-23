@@ -1,0 +1,41 @@
+{
+  "servicio": {
+    "eyebrow": "Cómo trabajamos",
+    "titulo": "Sabes qué va a pasar en cada paso",
+    "intro": "Antes de empezar conoces el diagnóstico, el precio y lo que incluye.",
+    "pasos": [
+      {
+        "titulo": "Nos cuentas",
+        "texto": "Escríbenos, llámanos o deja tus datos. Sin compromiso.",
+        "recibes": { "texto": "Respuesta en {tiempoRespuestaWhatsApp} y una hora de visita", "alt": "Respuesta y una hora concreta de visita" }
+      },
+      {
+        "titulo": "Diagnóstico o visita técnica",
+        "texto": "Un técnico revisa tu equipo o tu espacio y mide lo necesario.",
+        "recibes": { "texto": "Explicación clara de la falla o del equipo correcto, con fotos" }
+      },
+      {
+        "titulo": "Cotización transparente",
+        "texto": "Precio por escrito con lo que incluye y lo que no.",
+        "recibes": { "texto": "Cotización en {tiempoCotizacion}, antes de empezar", "alt": "Cotización por escrito antes de empezar" }
+      },
+      {
+        "titulo": "Ejecución y garantía",
+        "texto": "Hacemos el trabajo, probamos el equipo y te explicamos su cuidado.",
+        "recibes": { "texto": "Equipo operando, garantía escrita y recordatorio de mantenimiento" }
+      }
+    ]
+  },
+  "proyecto": {
+    "eyebrow": "Ingeniería de proyectos",
+    "titulo": "Un proceso que puedes presentar a tu gerencia",
+    "intro": "Cada etapa deja un entregable concreto. Así justificas la inversión con datos.",
+    "pasos": [
+      { "titulo": "Levantamiento", "texto": "Visitamos el sitio, medimos y entendemos tu producto o proceso.", "recibes": { "texto": "Informe de condiciones del sitio" } },
+      { "titulo": "Ingeniería y cálculo", "texto": "Calculamos la carga térmica y seleccionamos los equipos.", "recibes": { "texto": "Memoria de cálculo y selección de equipos" } },
+      { "titulo": "Propuesta técnico-económica", "texto": "Inversión, consumo estimado y retorno, con cronograma.", "recibes": { "texto": "Propuesta con ROI y cronograma" } },
+      { "titulo": "Montaje y puesta en marcha", "texto": "Instalamos, probamos y ajustamos hasta la temperatura de diseño.", "recibes": { "texto": "Acta de entrega y pruebas de funcionamiento" } },
+      { "titulo": "Mantenimiento programado", "texto": "Visitas periódicas para que el sistema rinda como el primer día.", "recibes": { "texto": "Plan de mantenimiento e informes de visita" } }
+    ]
+  }
+}

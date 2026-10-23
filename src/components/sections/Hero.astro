@@ -1,0 +1,95 @@
+---
+// 3.6 Hero de la Home [CLIENTE + CONVERSIÓN]: una sola foto (sin slider), texto centrado,
+// palabra que se escribe sola (4.2), micro-promesas y línea de prueba social.
+// El selector "¿Qué necesitas hoy?" se retiró a pedido del cliente (ver DECISIONES.md).
+import Photo from '../ui/Photo.astro';
+import Icon from '../ui/Icon.astro';
+import Stars from '../ui/Stars.astro';
+import { SITE } from '../../config/site';
+import { has, txt, fmtNum } from '../../lib/data';
+import home from '../../content/home.json';
+const h = home.hero;
+const promesas = h.promesas.map((p) => ({ icon: p.icon, texto: txt(p) })).filter((p) => p.texto);
+const rating = has(SITE.ratingGoogle) && has(SITE.numResenasGoogle);
+---
+<section class="hero on-dark" aria-label="Presentación">
+  <div class="hero__bg">
+    <Photo name={h.foto} alt={h.fotoAlt} ratio="16/9" eager sizes="100vw" widths={[640, 960, 1280, 1920]} />
+  </div>
+  <div class="container hero__in">
+    <p class="hero__eyebrow">{h.eyebrow}</p>
+    <p class="hero__title">
+      {h.antes}
+      <span class="hero__typed-line">
+        <span class="hero__typed" aria-hidden="true" data-typing={JSON.stringify(h.palabras)}>{h.palabras[0]}</span><span class="hero__caret" aria-hidden="true"></span>
+        <span class="sr-only">{h.palabras.join(', ')}</span>
+      </span>
+      {h.despues}
+    </p>
+    <p class="hero__sub">{h.subtitulo}</p>
+    <ul class="hero__promesas">
+      {promesas.map((p) => <li><Icon name={p.icon} size={20} />{p.texto}</li>)}
+    </ul>
+    {rating && (
+      <p class="hero__proof">
+        <Stars value={SITE.ratingGoogle!} />
+        <span>{SITE.ratingGoogle!.toLocaleString('es-CO')} en Google · {fmtNum(SITE.numResenasGoogle!)} reseñas</span>
+      </p>
+    )}
+  </div>
+</section>
+
+<script>
+  // 4.2 Máquina de escribir [BTO]: 70 ms/letra, pausa 2500 ms, borra a 40 ms/letra.
+  const el = document.querySelector<HTMLElement>('[data-typing]');
+  if (el && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const words: string[] = JSON.parse(el.dataset.typing || '[]');
+    let w = 0;
+    const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    const loop = async () => {
+      for (;;) {
+        await wait(2500);
+        const cur = words[w];
+        for (let i = cur.length; i >= 0; i--) { el.textContent = cur.slice(0, i); await wait(40); }
+        w = (w + 1) % words.length;
+        const next = words[w];
+        for (let i = 1; i <= next.length; i++) { el.textContent = next.slice(0, i); await wait(70); }
+      }
+    };
+    loop();
+  }
+</script>
+
+<style>
+  .hero {
+    position: relative; isolation: isolate; overflow: hidden; display: grid; align-items: center;
+    min-height: 620px; padding-block: 56px 64px; background: var(--c-primary-900) radial-gradient(rgba(255, 255, 255, .06) 1.4px, transparent 1.4px) 0 0 / 20px 20px;
+    color: #FFF; text-align: center;
+  }
+  @media (min-width: 981px) { .hero { min-height: 560px; padding-block: 72px 80px; } }
+  .hero__bg { position: absolute; inset: 0; z-index: -1; }
+  .hero__bg :global(.photo) { width: 100%; height: 100%; aspect-ratio: auto !important; }
+  .hero__bg :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .hero__bg :global(.ph) { display: none; }
+  .hero__bg::after { content: ""; position: absolute; inset: 0; background: var(--overlay-hero); }
+  .hero__in { max-width: 980px; }
+  .hero__eyebrow {
+    display: inline-block; margin: 0 0 20px; padding: 6px 16px; border: 1.5px solid rgba(255, 255, 255, .6); border-radius: var(--r-pill);
+    font-family: var(--font-heading); font-weight: 600; font-size: var(--fs-eyebrow); line-height: 1.2; letter-spacing: 3px; text-transform: uppercase;
+  }
+  .hero__title {
+    max-width: 860px; margin: 0 auto 16px; font-family: var(--font-heading); font-weight: 600; font-size: var(--fs-hero);
+    line-height: 1.2; letter-spacing: -1px; color: #FFF; text-shadow: var(--text-shadow-hero); text-wrap: balance;
+  }
+  .hero__typed-line { display: block; white-space: nowrap; font-size: min(1em, 8.2vw); min-height: 1.2em; color: #FFF; }
+  .hero__typed { box-shadow: inset 0 -.12em 0 rgba(255, 255, 255, .35); }
+  .hero__caret { display: inline-block; width: 3px; height: .9em; margin-left: 4px; vertical-align: -.08em; background: #FFF; animation: caret 1s step-end infinite; }
+  .hero__sub {
+    max-width: 860px; margin: 0 auto 20px; font-family: var(--font-heading); font-weight: 600; font-size: var(--fs-hero-sub);
+    line-height: 1.275; color: #FFF; text-shadow: var(--text-shadow-hero);
+  }
+  .hero__promesas { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 24px; list-style: none; font-size: 1.0625rem; font-weight: 600; line-height: 1.3; }
+  .hero__promesas li { display: inline-flex; align-items: center; gap: 8px; text-shadow: var(--text-shadow-hero); }
+  .hero__proof { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; margin: 22px auto 0; font-size: 1rem; font-weight: 600; }
+  @media (prefers-reduced-motion: reduce) { .hero__caret { display: none; } }
+</style>

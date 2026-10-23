@@ -1,0 +1,25 @@
+---
+// ProjectForm (perfil C): califica el lead para proyectos de ingeniería.
+import FormField from './FormField.astro';
+import FormShared from './FormShared.astro';
+import { OPCIONES_PROYECTO, OPCIONES_FECHA } from '../../config/servicios';
+import { SITE } from '../../config/site';
+interface Props { id?: string; tipo?: string; servicioOrigen?: string; titulo?: string; cta?: string }
+const { id = 'pf', tipo, servicioOrigen = 'general', titulo, cta = 'Solicitar visita de ingeniería' } = Astro.props;
+---
+<form class="form" data-form="project" data-wa={SITE.whatsapp} data-hide-mab novalidate action="/api/contacto.php" method="post" aria-labelledby={titulo ? `${id}-title` : undefined} aria-label={titulo ? undefined : 'Formulario de proyecto'}>
+  {titulo && <h3 id={`${id}-title`} class="form__title">{titulo}</h3>}
+  <div class="form__grid form__grid--2">
+    <FormField label="Nombre" name="nombre" id={`${id}-nombre`} required autocomplete="name" maxlength={80} />
+    <FormField label="Empresa" name="empresa" id={`${id}-empresa`} required autocomplete="organization" maxlength={120} />
+    <FormField label="Cargo" name="cargo" id={`${id}-cargo`} autocomplete="organization-title" maxlength={80} optional />
+    <FormField label="Celular" name="telefono" id={`${id}-tel`} type="tel" required autocomplete="tel-national" inputmode="tel" prefix="+57" placeholder="300 000 0000" maxlength={14} />
+    <FormField label="Correo" name="email" id={`${id}-email`} type="email" required autocomplete="email" inputmode="email" maxlength={120} />
+    <FormField label="Ciudad" name="ciudad" id={`${id}-ciudad`} required autocomplete="address-level2" maxlength={80} />
+    <FormField label="Tipo de proyecto" name="tipo_proyecto" id={`${id}-tipo`} type="select" required options={OPCIONES_PROYECTO} selected={tipo} full />
+    <FormField label="Capacidad o medidas aproximadas" name="capacidad" id={`${id}-cap`} maxlength={160} placeholder="Ej.: 3 × 4 × 2,5 m, 20 TR, 40 kW" optional full />
+    <FormField label="Fecha estimada" name="fecha" id={`${id}-fecha`} type="select" required options={OPCIONES_FECHA} full />
+    <FormField label="Mensaje" name="mensaje" id={`${id}-msg`} type="textarea" optional full placeholder="Cuéntanos qué necesitas enfriar, para qué proceso o qué falla tiene tu equipo actual." />
+    <FormShared id={id} form="project" cta={cta} servicioOrigen={servicioOrigen} />
+  </div>
+</form>

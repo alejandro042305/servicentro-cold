@@ -1,0 +1,55 @@
+---
+// Sectors: identificación ("negocios como el tuyo"). Tarjetas con icono y el problema típico.
+// `extended` = versión larga de /sectores/ (problema, solución, servicio recomendado y CTA).
+import Icon from '../ui/Icon.astro';
+import Button from '../ui/Button.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import { SERVICIOS, type ServicioSlug } from '../../config/servicios';
+import { waHref } from '../../lib/data';
+import sectores from '../../content/sectores.json';
+import home from '../../content/home.json';
+interface Props { extended?: boolean; heading?: boolean }
+const { extended = false, heading = true } = Astro.props;
+---
+<section class="section" aria-labelledby={heading ? 'sectores-h' : undefined} aria-label={heading ? undefined : 'Sectores'}>
+  <div class="container">
+    {heading && <SectionHeading id="sectores-h" eyebrow={home.sectores.eyebrow} title={home.sectores.titulo} intro={home.sectores.intro} />}
+    <ul class:list={['sec', { 'sec--ext': extended }]} data-reveal-stagger="60">
+      {sectores.map((s) => {
+        const svc = SERVICIOS[s.servicio as ServicioSlug];
+        return (
+          <li class="sec__item" id={s.slug} data-reveal="up" data-servicio={s.servicio} data-ubicacion="card">
+            <span class="sec__icon"><Icon name={s.icon} size={28} /></span>
+            <h3 class="sec__name">{s.nombre}</h3>
+            <p class="sec__prob">{s.problema}</p>
+            {extended && (
+              <>
+                <p class="sec__sol"><strong>Cómo te ayudamos:</strong> {s.solucion}</p>
+                <p class="sec__svc">Servicio recomendado: <a href={svc.href}>{svc.nombre}</a></p>
+                <Button href={waHref(`${svc.waMsg}Mi negocio es del sector ${s.nombre.toLowerCase()}.`)} variant="whatsapp" size="sm" icon="whatsapp">{s.cta}</Button>
+              </>
+            )}
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .sec { display: grid; gap: 16px; list-style: none; grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .sec { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 981px) { .sec { grid-template-columns: repeat(4, 1fr); } .sec--ext { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
+  .sec__item {
+    display: grid; align-content: start; gap: 10px; padding: 24px 22px; background: #FFF; border: 1px solid #E8E8E8; border-radius: var(--r-card);
+    transition: transform .3s, box-shadow .3s, border-color .3s;
+  }
+  .sec__item:hover { transform: translateY(var(--lift)); box-shadow: var(--shadow-card-hover); border-color: transparent; }
+  .sec__icon { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 14px; background: rgba(7, 119, 227, .1); color: var(--c-primary-900); }
+  .sec__name { margin: 0; font-size: 1.1875rem; color: var(--c-primary-900); letter-spacing: -.5px; }
+  .sec__prob { margin: 0; font-size: 1rem; line-height: 1.55; }
+  .sec__sol { margin: 0; font-size: 1rem; line-height: 1.55; }
+  .sec__svc { margin: 0; font-size: var(--fs-small); }
+  .sec--ext .sec__item { padding: 28px; }
+  .sec--ext :global(.btn) { justify-self: start; margin-top: 6px; }
+</style>

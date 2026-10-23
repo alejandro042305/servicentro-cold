@@ -1,0 +1,55 @@
+{
+  "eyebrow": "Tipos de equipo",
+  "titulo": "¿Qué aire acondicionado va con tu espacio?",
+  "intro": "Filtra por tipo de espacio. Los rangos son orientativos; la capacidad exacta sale del cálculo en la visita.",
+  "espacios": ["Hogar", "Oficina y consultorio", "Comercio y espacios grandes", "Industria"],
+  "nota": "VRF/VRV: {{PENDIENTE: confirmar si Serviaires ofrece sistemas VRF/VRV}}. La tarjeta está oculta hasta confirmarlo.",
+  "items": [
+    {
+      "slug": "mini-split", "nombre": "Mini split", "rango": "9.000 – 36.000 BTU/h", "foto": "equipo-mini-split",
+      "ideal": "Habitaciones, apartamentos, consultorios y oficinas pequeñas.",
+      "ventajas": ["Instalación rápida", "Versiones inverter de bajo consumo", "Control independiente por espacio"],
+      "espacios": ["Hogar", "Oficina y consultorio"]
+    },
+    {
+      "slug": "multi-split", "nombre": "Multi split", "rango": "18.000 – 48.000 BTU/h", "foto": "equipo-multi-split",
+      "ideal": "Casas u oficinas con varios espacios y poco lugar en fachada.",
+      "ventajas": ["Una unidad exterior para varias interiores", "Menos impacto visual", "Cada zona con su control"],
+      "espacios": ["Hogar", "Oficina y consultorio"]
+    },
+    {
+      "slug": "piso-techo", "nombre": "Piso techo", "rango": "24.000 – 60.000 BTU/h", "foto": "equipo-piso-techo",
+      "ideal": "Locales, restaurantes y salones sin cielo raso falso.",
+      "ventajas": ["Gran alcance de aire", "Se instala en pared baja o techo", "Buen costo por BTU"],
+      "espacios": ["Oficina y consultorio", "Comercio y espacios grandes"]
+    },
+    {
+      "slug": "cassette", "nombre": "Cassette", "rango": "18.000 – 60.000 BTU/h", "foto": "equipo-cassette",
+      "ideal": "Oficinas y comercios con cielo raso falso.",
+      "ventajas": ["Reparte el aire en 4 direcciones", "Queda integrado al techo", "Silencioso"],
+      "espacios": ["Oficina y consultorio", "Comercio y espacios grandes"]
+    },
+    {
+      "slug": "ductos", "nombre": "Centralizado por ductos", "rango": "36.000 – 120.000+ BTU/h", "foto": "equipo-ductos",
+      "ideal": "Pisos completos, bodegas, plantas y espacios grandes.",
+      "ventajas": ["Climatiza varias zonas con un equipo", "Equipo oculto, solo se ven las rejillas", "Permite renovación de aire"],
+      "espacios": ["Comercio y espacios grandes", "Industria"]
+    },
+    {
+      "slug": "vrf", "nombre": "VRF / VRV para edificios", "rango": "Proyectos a medida", "foto": "equipo-vrf",
+      "ideal": "Edificios de oficinas, hoteles y clínicas con muchas zonas.",
+      "ventajas": ["Control independiente por zona", "Alta eficiencia en cargas variables", "Una red para todo el edificio"],
+      "espacios": ["Comercio y espacios grandes", "Industria"],
+      "oculto": true
+    }
+  ],
+  "arbol": {
+    "titulo": "¿Cuál me conviene? Guía rápida",
+    "pasos": [
+      { "pregunta": "¿Es un solo espacio de menos de 40 m²?", "si": "Mini split.", "no": "Sigue a la siguiente pregunta." },
+      { "pregunta": "¿Son varios espacios con poco lugar en fachada?", "si": "Multi split.", "no": "Sigue a la siguiente pregunta." },
+      { "pregunta": "¿Tiene cielo raso falso?", "si": "Cassette, o ductos si son varias zonas.", "no": "Piso techo." },
+      { "pregunta": "¿Es un piso completo, una bodega o un edificio?", "si": "Sistema por ductos o, en edificios, una solución a medida.", "no": "Con las respuestas anteriores ya tienes una buena pista." }
+    ]
+  }
+}

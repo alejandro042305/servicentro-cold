@@ -1,0 +1,76 @@
+---
+// Pestañas accesibles (role=tablist). Cada panel es un slot con nombre "panel-0", "panel-1"…
+interface Props { tabs: string[]; id: string; tone?: 'light' | 'dark'; track?: string }
+const { tabs, id, tone = 'light' } = Astro.props;
+---
+<div class:list={['tabs', `tabs--${tone}`]} data-tabs>
+  <div class="tabs__list" role="tablist">
+    {tabs.map((t, i) => (
+      <button
+        type="button" role="tab" id={`${id}-tab-${i}`} aria-controls={`${id}-panel-${i}`}
+        aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} class="tabs__tab"
+      >{t}</button>
+    ))}
+  </div>
+  {tabs.map((_, i) => (
+    <div role="tabpanel" id={`${id}-panel-${i}`} aria-labelledby={`${id}-tab-${i}`} class="tabs__panel" hidden={i !== 0} tabindex="0">
+      {i === 0 && <slot name="panel-0" />}
+      {i === 1 && <slot name="panel-1" />}
+      {i === 2 && <slot name="panel-2" />}
+      {i === 3 && <slot name="panel-3" />}
+    </div>
+  ))}
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((root) => {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>(':scope > .tabs__list > [role=tab]')];
+    const select = (i: number, focus = false) => {
+      tabs.forEach((t, j) => {
+        const on = i === j;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute('aria-controls')!)!.hidden = !on;
+      });
+      if (focus) tabs[i].focus();
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(i));
+      t.addEventListener('keydown', (e) => {
+        const k = e.key;
+        if (k === 'ArrowRight') select((i + 1) % tabs.length, true);
+        else if (k === 'ArrowLeft') select((i - 1 + tabs.length) % tabs.length, true);
+        else if (k === 'Home') select(0, true);
+        else if (k === 'End') select(tabs.length - 1, true);
+        else return;
+        e.preventDefault();
+      });
+    });
+    // Abrir una pestaña desde un hash (#proyecto) apuntando a un elemento dentro del panel
+    const open = () => {
+      const target = location.hash && root.querySelector(location.hash);
+      const panel = target && target.closest('[role=tabpanel]');
+      if (panel) select(tabs.findIndex((t) => t.getAttribute('aria-controls') === panel.id));
+    };
+    open();
+    addEventListener('hashchange', open);
+  });
+</script>
+
+<style is:global>
+  .tabs__list {
+    display: flex; flex-wrap: wrap; gap: 6px; padding: 6px; margin-bottom: 24px;
+    background: var(--c-bg-muted); border-radius: var(--r-input); width: fit-content; max-width: 100%;
+  }
+  .tabs__tab {
+    flex: 1 1 auto; min-height: 44px; padding: 8px 18px; border: 0; border-radius: 8px; background: transparent;
+    font-family: var(--font-heading); font-weight: 500; font-size: .9375rem; color: var(--c-text);
+    transition: background-color .3s, color .3s;
+  }
+  .tabs__tab:hover { color: var(--c-primary-900); }
+  .tabs__tab[aria-selected="true"] { background: var(--c-primary-600); color: #FFF; box-shadow: var(--shadow-btn); }
+  .tabs--dark .tabs__list { background: rgba(255, 255, 255, .12); }
+  .tabs--dark .tabs__tab { color: #FFF; }
+  .tabs--dark .tabs__tab[aria-selected="true"] { background: #FFF; color: var(--c-primary-800); }
+  .tabs__panel:focus-visible { outline-offset: 6px; }
+</style>

@@ -1,0 +1,64 @@
+---
+// Nosotros: historia (texto del cliente), misión-visión, valores, responsable técnico, equipo, certificaciones, cobertura y CTA.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/sections/PageHero.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import FeatureList from '../../components/sections/FeatureList.astro';
+import TechLead from '../../components/sections/TechLead.astro';
+import Gallery from '../../components/sections/Gallery.astro';
+import Coverage from '../../components/sections/Coverage.astro';
+import CTASection from '../../components/sections/CTASection.astro';
+import Button from '../../components/ui/Button.astro';
+import Icon from '../../components/ui/Icon.astro';
+import { SITE } from '../../config/site';
+import { waHref } from '../../lib/data';
+import p from '../../content/paginas.json';
+const t = p.nosotros;
+const historia = t.historia as string[];
+---
+<BaseLayout title={t.seo.title} description={t.seo.description}>
+  <PageHero title={t.h1} subtitle={t.sub} photo="nosotros-hero" photoAlt="Equipo técnico de Serviaires" crumbs={[{ label: 'Nosotros' }]} />
+
+  <section class="section" aria-labelledby="mv-h">
+    <div class="container">
+      {historia.length > 0 && (
+        <div class="hist">
+          <SectionHeading id="hist-h" title={t.historiaTitulo} />
+          {historia.map((par) => <p>{par}</p>)}
+        </div>
+      )}
+      <h2 id="mv-h" class="sr-only">Misión y visión</h2>
+      <div class="grid-2 mv">
+        <article class="mv__card" data-reveal="up"><Icon name="lucide:target" size={32} /><h3>Misión</h3><p>{t.mision}</p></article>
+        <article class="mv__card" data-reveal="up"><Icon name="lucide:telescope" size={32} /><h3>Visión</h3><p>{t.vision}</p></article>
+      </div>
+      <TechLead />
+    </div>
+  </section>
+
+  <FeatureList id="valores" tone="soft" eyebrow="Valores" titulo="Lo que nos guía en cada visita" items={t.valores} />
+  <Gallery id="equipo" titulo={t.equipoTitulo} prefijo={t.equipoPrefijo} alt="Integrante del equipo de Serviaires" />
+
+  {SITE.certificaciones.length > 0 && (
+    <section class="section" aria-labelledby="cert-h">
+      <div class="container">
+        <SectionHeading id="cert-h" title={t.certTitulo} />
+        <ul class="chips cert">{SITE.certificaciones.map((c) => <li class="chip"><Icon name="lucide:badge-check" size={18} />{c}</li>)}</ul>
+      </div>
+    </section>
+  )}
+
+  <Coverage />
+  <CTASection titulo={t.ctaTitulo} texto={t.ctaTexto}>
+    <Button href={waHref('Hola, quiero hablar con Serviaires. ')} variant="whatsapp" icon="whatsapp">Escribir por WhatsApp</Button>
+    <Button href="/contacto/" variant="white">Ver todos los canales</Button>
+  </CTASection>
+</BaseLayout>
+
+<style>
+  .hist { max-width: 760px; margin: 0 auto 40px; }
+  .mv__card { padding: 32px 28px; border-radius: var(--r-card-lg); background: var(--c-primary-600); color: #FFF; }
+  .mv__card h3 { color: var(--c-on-primary-soft); margin-top: 12px; }
+  .mv__card p { color: #FFF; margin: 0; }
+  .cert { justify-content: center; }
+</style>

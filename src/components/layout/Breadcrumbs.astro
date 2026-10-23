@@ -1,0 +1,31 @@
+---
+// Migas de pan visibles + JSON-LD BreadcrumbList.
+interface Props { items: { label: string; href?: string }[]; tone?: 'light' | 'dark' }
+const { items, tone = 'dark' } = Astro.props;
+const all = [{ label: 'Inicio', href: '/' }, ...items];
+const ld = {
+  '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+  itemListElement: all.map((i, n) => ({
+    '@type': 'ListItem', position: n + 1, name: i.label,
+    ...(i.href ? { item: new URL(i.href, Astro.site).href } : {}),
+  })),
+};
+---
+<nav class:list={['bc', `bc--${tone}`]} aria-label="Migas de pan">
+  <ol>
+    {all.map((i, n) => (
+      <li>
+        {i.href && n < all.length - 1 ? <a href={i.href}>{i.label}</a> : <span aria-current="page">{i.label}</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+<script type="application/ld+json" set:html={JSON.stringify(ld)} />
+
+<style>
+  .bc ol { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 8px; list-style: none; font-size: var(--fs-small); line-height: 1.4; }
+  .bc li + li::before { content: "›"; margin-right: 8px; opacity: .8; }
+  .bc--dark, .bc--dark a { color: #FFF; }
+  .bc--dark a:hover { color: #FFF; }
+  .bc--light, .bc--light a { color: var(--c-text); }
+</style>

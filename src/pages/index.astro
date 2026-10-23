@@ -1,0 +1,42 @@
+---
+// 5.1 Home: orden exacto de la guía (02 §4 y 03 §5.1).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/sections/Hero.astro';
+import IntroForm from '../components/sections/IntroForm.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import ServicesGrid from '../components/sections/ServicesGrid.astro';
+import AlertSigns from '../components/sections/AlertSigns.astro';
+import BigCards from '../components/sections/BigCards.astro';
+import ProcessSteps from '../components/sections/ProcessSteps.astro';
+import WhyUs from '../components/sections/WhyUs.astro';
+import StatsBand from '../components/sections/StatsBand.astro';
+import Sectors from '../components/sections/Sectors.astro';
+import CaseStudies from '../components/sections/CaseStudies.astro';
+import Testimonials from '../components/sections/Testimonials.astro';
+import UrgencyBand from '../components/sections/UrgencyBand.astro';
+import FAQ from '../components/sections/FAQ.astro';
+import Coverage from '../components/sections/Coverage.astro';
+import ContactSection from '../components/sections/ContactSection.astro';
+import { getCasos } from '../lib/content';
+import home from '../content/home.json';
+import faq from '../content/faq/home.json';
+const casos = await getCasos();
+---
+<BaseLayout title={home.seo.title} description={home.seo.description}>
+  <Hero />
+  <IntroForm />
+  <TrustBar />
+  <ServicesGrid />
+  <AlertSigns />
+  <BigCards />
+  <ProcessSteps />
+  <WhyUs />
+  <StatsBand />
+  <Sectors />
+  <CaseStudies casos={casos} />
+  <Testimonials />
+  <UrgencyBand />
+  <FAQ items={faq} />
+  <Coverage />
+  <ContactSection servicioOrigen="home" />
+</BaseLayout>

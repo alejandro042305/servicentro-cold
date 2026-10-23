@@ -1,0 +1,130 @@
+/* =====================================================================
+   Serviaires · Tokens de diseño
+   [CLIENTE] = medido en servicentrohogar.com · [BTO] = btodigital.es
+   [CONVERSIÓN] = decisión propia (ver DECISIONES.md), reversible aquí.
+   ===================================================================== */
+:root {
+  /* ===== Marca [CLIENTE] ===== */
+  --c-primary-900: #0047B9;   /* footer, hero de internas, base de tarjetas grandes */
+  --c-primary-800: #0047BF;   /* H1 de la home, texto de botones blancos */
+  /* [CONVERSIÓN] cliente #0777E3 → #0774E2 (ΔG −3, imperceptible): blanco pasa de 4,41:1 a 4,56:1 */
+  --c-primary-600: #0774E2;   /* botones primarios, tarjetas de servicios y beneficios */
+  /* [CONVERSIÓN] cliente #0777DD → #0775DB (imperceptible): blanco pasa de 4,48:1 a 4,59:1 */
+  --c-primary-500: #0775DB;   /* secciones azules, borde de submenú, hamburguesa */
+  --c-primary-shadow: 7, 119, 222;  /* #0777DE en rgba() para sombras */
+  --c-link: #0066CC;          /* [CONVERSIÓN] enlaces sobre #FFF/#F9F9F9 (5,29:1); #0777DD daba 4,25:1 sobre #F9F9F9 */
+  --c-bg: #FFFFFF;
+  --c-bg-soft: #F9F9F9;
+  --c-bg-muted: #F4F4F4;
+  --c-border: #D9D9D9;
+  --c-heading: #000000;
+  --c-text: #444444;
+  --c-text-muted: #666666;
+  --c-on-primary: #FFFFFF;
+  --c-on-primary-soft: #F9F9F9;
+  --c-footer-link: rgba(255, 255, 255, .8);
+  --c-whatsapp: #49E670;      /* burbuja WhatsApp (solo icono) */
+  --c-phone: #1E88E5;         /* burbuja teléfono (solo icono) */
+  --c-facebook: #3B5998;
+  --c-x: #000000;
+
+  /* ===== Acentos [BTO] ===== */
+  --c-accent: #0052FF;
+  --c-accent-hover: #4D80FF;
+  --c-accent-tint: rgba(77, 128, 255, .25);
+  --c-neutral-200: #DDDDDD;
+  --c-neutral-300: #D6D6D6;
+  --c-ink: #0B1B3F;
+  --c-star: #FFCB00;
+
+  /* ===== Funcionales [CONVERSIÓN] ===== */
+  --c-urgent-bright: #FF6A13; /* solo decorativo (pulsos, iconos): con texto blanco da 2,87:1 */
+  --c-urgent: #C2410C;        /* botón de urgencias con texto blanco (5,18:1) */
+  --c-urgent-hover: #9A3412;
+  --c-success: #16A34A;
+  --c-error: #DC2626;
+  --c-whatsapp-btn: #15803D;  /* botón WhatsApp con texto (5,02:1). #1FAF54 daba 2,87:1 */
+  --c-whatsapp-btn-hover: #116932;
+  --c-phone-btn: #1565C0;     /* botón "Llamar" con texto (5,75:1). #1E88E5 daba 3,68:1 */
+  --c-phone-btn-hover: #0D4F9E;
+  --c-chip-on-blue: rgba(0, 25, 90, .32); /* chip sobre tarjeta azul: mantiene ≥ 4,5:1 */
+
+  /* ===== Superposiciones ===== */
+  --overlay-hero: linear-gradient(180deg, rgba(0, 0, 0, .10) 0%, rgba(0, 0, 0, .35) 100%);
+  --overlay-blue: rgba(0, 71, 185, .72);
+  --text-shadow-hero: 0 1px 3px rgba(0, 0, 0, .3);
+  --fade-marquee-l: linear-gradient(to right, #FFF, rgba(255, 255, 255, .8), transparent);
+  --fade-marquee-r: linear-gradient(to left, #FFF, rgba(255, 255, 255, .8), transparent);
+
+  /* ===== Tipografía [CLIENTE] ===== */
+  --font-heading: "Poppins", Helvetica, Arial, sans-serif;
+  --font-body: "Source Sans 3", "Source Sans Pro", Helvetica, Arial, sans-serif;
+  /* clamp() interpola entre 375 px y 1280 px */
+  --fs-hero: clamp(2rem, 1.586rem + 1.768vw, 3rem);          /* 32 → 48 */
+  --fs-hero-sub: clamp(1.25rem, 1.146rem + .442vw, 1.5rem);  /* 20 → 24 */
+  --fs-h1: clamp(2.25rem, 2.043rem + .884vw, 2.75rem);       /* 36 → 44 */
+  --fs-h2: clamp(1.75rem, 1.543rem + .884vw, 2.25rem);       /* 28 → 36 */
+  --fs-h3: 1.5rem;                                           /* 24 */
+  --fs-h3-lg: clamp(1.5rem, 1.396rem + .442vw, 1.75rem);     /* 24 → 28 */
+  --fs-h4: 1.375rem;                                         /* 22 */
+  --fs-faq: 1.0625rem;                                       /* 17 */
+  --fs-body: 1.125rem;                                       /* 18 */
+  --fs-card: 1.0625rem;                                      /* 17 */
+  --fs-btn: clamp(1.125rem, 1.073rem + .221vw, 1.25rem);     /* 18 → 20 */
+  --fs-nav: .9375rem;                                        /* 15 */
+  --fs-small: .9375rem;                                      /* 15 */
+  --fs-eyebrow: clamp(.8125rem, .787rem + .11vw, .875rem);   /* 13 → 14 */
+  --fs-stat: clamp(2.25rem, 1.887rem + 1.547vw, 3.125rem);   /* 36 → 50 */
+  --lh-body: 1.7;
+  --lh-btn: 34px;
+  --ls-heading: -1px;
+
+  /* ===== Layout ===== */
+  --container: 1080px;
+  --container-wide: 1280px;
+  --gap-grid: 33px;
+  --section-py: 48px;
+  --row-py: 32px;
+  --header-h: 72px;
+  --mab-h: 64px;
+
+  /* ===== Radios [CLIENTE/BTO] ===== */
+  --r-btn: 8px;
+  --r-card-sm: 12px;
+  --r-card: 16px;
+  --r-card-lg: 20px;
+  --r-input: 12px;
+  --r-pill: 999px;
+
+  /* ===== Sombras [CLIENTE] ===== */
+  --shadow-btn: 0 12px 18px -6px rgba(var(--c-primary-shadow), .20);
+  --shadow-btn-hover: 0 12px 18px -6px rgba(var(--c-primary-shadow), .35);
+  --shadow-btn-white: 0 12px 18px -6px rgba(0, 0, 0, .25);
+  --shadow-card-hover: 0 14px 20px -6px rgba(var(--c-primary-shadow), .35);
+  --shadow-submenu: 0 2px 5px rgba(0, 0, 0, .1);
+  --shadow-float: 0 16px 24px rgba(73, 104, 126, .16);
+  --shadow-header-scrolled: 0 2px 10px rgba(0, 0, 0, .08);
+  --lift: -3px;
+
+  /* ===== Movimiento ===== */
+  --dur-fast: 300ms;
+  --dur-nav: 400ms;
+  --dur-enter: 1000ms;
+  --ease-divi: cubic-bezier(.77, 0, .175, 1);
+  --dur-enter-bto: 1250ms;
+  --delay-enter: 300ms;
+  --ease-bto: ease;
+  --ease-out-soft: cubic-bezier(.22, 1, .36, 1);
+  --dur-counter: 2000ms;
+  --dur-marquee: 50s;
+  --dur-slide: 5000ms;
+  --dur-slide-transition: 500ms;
+  --typing-pause: 2500ms;
+}
+
+@media (min-width: 981px) {
+  :root {
+    --section-py: 64px;
+    --header-h: 112px;
+  }
+}

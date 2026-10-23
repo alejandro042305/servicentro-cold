@@ -1,0 +1,34 @@
+---
+// EquipmentTypes: tarjetas de tipos de aire acondicionado con filtro por espacio (Tabs).
+import Tabs from '../ui/Tabs.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import EquipmentPanel from './EquipmentPanel.astro';
+import equipos from '../../content/equipos.json';
+const items = equipos.items.filter((i) => !i.oculto);
+---
+<section class="section dot-grid" id="equipos" aria-labelledby="equipos-h" data-ubicacion="card" data-servicio="aire-acondicionado">
+  <div class="container">
+    <SectionHeading id="equipos-h" eyebrow={equipos.eyebrow} title={equipos.titulo} intro={equipos.intro} />
+    <Tabs id="esp" tabs={equipos.espacios}>
+      <EquipmentPanel slot="panel-0" items={items.filter((i) => i.espacios.includes(equipos.espacios[0]))} />
+      <EquipmentPanel slot="panel-1" items={items.filter((i) => i.espacios.includes(equipos.espacios[1]))} />
+      <EquipmentPanel slot="panel-2" items={items.filter((i) => i.espacios.includes(equipos.espacios[2]))} />
+      <EquipmentPanel slot="panel-3" items={items.filter((i) => i.espacios.includes(equipos.espacios[3]))} />
+    </Tabs>
+  </div>
+</section>
+
+<style>
+  #equipos :global(.tabs__list) { margin-inline: auto; }
+</style>
+
+<style is:global>
+  .eq { display: flex; flex-direction: column; background: #FFF; border-radius: var(--r-card); overflow: hidden; border: 1px solid #E8E8E8; transition: transform .3s, box-shadow .3s; }
+  .eq:hover { transform: translateY(var(--lift)); box-shadow: var(--shadow-card-hover); }
+  .eq__body { display: flex; flex-direction: column; gap: 8px; flex: 1; padding: 20px 22px 24px; }
+  .eq__name { margin: 0; font-size: var(--fs-h3); color: var(--c-primary-900); }
+  .eq__range { margin: 0; font-family: var(--font-heading); font-weight: 600; font-size: .9375rem; color: var(--c-primary-900); }
+  .eq__ideal { margin: 0; font-size: 1rem; line-height: 1.5; }
+  .eq__list { font-size: .9375rem; margin: 4px 0 12px; }
+  .eq :global(.btn) { margin-top: auto; }
+</style>

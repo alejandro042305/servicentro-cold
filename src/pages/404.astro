@@ -1,0 +1,37 @@
+---
+// 5.10 404: termómetro, "Esta página se quedó sin refrigerante", botones a Home y WhatsApp.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+import { waHref } from '../lib/data';
+import p from '../content/paginas.json';
+const t = p.error404;
+---
+<BaseLayout title={t.seo.title} description={t.seo.description} noindex>
+  <section class="section dot-grid nf">
+    <div class="container nf__in">
+      <svg class="nf__thermo" viewBox="0 0 120 220" aria-hidden="true">
+        <rect x="44" y="12" width="32" height="150" rx="16" fill="#FFF" stroke="#0047B9" stroke-width="4" />
+        <circle cx="60" cy="180" r="30" fill="#C2410C" stroke="#0047B9" stroke-width="4" />
+        <rect x="54" y="60" width="12" height="110" rx="6" fill="#C2410C" />
+        <g stroke="#0047B9" stroke-width="3" stroke-linecap="round"><path d="M80 40h12M80 70h12M80 100h12M80 130h12" /></g>
+      </svg>
+      <div>
+        <p class="nf__code">404</p>
+        <h1>{t.titulo}</h1>
+        <p class="lead">{t.texto}</p>
+        <div class="cluster" data-ubicacion="contact">
+          <Button href="/" variant="primary" icon="lucide:house">{t.inicio}</Button>
+          <Button href={waHref('Hola, no encontré una página en su web. ')} variant="whatsapp" icon="whatsapp">{t.whatsapp}</Button>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf__in { display: grid; gap: 32px; align-items: center; justify-items: center; text-align: center; }
+  @media (min-width: 768px) { .nf__in { grid-template-columns: 160px 1fr; text-align: left; justify-items: start; } }
+  .nf__thermo { width: 120px; }
+  .nf__code { margin: 0; font-family: var(--font-heading); font-weight: 700; font-size: 3rem; line-height: 1; color: var(--c-primary-900); }
+  .nf h1 { color: var(--c-primary-800); }
+</style>

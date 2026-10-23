@@ -1,0 +1,72 @@
+---
+// 3.5 Burbujas flotantes (≥ 768 px) [CLIENTE, estilo Chaty] + pulso cada 6 s + globo a los 8 s.
+import Icon from '../ui/Icon.astro';
+import { SITE } from '../../config/site';
+import { waHref, telHref, has } from '../../lib/data';
+interface Props { waMsg: string }
+const { waMsg } = Astro.props;
+const saludo = has(SITE.tiempoRespuestaWhatsApp)
+  ? `¿Te ayudamos? Te respondemos en ${SITE.tiempoRespuestaWhatsApp}.`
+  : '¿Te ayudamos? Escríbenos por WhatsApp.';
+---
+<div class="fab" data-fab data-ubicacion="float">
+  <div class="fab__greet" data-fab-greet hidden>
+    <p>{saludo}</p>
+    <button type="button" class="fab__x" aria-label="Cerrar mensaje" data-fab-close><Icon name="lucide:x" size={16} /></button>
+  </div>
+  <a href={telHref} class="fab__btn fab__btn--tel" aria-label="Llámanos">
+    <Icon name="lucide:phone" size={26} />
+    <span class="fab__tip" aria-hidden="true">Llámanos</span>
+  </a>
+  <a href={waHref(waMsg)} class="fab__btn fab__btn--wa" aria-label="Escríbenos por WhatsApp" target="_blank" rel="noopener">
+    <Icon name="whatsapp" size={28} />
+    <span class="fab__tip" aria-hidden="true">Escríbenos</span>
+  </a>
+</div>
+
+<script>
+  const greet = document.querySelector<HTMLElement>('[data-fab-greet]');
+  let closed = false;
+  try { closed = sessionStorage.getItem('sa_greet') === '1'; } catch { /* sin almacenamiento */ }
+  if (greet && !closed && matchMedia('(min-width: 768px)').matches) {
+    setTimeout(() => { greet.hidden = false; }, 8000);
+    greet.querySelector('[data-fab-close]')!.addEventListener('click', () => {
+      greet.hidden = true;
+      try { sessionStorage.setItem('sa_greet', '1'); } catch { /* */ }
+    });
+  }
+</script>
+
+<style>
+  .fab { display: none; position: fixed; right: 24px; bottom: 24px; z-index: 40; flex-direction: column; align-items: flex-end; gap: 12px; }
+  @media (min-width: 768px) { .fab { display: flex; } }
+  :global(body.has-consent) .fab { bottom: 120px; }
+  .fab__btn {
+    position: relative; display: grid; place-items: center; width: 54px; height: 54px; border-radius: 50%;
+    color: #FFF; box-shadow: var(--shadow-float); transition: transform .3s;
+  }
+  .fab__btn:hover { transform: scale(1.06); color: #FFF; }
+  .fab__btn--tel { background: var(--c-phone); }
+  .fab__btn--wa { background: var(--c-whatsapp); color: #FFF; }
+  .fab__btn--wa::before {
+    content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--c-whatsapp);
+    animation: fab-pulse 6s ease-out 2s infinite; /* anillo 1,2 s (20 % de 6 s) y reposo */
+  }
+  @keyframes fab-pulse {
+    0% { transform: scale(1); opacity: .8; }
+    20% { transform: scale(1.6); opacity: 0; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+  .fab__tip {
+    position: absolute; right: calc(100% + 12px); top: 50%; translate: 0 -50%; white-space: nowrap;
+    padding: 6px 12px; border-radius: 6px; background: #FFF; color: var(--c-heading); box-shadow: var(--shadow-float);
+    font-family: var(--font-heading); font-weight: 500; font-size: .875rem; opacity: 0; pointer-events: none; transition: opacity .3s;
+  }
+  .fab__btn:hover .fab__tip, .fab__btn:focus-visible .fab__tip { opacity: 1; }
+  .fab__greet {
+    position: relative; max-width: 240px; padding: 14px 36px 14px 16px; border-radius: 14px 14px 4px 14px;
+    background: #FFF; box-shadow: var(--shadow-float); font-size: .9375rem; line-height: 1.4; color: var(--c-text);
+  }
+  .fab__greet p { margin: 0; }
+  .fab__x { position: absolute; top: 6px; right: 6px; display: grid; place-items: center; width: 28px; height: 28px; border: 0; background: none; color: var(--c-text-muted); }
+</style>

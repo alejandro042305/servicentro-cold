@@ -1,0 +1,59 @@
+---
+// Hero de páginas internas [CLIENTE]: foto sobre #0047B9 con velo rgba(0,71,185,.72),
+// migas blancas, H1 #F9F9F9 centrado + divisor blanco + subtítulo + 1–2 botones (slot).
+import Breadcrumbs from '../layout/Breadcrumbs.astro';
+import Photo from '../ui/Photo.astro';
+interface Props {
+  title: string;
+  subtitle?: string;
+  eyebrow?: string;
+  photo?: string;
+  photoAlt?: string;
+  crumbs?: { label: string; href?: string }[];
+  /** Decoración SVG que rota con el scroll (cuartos fríos, chillers). */
+  deco?: 'snowflake' | 'fan';
+}
+const { title, subtitle, eyebrow, photo, photoAlt = '', crumbs, deco } = Astro.props;
+---
+<section class="phero on-blue">
+  {photo && <div class="phero__bg"><Photo name={photo} alt={photoAlt} ratio="16/9" eager sizes="100vw" widths={[800, 1280, 1920]} /></div>}
+  {deco && (
+    <svg class="phero__deco" data-parallax data-y="40" data-r={deco === 'fan' ? -45 : 45} viewBox="0 0 100 100" aria-hidden="true">
+      {deco === 'snowflake'
+        ? <g stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"><path d="M50 6v88M12 28l76 44M12 72l76-44" /><path d="M42 12l8 8 8-8M42 88l8-8 8 8M14 38l11-3-3-11M86 62l-11 3 3 11M14 62l11 3-3 11M86 38l-11-3 3-11" /></g>
+        : <g fill="currentColor"><circle cx="50" cy="50" r="7" /><path d="M50 43c-4-14-2-30 8-34 9 4 6 22-8 34zM57 50c14-4 30-2 34 8-4 9-22 6-34-8zM50 57c4 14 2 30-8 34-9-4-6-22 8-34zM43 50c-14 4-30 2-34-8 4-9 22-6 34 8z" opacity=".9" /></g>}
+    </svg>
+  )}
+  <div class="container phero__in">
+    {crumbs && <Breadcrumbs items={crumbs} />}
+    {eyebrow && <p class="phero__eyebrow">{eyebrow}</p>}
+    <h1 class="phero__title">{title}</h1>
+    <hr class="divider divider--white" />
+    {subtitle && <p class="phero__sub">{subtitle}</p>}
+    <div class="phero__ctas"><slot /></div>
+  </div>
+</section>
+
+<style>
+  .phero {
+    position: relative; isolation: isolate; overflow: hidden; display: grid; align-items: center;
+    min-height: 320px; padding-block: 48px 56px; background: var(--c-primary-900); color: #FFF; text-align: center;
+  }
+  @media (min-width: 981px) { .phero { min-height: 400px; } }
+  .phero__bg { position: absolute; inset: 0; z-index: -2; }
+  .phero__bg :global(.photo) { width: 100%; height: 100%; aspect-ratio: auto !important; object-fit: cover; }
+  .phero__bg :global(.ph) { display: none; }
+  .phero__bg::after { content: ""; position: absolute; inset: 0; background: var(--overlay-blue); }
+  .phero__in { display: grid; justify-items: center; gap: 4px; }
+  .phero__eyebrow {
+    margin: 14px 0 0; padding: 6px 16px; border: 1.5px solid rgba(255, 255, 255, .6); border-radius: var(--r-pill);
+    font-family: var(--font-heading); font-weight: 600; font-size: var(--fs-eyebrow); letter-spacing: 3px; text-transform: uppercase;
+  }
+  .phero__title { margin: 16px auto 18px; max-width: 900px; color: var(--c-on-primary-soft); font-size: var(--fs-h1); line-height: 1.1; }
+  .phero__sub { max-width: 720px; margin: 0 auto; font-size: 1.1875rem; color: #FFF; }
+  .phero__ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 24px; }
+  .phero__ctas:empty { display: none; }
+  @media (max-width: 767.98px) { .phero__ctas { width: 100%; flex-direction: column; } .phero__ctas > :global(*) { width: 100%; } }
+  .phero__deco { position: absolute; z-index: -1; width: 260px; right: -40px; top: 20px; color: rgba(255, 255, 255, .12); }
+  @media (max-width: 980px) { .phero__deco { display: none; } }
+</style>

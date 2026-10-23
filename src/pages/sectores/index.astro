@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/sections/PageHero.astro';
+import Sectors from '../../components/sections/Sectors.astro';
+import UrgencyBand from '../../components/sections/UrgencyBand.astro';
+import ContactSection from '../../components/sections/ContactSection.astro';
+import p from '../../content/paginas.json';
+const t = p.sectores;
+---
+<BaseLayout title={t.seo.title} description={t.seo.description}>
+  <PageHero title={t.h1} subtitle={t.sub} photo="sectores-hero" photoAlt="Cuarto frío de un supermercado" crumbs={[{ label: 'Sectores' }]} />
+  <Sectors extended heading={false} />
+  <UrgencyBand />
+  <ContactSection servicioOrigen="sectores" />
+</BaseLayout>

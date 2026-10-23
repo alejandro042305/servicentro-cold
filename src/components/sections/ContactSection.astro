@@ -1,0 +1,85 @@
+---
+// ContactSection [CLIENTE 2.5]: fondo #0777DD + foto con velo azul, caja blanca radio 16 a 2 columnas:
+// tarjetas de canal (izquierda) y formulario con pestañas Servicio / Proyecto (derecha).
+import Icon from '../ui/Icon.astro';
+import Photo from '../ui/Photo.astro';
+import Tabs from '../ui/Tabs.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import QuickForm from '../forms/QuickForm.astro';
+import ProjectForm from '../forms/ProjectForm.astro';
+import { SITE } from '../../config/site';
+import { has, waHref, telHref, telVisible, emailVisible } from '../../lib/data';
+import { WA_MSG_GENERAL } from '../../config/servicios';
+import home from '../../content/home.json';
+interface Props { id?: string; servicioOrigen?: string; servicio?: string; tipoProyecto?: string; level?: 'h1' | 'h2'; startProject?: boolean; waMsg?: string }
+const { id = 'contacto', servicioOrigen = 'general', servicio, tipoProyecto, level = 'h2', startProject = false, waMsg = WA_MSG_GENERAL } = Astro.props;
+const c = home.contacto;
+const canales = [
+  { icon: 'lucide:phone', label: 'Llamar', value: telVisible || 'Llamar ahora', href: telHref },
+  { icon: 'whatsapp', label: 'WhatsApp', value: has(SITE.tiempoRespuestaWhatsApp) ? `Respuesta en ${SITE.tiempoRespuestaWhatsApp}` : 'Escríbenos', href: waHref(waMsg) },
+  emailVisible && { icon: 'lucide:mail', label: 'Correo', value: emailVisible, href: `mailto:${emailVisible}` },
+  has(SITE.direccion) && { icon: 'lucide:map-pin', label: 'Dirección', value: `${SITE.direccion}, ${SITE.ciudad}` },
+  { icon: 'lucide:clock', label: 'Horario', value: `Lun–vie ${SITE.horario.lunVie} · Sáb ${SITE.horario.sab}${has(SITE.horario.urgencias) ? ` · Urgencias ${SITE.horario.urgencias}` : ''}` },
+].filter(Boolean) as { icon: string; label: string; value: string; href?: string }[];
+const tabs = startProject ? [c.tabProyecto, c.tabServicio] : [c.tabServicio, c.tabProyecto];
+---
+<section class="section section--blue contact on-blue" id={id} aria-labelledby={`${id}-h`} data-ubicacion="contact">
+  <div class="contact__bg" aria-hidden="true"><Photo name="contacto" alt="" ratio="16/9" sizes="100vw" widths={[960, 1600]} /></div>
+  <div class="container">
+    <SectionHeading id={`${id}-h`} eyebrow={c.eyebrow} title={c.titulo} intro={c.intro} tone="dark" level={level} />
+    <div class="contact__box">
+      <ul class="contact__channels">
+        {canales.map((ch) => (
+          <li>
+            {ch.href ? (
+              <a href={ch.href} class="ch" target={ch.href.startsWith('http') ? '_blank' : undefined} rel={ch.href.startsWith('http') ? 'noopener' : undefined}>
+                <span class:list={['ch__icon', { 'ch__icon--wa': ch.icon === 'whatsapp' }]}><Icon name={ch.icon} size={22} /></span>
+                <span><span class="ch__label">{ch.label}</span><span class="ch__value">{ch.value}</span></span>
+              </a>
+            ) : (
+              <div class="ch">
+                <span class="ch__icon"><Icon name={ch.icon} size={22} /></span>
+                <span><span class="ch__label">{ch.label}</span><span class="ch__value">{ch.value}</span></span>
+              </div>
+            )}
+          </li>
+        ))}
+      </ul>
+      <div class="contact__form">
+        <Tabs id={`${id}-tabs`} tabs={tabs}>
+          <div slot="panel-0">
+            {startProject
+              ? <div id="proyecto"><ProjectForm id={`${id}-pf`} servicioOrigen={servicioOrigen} tipo={tipoProyecto} /></div>
+              : <QuickForm id={`${id}-qf`} servicioOrigen={servicioOrigen} servicio={servicio} />}
+          </div>
+          <div slot="panel-1">
+            {startProject
+              ? <QuickForm id={`${id}-qf`} servicioOrigen={servicioOrigen} servicio={servicio} />
+              : <div id={`${id}-proyecto`}><ProjectForm id={`${id}-pf`} servicioOrigen={servicioOrigen} tipo={tipoProyecto} /></div>}
+          </div>
+        </Tabs>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact { overflow: hidden; isolation: isolate; }
+  .contact__bg { position: absolute; inset: 0; z-index: -1; }
+  .contact__bg :global(.photo) { width: 100%; height: 100%; aspect-ratio: auto !important; }
+  .contact__bg :global(.ph) { display: none; }
+  .contact__bg::after { content: ""; position: absolute; inset: 0; background: rgba(7, 117, 219, .88); }
+  .contact__box {
+    display: grid; gap: 28px; max-width: 960px; margin-inline: auto; padding: 28px 20px;
+    background: #FFF; color: var(--c-text); border-radius: var(--r-card); box-shadow: 0 24px 48px -24px rgba(0, 0, 0, .35);
+  }
+  @media (min-width: 981px) { .contact__box { grid-template-columns: 300px 1fr; gap: 40px; padding: 40px 32px; } }
+  .contact__box :global(.tabs__list) { width: 100%; }
+  .contact__channels { list-style: none; display: grid; gap: 10px; align-content: start; }
+  .ch { display: flex; gap: 14px; align-items: center; padding: 12px 14px; border-radius: var(--r-card-sm); background: var(--c-bg-soft); text-decoration: none; color: var(--c-text); transition: background-color .3s, transform .3s; }
+  a.ch:hover { background: rgba(7, 119, 227, .08); transform: translateX(3px); color: var(--c-text); }
+  .ch__icon { display: grid; place-items: center; flex: none; width: 44px; height: 44px; border-radius: 50%; background: var(--c-primary-600); color: #FFF; }
+  .ch__icon--wa { background: var(--c-whatsapp-btn); }
+  .ch__label { display: block; font-family: var(--font-heading); font-weight: 600; font-size: .9375rem; color: var(--c-heading); }
+  .ch__value { display: block; font-size: .9375rem; line-height: 1.4; }
+</style>

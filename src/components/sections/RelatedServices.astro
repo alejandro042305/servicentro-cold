@@ -1,0 +1,36 @@
+---
+// Enlazado interno: cada servicio enlaza a los demás y a los sectores donde aplica.
+import Icon from '../ui/Icon.astro';
+import { SERVICIOS, SERVICIOS_ORDEN, type ServicioSlug } from '../../config/servicios';
+import sectores from '../../content/sectores.json';
+interface Props { actual: ServicioSlug }
+const { actual } = Astro.props;
+const otros = SERVICIOS_ORDEN.filter((s) => s !== actual);
+const secs = sectores.filter((s) => s.servicio === actual);
+---
+<nav class="section rel" aria-labelledby="rel-h">
+  <div class="container">
+    <h2 id="rel-h" class="rel__h">Otros servicios</h2>
+    <ul class="rel__list">
+      {otros.map((s) => (
+        <li><a href={SERVICIOS[s].href} class="rel__a"><Icon name={SERVICIOS[s].icon} size={22} />{SERVICIOS[s].nombre}<Icon name="lucide:arrow-right" size={18} class="rel__arr" /></a></li>
+      ))}
+    </ul>
+    {secs.length > 0 && (
+      <p class="rel__sec">Sectores donde aplicamos este servicio: {secs.map((s, i) => <>{i > 0 && ', '}<a href={`/sectores/#${s.slug}`}>{s.nombre}</a></>)}.</p>
+    )}
+  </div>
+</nav>
+
+<style>
+  .rel { padding-block: 40px; background: var(--c-bg-soft); border-top: 1px solid #EEE; }
+  .rel__h { font-size: 1.375rem; text-align: center; margin-bottom: 18px; }
+  .rel__list { display: grid; gap: 10px; list-style: none; }
+  @media (min-width: 768px) { .rel__list { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 981px) { .rel__list { grid-template-columns: repeat(4, 1fr); } }
+  .rel__a { display: flex; align-items: center; gap: 10px; height: 100%; padding: 14px 16px; background: #FFF; border: 1px solid #E6E6E6; border-radius: var(--r-card-sm); font-family: var(--font-heading); font-weight: 500; font-size: .9375rem; color: var(--c-heading); text-decoration: none; transition: border-color .3s, transform .3s; }
+  .rel__a:hover { border-color: var(--c-primary-600); transform: translateY(var(--lift)); color: var(--c-primary-900); }
+  .rel__a :global(.icon:first-child) { color: var(--c-primary-600); }
+  .rel__a :global(.rel__arr) { margin-left: auto; }
+  .rel__sec { text-align: center; margin: 20px auto 0; font-size: 1rem; }
+</style>

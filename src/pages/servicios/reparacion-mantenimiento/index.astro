@@ -1,0 +1,103 @@
+---
+// 5.2 Reparación y mantenimiento (enfoque velocidad · perfil A).
+import { getEntry } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PageHero from '../../../components/sections/PageHero.astro';
+import Button from '../../../components/ui/Button.astro';
+import Badge from '../../../components/ui/Badge.astro';
+import Icon from '../../../components/ui/Icon.astro';
+import SectionHeading from '../../../components/ui/SectionHeading.astro';
+import FeatureList from '../../../components/sections/FeatureList.astro';
+import AlertSigns from '../../../components/sections/AlertSigns.astro';
+import CompareTable from '../../../components/sections/CompareTable.astro';
+import ProcessSteps from '../../../components/sections/ProcessSteps.astro';
+import Testimonials from '../../../components/sections/Testimonials.astro';
+import FAQ from '../../../components/sections/FAQ.astro';
+import ContactSection from '../../../components/sections/ContactSection.astro';
+import RelatedServices from '../../../components/sections/RelatedServices.astro';
+import { SERVICIOS, WA_MSG_URGENTE } from '../../../config/servicios';
+import { waHref, telHref, txt } from '../../../lib/data';
+import { serviceLd } from '../../../lib/schema';
+import faq from '../../../content/faq/reparacion-mantenimiento.json';
+
+const slug = 'reparacion-mantenimiento';
+const entry = await getEntry('servicios', slug);
+const d = entry!.data as Record<string, any>;
+const svc = SERVICIOS[slug];
+const sub = txt({ texto: d.hero.sub, alt: d.hero.subAlt });
+---
+<BaseLayout title={d.seo.title} description={d.seo.description} servicio={slug} readProgress
+  schema={[serviceLd(Astro.site!, svc.nombre, d.seo.description, svc.href)]}>
+  <PageHero title={d.hero.h1} subtitle={sub ?? undefined} eyebrow={d.hero.eyebrow} photo={d.hero.foto} photoAlt={d.hero.fotoAlt}
+    crumbs={[{ label: 'Servicios' }, { label: svc.nombre }]}>
+    <div class="ctas" data-ubicacion="hero">
+      {d.hero.disponibleHoy && <Badge tone="onBlue" live>Disponibles hoy</Badge>}
+      <div class="ctas__row">
+        <Button href={telHref} variant="urgent" icon="lucide:phone">Llamar ahora</Button>
+        <Button href={waHref(WA_MSG_URGENTE)} variant="whatsapp" icon="whatsapp" bob>WhatsApp urgente</Button>
+      </div>
+    </div>
+  </PageHero>
+
+  <FeatureList id="mientras" eyebrow={d.mientras.eyebrow} titulo={d.mientras.titulo} intro={d.mientras.intro} items={d.mientras.items} />
+  <AlertSigns tone="soft" />
+
+  <section class="section" id="diagnostico" aria-labelledby="diag-h">
+    <div class="container">
+      <SectionHeading id="diag-h" eyebrow={d.diagnostico.eyebrow} title={d.diagnostico.titulo} intro={d.diagnostico.intro} />
+      <ol class="diag" data-reveal-stagger="60">
+        {d.diagnostico.items.map((i: { titulo: string; texto: string }) => (
+          <li data-reveal="up"><Icon name="lucide:circle-check" size={22} /><div><strong>{i.titulo}.</strong> {i.texto}</div></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <CompareTable id="preventivo" tone="soft" eyebrow={d.comparativa.eyebrow} titulo={d.comparativa.titulo} intro={d.comparativa.intro} columnas={d.comparativa.columnas} filas={d.comparativa.filas} />
+
+  <section class="section" id="planes" aria-labelledby="planes-h" data-ubicacion="card">
+    <div class="container">
+      <SectionHeading id="planes-h" eyebrow={d.planes.eyebrow} title={d.planes.titulo} intro={d.planes.intro} />
+      <div class="grid-3 plans" data-reveal-stagger="100">
+        {d.planes.items.map((p: { nombre: string; para: string; incluye: string[]; noIncluye: string[]; destacado?: boolean }) => (
+          <article class:list={['plan', { 'plan--hl': p.destacado }]} data-reveal="up">
+            <h3 class="plan__name">{p.nombre}</h3>
+            <p class="plan__for">{p.para}</p>
+            <p class="plan__lbl">Incluye</p>
+            <ul class="checks checks--blue">{p.incluye.map((x) => <li>{x}</li>)}</ul>
+            <p class="plan__lbl">No incluye</p>
+            <ul class="plan__no">{p.noIncluye.map((x) => <li>{x}</li>)}</ul>
+            <Button href={waHref(`Hola, quiero una propuesta de mantenimiento ${p.nombre.toLowerCase()} para mi empresa. `)} variant={p.destacado ? 'primary' : 'outline'} size="sm" full>{d.planes.cta}</Button>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <ProcessSteps tone="soft" />
+  <Testimonials />
+  <FAQ items={faq} tone="white" titulo="Preguntas sobre reparación y mantenimiento" />
+  <ContactSection servicioOrigen={slug} servicio="Reparación urgente" waMsg={svc.waMsg} />
+  <RelatedServices actual={slug} />
+</BaseLayout>
+
+<style>
+  .ctas { display: grid; justify-items: center; gap: 14px; width: 100%; }
+  .ctas__row { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+  @media (max-width: 767.98px) { .ctas__row { flex-direction: column; width: 100%; } }
+  .diag { list-style: none; display: grid; gap: 12px; max-width: 900px; margin-inline: auto; }
+  @media (min-width: 768px) { .diag { grid-template-columns: 1fr 1fr; gap: 14px 32px; } }
+  .diag li { display: flex; gap: 12px; align-items: flex-start; font-size: 1.0625rem; line-height: 1.55; }
+  .diag :global(.icon) { color: var(--c-primary-600); margin-top: 3px; }
+  .diag strong { color: var(--c-heading); }
+  .plan { display: flex; flex-direction: column; gap: 8px; padding: 32px 26px; background: #FFF; border: 1px solid #E3E3E3; border-radius: var(--r-card-lg); transition: transform .3s, box-shadow .3s; }
+  .plan:hover { transform: translateY(var(--lift)); box-shadow: var(--shadow-card-hover); }
+  .plan--hl { border: 2px solid var(--c-primary-600); box-shadow: var(--shadow-btn); }
+  .plan__name { margin: 0; font-size: var(--fs-h3); color: var(--c-primary-900); }
+  .plan__for { margin: 0 0 6px; font-size: 1rem; }
+  .plan__lbl { margin: 8px 0 0; font-family: var(--font-heading); font-weight: 600; font-size: .875rem; color: var(--c-heading); }
+  .plan .checks { font-size: 1rem; }
+  .plan__no { list-style: none; font-size: .9375rem; color: var(--c-text-muted); margin-bottom: 16px; }
+  .plan__no li::before { content: "— "; }
+  .plan :global(.btn) { margin-top: auto; }
+</style>

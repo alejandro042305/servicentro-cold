@@ -1,0 +1,30 @@
+---
+// 3.13 / 3.8 Tarjeta de contador [BTO]: borde 0.8px #0052FF, radio 16, cifra Poppins 700.
+// Recibe solo datos reales; si `value` no existe, no se renderiza.
+import { fmtNum } from '../../lib/data';
+interface Props { value: number | null | undefined; label: string; prefix?: string; suffix?: string; decimals?: number; tone?: 'light' | 'dark' }
+const { value, label, prefix = '', suffix = '', decimals = 0, tone = 'light' } = Astro.props;
+const shown = value
+  ? decimals ? value.toLocaleString('es-CO', { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) : fmtNum(value)
+  : '';
+---
+{value ? (
+  <div class:list={['counter', `counter--${tone}`]} data-counter={value} data-decimals={decimals}>
+    <p class="counter__num">{prefix}<span data-counter-value>{shown}</span>{suffix}</p>
+    <p class="counter__label">{label}</p>
+  </div>
+) : null}
+
+<style is:global>
+  .counter {
+    background: #FFF; border: .8px solid var(--c-accent); border-radius: var(--r-card);
+    padding: 16px 20px; text-align: center;
+  }
+  .counter__num {
+    margin: 0; font-family: var(--font-heading); font-weight: 700; font-size: var(--fs-stat); line-height: 1;
+    color: var(--c-primary-900); letter-spacing: -1px; font-variant-numeric: tabular-nums;
+  }
+  .counter__label { margin: 8px auto 0; font-size: var(--fs-small); line-height: 1.4; color: var(--c-text); }
+  .counter--dark { background: var(--c-accent-tint); }
+  .counter--dark .counter__num, .counter--dark .counter__label { color: #FFF; }
+</style>

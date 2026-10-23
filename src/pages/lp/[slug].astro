@@ -1,0 +1,53 @@
+---
+// Landings de Google Ads (§6): contenido en src/content/landings/*.md — una landing nueva = un archivo nuevo.
+import { getCollection } from 'astro:content';
+import LandingLayout from '../../layouts/LandingLayout.astro';
+import LandingHero from '../../components/sections/LandingHero.astro';
+import TrustBar from '../../components/sections/TrustBar.astro';
+import WhyUs from '../../components/sections/WhyUs.astro';
+import ProcessSteps from '../../components/sections/ProcessSteps.astro';
+import CaseStudies from '../../components/sections/CaseStudies.astro';
+import Testimonials from '../../components/sections/Testimonials.astro';
+import FAQ from '../../components/sections/FAQ.astro';
+import CTASection from '../../components/sections/CTASection.astro';
+import QuickForm from '../../components/forms/QuickForm.astro';
+import ProjectForm from '../../components/forms/ProjectForm.astro';
+import Button from '../../components/ui/Button.astro';
+import { SERVICIOS } from '../../config/servicios';
+import { waHref, telHref } from '../../lib/data';
+import { getCasos } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const lps = await getCollection('landings');
+  return lps.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const d = entry.data;
+const svc = SERVICIOS[d.servicio];
+const casos = (await getCasos()).filter((c) => !d.servicio.includes('cuartos') || c.tipo === 'Cuarto frío').slice(0, 1);
+const urgent = d.form === 'quick-min';
+---
+<LandingLayout title={d.titulo} description={d.descripcion} canonical={d.canonical} servicio={d.servicio} waMsg={svc.waMsg}>
+  <LandingHero eyebrow={d.eyebrow} h1={d.h1} kw={d.kw} lead={d.lead} promesas={d.promesas} foto={d.foto} fotoAlt={d.fotoAlt} waMsg={svc.waMsg} urgent={urgent}>
+    {d.form === 'project'
+      ? <ProjectForm id="lp-f1" titulo={d.formTitulo} servicioOrigen={`lp-${entry.id}`} tipo={d.formServicio} cta={d.cta} />
+      : <QuickForm id="lp-f1" titulo={d.formTitulo} servicioOrigen={`lp-${entry.id}`} servicio={d.formServicio} minimal={urgent} cta={d.cta} />}
+  </LandingHero>
+  <TrustBar />
+  <WhyUs id="beneficios" eyebrow="Beneficios" titulo={d.beneficios.titulo} intro="" items={d.beneficios.items} techLead={false} />
+  <ProcessSteps variant={d.proceso} />
+  <CaseStudies casos={casos} max={1} links={false} />
+  <Testimonials max={3} />
+  <FAQ items={d.faq} max={5} tone="white" />
+  <CTASection id="cta-lp" titulo={d.ctaFinal.titulo} texto={d.ctaFinal.texto}>
+    <span data-ubicacion="band" style="display:contents">
+      <Button href={telHref} variant={urgent ? 'urgent' : 'white'} icon="lucide:phone">Llamar ahora</Button>
+      <Button href={waHref(svc.waMsg)} variant="whatsapp" icon="whatsapp">WhatsApp</Button>
+    </span>
+    <div slot="form" data-ubicacion="contact">
+      {d.form === 'project'
+        ? <ProjectForm id="lp-f2" servicioOrigen={`lp-${entry.id}`} tipo={d.formServicio} cta={d.cta} />
+        : <QuickForm id="lp-f2" servicioOrigen={`lp-${entry.id}`} servicio={d.formServicio} minimal={urgent} cta={d.cta} />}
+    </div>
+  </CTASection>
+</LandingLayout>

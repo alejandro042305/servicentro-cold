@@ -1,0 +1,30 @@
+---
+// CTASection: cierre de página con título, texto y 1–2 botones (slot), opcionalmente con formulario al lado.
+interface Props { titulo: string; texto?: string; id?: string; tone?: 'navy' | 'soft' }
+const { titulo, texto, id = 'cta-final', tone = 'navy' } = Astro.props;
+const hasForm = Astro.slots.has('form');
+---
+<section class:list={['section', 'cta', tone === 'navy' ? 'section--navy on-dark' : 'dot-grid']} id={id} aria-labelledby={`${id}-h`}>
+  <div class:list={['container', 'cta__in', { 'cta__in--form': hasForm }]}>
+    <div class="cta__text" data-reveal="up">
+      <h2 id={`${id}-h`}>{titulo}</h2>
+      <hr class:list={['divider', { 'divider--white': tone === 'navy' }, { 'divider--left': hasForm }]} />
+      {texto && <p class="cta__p">{texto}</p>}
+      <div class="cta__btns"><slot /></div>
+    </div>
+    {hasForm && <div class="cta__form"><slot name="form" /></div>}
+  </div>
+</section>
+
+<style>
+  .cta__in { text-align: center; }
+  .cta__in--form { display: grid; gap: 32px; text-align: left; align-items: center; }
+  @media (min-width: 981px) { .cta__in--form { grid-template-columns: 1fr 440px; gap: 56px; } }
+  .cta__in:not(.cta__in--form) .cta__p { margin-inline: auto; }
+  .cta__p { font-size: 1.1875rem; }
+  .cta__btns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+  .cta__in:not(.cta__in--form) .cta__btns { justify-content: center; }
+  .cta__btns:empty { display: none; }
+  @media (max-width: 767.98px) { .cta__btns { flex-direction: column; } }
+  .cta__form { background: #FFF; color: var(--c-text); border-radius: var(--r-card); padding: 28px 24px; }
+</style>

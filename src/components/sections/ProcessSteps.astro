@@ -1,0 +1,73 @@
+---
+// 3.12 ProcessSteps: pasos numerados con "Recibes: …", línea punteada que se dibuja (4.13), stagger 150 ms.
+import Icon from '../ui/Icon.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import { txt } from '../../lib/data';
+import proceso from '../../content/proceso.json';
+type Paso = { titulo: string; texto: string; recibes: { texto: string; alt?: string } };
+type Data = { eyebrow: string; titulo: string; intro: string; pasos: Paso[] };
+interface Props { variant?: 'servicio' | 'proyecto'; tone?: 'white' | 'soft'; id?: string; data?: Data }
+const { variant = 'servicio', tone = 'white', id = `proceso-${variant}`, data } = Astro.props;
+const p: Data = data ?? proceso[variant];
+const pasos = p.pasos.map((s) => ({ ...s, recibes: txt(s.recibes) }));
+---
+<section class:list={['section', { 'dot-grid': tone === 'soft' }]} aria-labelledby={`${id}-h`}>
+  <div class="container">
+    <SectionHeading id={`${id}-h`} eyebrow={p.eyebrow} title={p.titulo} intro={p.intro} />
+    <ol class:list={['steps', `steps--${pasos.length}`]} data-steps data-reveal-stagger="150">
+      <svg class="steps__line" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 100 2"><line x1="0" y1="1" x2="100" y2="1" /></svg>
+      {pasos.map((s, i) => (
+        <li class="step" data-reveal="up">
+          <span class="step__num">{i + 1}</span>
+          <h3 class="step__title">{s.titulo}</h3>
+          <p class="step__text">{s.texto}</p>
+          {s.recibes && <p class="step__get"><Icon name="lucide:circle-check" size={18} /><span><strong>Recibes:</strong> {s.recibes}</span></p>}
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-steps]').forEach((el) => {
+    if (!('IntersectionObserver' in window)) { el.classList.add('is-drawn'); return; }
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { el.classList.add('is-drawn'); io.disconnect(); }
+    }, { threshold: 0.3 });
+    io.observe(el);
+  });
+</script>
+
+<style>
+  .steps { position: relative; display: grid; gap: 28px; list-style: none; }
+  @media (min-width: 981px) {
+    .steps--4 { grid-template-columns: repeat(4, 1fr); }
+    .steps--5 { grid-template-columns: repeat(5, 1fr); }
+    .steps { gap: 24px; }
+  }
+  .steps__line { display: none; }
+  @media (min-width: 981px) {
+    .steps__line { display: block; position: absolute; top: 31px; left: 10%; width: 80%; height: 4px; overflow: visible; }
+    .steps__line line {
+      stroke: var(--c-primary-500); stroke-width: 3; stroke-dasharray: 2 6; vector-effect: non-scaling-stroke;
+      clip-path: inset(0 100% 0 0); transition: clip-path 1.2s var(--ease-out-soft);
+    }
+    .is-drawn .steps__line line { clip-path: inset(0 0 0 0); }
+    :global(html:not(.js)) .steps__line line { clip-path: none; }
+  }
+  .step { position: relative; display: grid; justify-items: start; gap: 8px; padding-left: 84px; min-height: 64px; }
+  @media (min-width: 981px) { .step { justify-items: center; text-align: center; padding-left: 0; } }
+  @media (max-width: 980px) {
+    .step:not(:last-child)::after { content: ""; position: absolute; left: 31px; top: 72px; bottom: -24px; border-left: 3px dotted var(--c-primary-500); }
+  }
+  .step__num {
+    position: absolute; left: 0; top: 0; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%;
+    background: var(--c-primary-600); color: #FFF; font-family: var(--font-heading); font-weight: 600; font-size: 1.5rem;
+    box-shadow: 0 0 0 6px rgba(7, 119, 227, .15); z-index: 1;
+  }
+  @media (min-width: 981px) { .step__num { position: relative; margin-bottom: 12px; } }
+  .step__title { margin: 0; font-size: var(--fs-h4); color: var(--c-heading); }
+  .step__text { margin: 0; font-size: 1.0625rem; line-height: 1.55; }
+  .step__get { display: flex; gap: 8px; align-items: flex-start; margin: 4px 0 0; font-size: var(--fs-small); line-height: 1.45; text-align: left; }
+  .step__get :global(.icon) { color: var(--c-primary-900); margin-top: 2px; }
+</style>

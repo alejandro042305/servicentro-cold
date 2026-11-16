@@ -1,6 +1,6 @@
 ---
-// Hero de la Home: banner panorámico tipo slider (≈ 3:1) dentro de un marco azul de 76 px a los lados
-// y 16 px arriba y abajo, esquinas rectas, sin velo de color (legibilidad por sombra de texto),
+// Hero de la Home: banner panorámico tipo slider (≈ 3:1) dentro de un marco azul parejo
+// (76 px en los 4 lados en escritorio, 16 px en móvil), esquinas rectas, sin velo de color (legibilidad por sombra de texto),
 // 4 slides con fundido, flechas blancas sin fondo, puntos de paginación y palabra que se escribe sola.
 import Photo from '../ui/Photo.astro';
 import Button from '../ui/Button.astro';
@@ -117,7 +117,7 @@ const hrefOf = (s: Slide) => (s.tipo === 'whatsapp' ? waHref(SERVICIOS[(s.servic
     padding: 16px;
     background: var(--c-primary-900) radial-gradient(rgba(255, 255, 255, .06) 1.4px, transparent 1.4px) 0 0 / 20px 20px;
   }
-  @media (min-width: 981px) { .hs { padding: 16px 76px; } }
+  @media (min-width: 981px) { .hs { padding: 76px; } }
   .hs__frame { position: relative; overflow: hidden; background: var(--c-primary-900); height: 460px; }
   @media (min-width: 768px) { .hs__frame { height: auto; aspect-ratio: 1370 / 465; min-height: 380px; } }
 

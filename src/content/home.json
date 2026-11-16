@@ -10,11 +10,16 @@
         "foto": "hero-tecnico",
         "fotoAlt": "Técnico revisando un aire acondicionado con un manómetro digital",
         "pos": "center 35%",
-        "titulo": "Tu aire acondicionado funcionando como debe",
+        "titulo": "Tu {palabra} funcionando como debe",
         "subtitulo": "Reparación, instalación y mantenimiento en Bogotá y alrededores.",
         "cta": "Escríbenos",
         "tipo": "whatsapp",
-        "servicio": "reparacion-mantenimiento"
+        "servicio": "reparacion-mantenimiento",
+        "palabras": [
+          "aire acondicionado",
+          "cuarto frío",
+          "chiller"
+        ]
       },
       {
         "foto": "cuarto-frio-1",

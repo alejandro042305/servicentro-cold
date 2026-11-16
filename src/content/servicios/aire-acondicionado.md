@@ -1,6 +1,6 @@
 ---
 seo:
-  title: "Tipos de aire acondicionado en Bogotá | Serviaires"
+  title: "Tipos de aire acondicionado en Bogotá | Servicentro Cold"
   description: "Mini split, multi split, piso techo, cassette y ductos: te ayudamos a elegir el aire acondicionado para tu hogar, oficina o negocio en Bogotá."
 hero:
   eyebrow: "Aire acondicionado"

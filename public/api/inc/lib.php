@@ -1,6 +1,6 @@
 <?php
 /**
- * Serviaires · utilidades del formulario. Carpeta bloqueada por .htaccess (no accesible desde la web).
+ * Servicentro Cold · utilidades del formulario. Carpeta bloqueada por .htaccess (no accesible desde la web).
  */
 declare(strict_types=1);
 

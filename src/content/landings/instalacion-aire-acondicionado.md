@@ -1,5 +1,5 @@
 ---
-titulo: "Instalación de aire acondicionado en Bogotá | Serviaires"
+titulo: "Instalación de aire acondicionado Bogotá | Servicentro Cold"
 descripcion: "Instalación de aire acondicionado con cálculo de BTU, equipos inverter y garantía escrita en Bogotá. Cotiza por WhatsApp sin compromiso."
 servicio: "instalacion"
 canonical: "/servicios/instalacion/"

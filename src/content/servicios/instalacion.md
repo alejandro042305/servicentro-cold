@@ -1,6 +1,6 @@
 ---
 seo:
-  title: "Instalación de aire acondicionado en Bogotá | Serviaires"
+  title: "Instalación de aire acondicionado Bogotá | Servicentro Cold"
   description: "Instalación de aire acondicionado con cálculo de BTU, equipos inverter y garantía escrita en Bogotá. Calcula tu capacidad y cotiza por WhatsApp."
 hero:
   eyebrow: "Instalación y sustitución"

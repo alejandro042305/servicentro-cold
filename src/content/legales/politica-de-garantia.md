@@ -1,6 +1,6 @@
 ---
 titulo: "Política de garantía"
-descripcion: "Alcance, duración, exclusiones y cómo reclamar la garantía de los trabajos de Serviaires."
+descripcion: "Alcance, duración, exclusiones y cómo reclamar la garantía de los trabajos de Servicentro Cold."
 actualizado: "22 de octubre de 2026 · PLANTILLA PENDIENTE DE REVISIÓN LEGAL"
 ---
 
@@ -8,7 +8,7 @@ actualizado: "22 de octubre de 2026 · PLANTILLA PENDIENTE DE REVISIÓN LEGAL"
 
 ## 1. Alcance
 
-La garantía cubre la **mano de obra** de los trabajos ejecutados por Serviaires: instalaciones, reparaciones y mantenimientos.
+La garantía cubre la **mano de obra** de los trabajos ejecutados por Servicentro Cold: instalaciones, reparaciones y mantenimientos.
 
 ## 2. Duración
 

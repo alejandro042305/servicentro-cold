@@ -1,6 +1,6 @@
 ---
 titulo: "Términos y condiciones"
-descripcion: "Condiciones de uso del sitio web y de los servicios de Serviaires."
+descripcion: "Condiciones de uso del sitio web y de los servicios de Servicentro Cold."
 actualizado: "22 de octubre de 2026 · PLANTILLA PENDIENTE DE REVISIÓN LEGAL"
 ---
 
@@ -8,7 +8,7 @@ actualizado: "22 de octubre de 2026 · PLANTILLA PENDIENTE DE REVISIÓN LEGAL"
 
 ## 1. Quiénes somos
 
-Este sitio pertenece a [PENDIENTE: razón social S.A.S.], NIT [PENDIENTE], con domicilio en Bogotá D.C., Colombia (en adelante, "Serviaires").
+Este sitio pertenece a [PENDIENTE: razón social S.A.S.], NIT [PENDIENTE], con domicilio en Bogotá D.C., Colombia (en adelante, "Servicentro Cold").
 
 ## 2. Uso del sitio
 
@@ -30,11 +30,11 @@ Las condiciones de garantía están en la [Política de garantía](/politica-de-
 
 ## 6. Responsabilidad
 
-Serviaires responde por los trabajos que ejecuta en los términos de la garantía y de la ley. No responde por daños causados por mal uso del equipo, intervenciones de terceros o fallas del suministro eléctrico.
+Servicentro Cold responde por los trabajos que ejecuta en los términos de la garantía y de la ley. No responde por daños causados por mal uso del equipo, intervenciones de terceros o fallas del suministro eléctrico.
 
 ## 7. Propiedad intelectual
 
-Textos, diseño y fotografías de este sitio son de Serviaires o se usan con autorización. No se permite su reproducción sin permiso.
+Textos, diseño y fotografías de este sitio son de Servicentro Cold o se usan con autorización. No se permite su reproducción sin permiso.
 
 ## 8. Ley aplicable
 

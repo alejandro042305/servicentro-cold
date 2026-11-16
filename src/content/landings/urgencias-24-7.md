@@ -1,5 +1,5 @@
 ---
-titulo: "Reparación urgente de aire acondicionado en Bogotá | Serviaires"
+titulo: "Reparación urgente de aire acondicionado | Servicentro Cold"
 descripcion: "¿Tu aire acondicionado o cuarto frío falló? Llámanos o escríbenos por WhatsApp. Diagnóstico con mediciones y precio antes de reparar."
 servicio: "reparacion-mantenimiento"
 canonical: "/servicios/reparacion-mantenimiento/"

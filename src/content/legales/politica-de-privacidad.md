@@ -1,6 +1,6 @@
 ---
 titulo: "Política de privacidad y tratamiento de datos"
-descripcion: "Cómo Serviaires recolecta, usa y protege tus datos personales según la Ley 1581 de 2012 y el Decreto 1377 de 2013."
+descripcion: "Cómo Servicentro Cold recolecta, usa y protege tus datos personales según la Ley 1581 de 2012 y el Decreto 1377 de 2013."
 actualizado: "22 de octubre de 2026 · PLANTILLA PENDIENTE DE REVISIÓN LEGAL"
 ---
 

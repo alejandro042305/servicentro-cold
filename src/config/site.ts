@@ -2,7 +2,7 @@
 // Regla: nunca inventar datos. Lo que tenga {{PENDIENTE}}, null, "" o [] se trata como
 // inexistente y el componente que lo usa se oculta. Ver PENDIENTES.md.
 export const SITE = {
-  nombre: "Serviaires",
+  nombre: "Servicentro Cold",
   razonSocial: "{{PENDIENTE: razón social S.A.S.}}",
   nit: "{{PENDIENTE}}",
   dominio: "https://{{PENDIENTE: dominio}}.com",

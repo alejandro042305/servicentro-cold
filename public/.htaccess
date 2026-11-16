@@ -1,5 +1,5 @@
 # =====================================================================
-# Serviaires · .htaccess para Hostinger (Apache / LiteSpeed)
+# Servicentro Cold · .htaccess para Hostinger (Apache / LiteSpeed)
 # Sitio estático de Astro (build.format: 'directory', trailingSlash: 'always').
 # CAMBIA "tudominio.com" por el dominio real (2 lugares abajo).
 # =====================================================================

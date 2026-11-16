@@ -1,5 +1,5 @@
 ---
-titulo: "Chillers industriales en Bogotá | Serviaires"
+titulo: "Chillers industriales en Bogotá | Servicentro Cold"
 descripcion: "Dimensionamiento, instalación y mantenimiento de chillers enfriados por aire o por agua para procesos industriales y edificios en Bogotá."
 servicio: "chillers"
 canonical: "/servicios/chillers/"

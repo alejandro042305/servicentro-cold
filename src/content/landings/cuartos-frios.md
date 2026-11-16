@@ -1,5 +1,5 @@
 ---
-titulo: "Cuartos fríos en Bogotá: diseño y montaje | Serviaires"
+titulo: "Cuartos fríos en Bogotá | Servicentro Cold"
 descripcion: "Diseño y montaje de cuartos fríos de conservación y congelación en Bogotá, con cálculo de carga térmica y propuesta con cronograma."
 servicio: "cuartos-frios"
 canonical: "/servicios/cuartos-frios/"

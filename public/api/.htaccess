@@ -1,4 +1,4 @@
-# Serviaires · protección de la carpeta /api
+# Servicentro Cold · protección de la carpeta /api
 Options -Indexes
 
 # Solo se pueden ejecutar los dos endpoints públicos

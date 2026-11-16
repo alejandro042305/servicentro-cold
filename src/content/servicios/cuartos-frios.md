@@ -1,6 +1,6 @@
 ---
 seo:
-  title: "Cuartos fríos en Bogotá: diseño y montaje | Serviaires"
+  title: "Cuartos fríos en Bogotá | Servicentro Cold"
   description: "Diseño, montaje y mantenimiento de cuartos fríos de conservación y congelación en Bogotá, con cálculo de carga térmica y registro de temperatura."
 hero:
   eyebrow: "Ingeniería en refrigeración"

@@ -17,7 +17,7 @@ const t = p.nosotros;
 const historia = t.historia as string[];
 ---
 <BaseLayout title={t.seo.title} description={t.seo.description}>
-  <PageHero title={t.h1} subtitle={t.sub} photo="nosotros-hero" photoAlt="Equipo técnico de Serviaires" crumbs={[{ label: 'Nosotros' }]} />
+  <PageHero title={t.h1} subtitle={t.sub} photo="nosotros-hero" photoAlt="Equipo técnico de Servicentro Cold" crumbs={[{ label: 'Nosotros' }]} />
 
   <section class="section" aria-labelledby="mv-h">
     <div class="container">
@@ -37,7 +37,7 @@ const historia = t.historia as string[];
   </section>
 
   <FeatureList id="valores" tone="soft" eyebrow="Valores" titulo="Lo que nos guía en cada visita" items={t.valores} />
-  <Gallery id="equipo" titulo={t.equipoTitulo} prefijo={t.equipoPrefijo} alt="Integrante del equipo de Serviaires" />
+  <Gallery id="equipo" titulo={t.equipoTitulo} prefijo={t.equipoPrefijo} alt="Integrante del equipo de Servicentro Cold" />
 
   {SITE.certificaciones.length > 0 && (
     <section class="section" aria-labelledby="cert-h">
@@ -50,7 +50,7 @@ const historia = t.historia as string[];
 
   <Coverage />
   <CTASection titulo={t.ctaTitulo} texto={t.ctaTexto}>
-    <Button href={waHref('Hola, quiero hablar con Serviaires. ')} variant="whatsapp" icon="whatsapp">Escribir por WhatsApp</Button>
+    <Button href={waHref('Hola, quiero hablar con Servicentro Cold. ')} variant="whatsapp" icon="whatsapp">Escribir por WhatsApp</Button>
     <Button href="/contacto/" variant="white">Ver todos los canales</Button>
   </CTASection>
 </BaseLayout>

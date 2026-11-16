@@ -1,6 +1,6 @@
 <?php
 /**
- * Serviaires · Configuración del formulario (EJEMPLO).
+ * Servicentro Cold · Configuración del formulario (EJEMPLO).
  *
  * 1. Copia este archivo como `config.php` en la misma carpeta (public_html/api/config.php en Hostinger).
  * 2. Rellena los valores reales. `config.php` NO va a git y está bloqueado por .htaccess.
@@ -14,7 +14,7 @@ const SMTP_PASS = 'CAMBIAR';
 
 // --- Remitente y destino ---
 const MAIL_FROM      = 'no-reply@tudominio.com';
-const MAIL_FROM_NAME = 'Web Serviaires';
+const MAIL_FROM_NAME = 'Web Servicentro Cold';
 const MAIL_TO        = 'comercial@tudominio.com';   // quien recibe los leads (se pueden separar con coma)
 const SEND_CONFIRMATION = true;                     // copia de confirmación al usuario si dejó correo
 

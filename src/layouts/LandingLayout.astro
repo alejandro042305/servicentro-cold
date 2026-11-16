@@ -11,7 +11,7 @@ const { title, description, canonical, servicio, waMsg, schema } = Astro.props;
 <BaseLayout {title} {description} {canonical} {servicio} {waMsg} {schema} noindex landing>
   <header slot="header" class="lp-head" data-ubicacion="header">
     <div class="container container--wide lp-head__in">
-      <span class="lp-head__logo"><Logo eager width={160} height={64} /></span>
+      <span class="lp-head__logo"><Logo eager width={220} height={56} /></span>
       <div class="lp-head__ctas">
         <Button href={telHref} variant="outline" size="sm" icon="lucide:phone" class="lp-head__tel">{telVisible || 'Llamar'}</Button>
         <Button href={waHref(waMsg)} variant="whatsapp" size="sm" icon="whatsapp">WhatsApp</Button>

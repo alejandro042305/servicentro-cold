@@ -1,5 +1,5 @@
 ---
-titulo: "Mantenimiento de aire acondicionado para empresas | Serviaires"
+titulo: "Mantenimiento para empresas en Bogotá | Servicentro Cold"
 descripcion: "Contratos de mantenimiento preventivo de aire acondicionado, cuartos fríos y chillers para empresas en Bogotá. Visitas programadas e informe escrito."
 servicio: "reparacion-mantenimiento"
 canonical: "/servicios/reparacion-mantenimiento/"

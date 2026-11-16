@@ -1,4 +1,4 @@
-/* Serviaires · Utilidades */
+/* Servicentro Cold · Utilidades */
 .grid { display: grid; gap: var(--gap-grid); }
 .grid-2, .grid-3, .grid-4 { display: grid; gap: var(--gap-grid); grid-template-columns: 1fr; }
 @media (min-width: 768px) {

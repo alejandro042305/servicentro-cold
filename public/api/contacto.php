@@ -152,7 +152,7 @@ $meta = [
 ];
 
 // --- Correo al equipo ---
-$asunto = '[Serviaires] Nuevo lead · ' . $servicio . ' · ' . $nombre;
+$asunto = '[Servicentro Cold] Nuevo lead · ' . $servicio . ' · ' . $nombre;
 $filas = '';
 $texto = '';
 foreach (array_merge($datos, ['—' => ''], $meta) as $k => $v) {
@@ -211,13 +211,13 @@ if (SEND_CONFIRMATION && $email !== '') {
     try {
         $c = mailer();
         $c->addAddress($email, $nombre);
-        $c->Subject = 'Recibimos tu solicitud · Serviaires';
+        $c->Subject = 'Recibimos tu solicitud · Servicentro Cold';
         $c->isHTML(true);
         $c->Body = '<div style="font-family:Arial,sans-serif;font-size:15px;color:#222">'
             . '<p>Hola ' . h($nombre) . ',</p><p>Recibimos tu solicitud sobre <strong>' . h($servicio) . '</strong>. '
             . 'Te contactamos en horario hábil para coordinar los siguientes pasos.</p>'
-            . '<p>Si es urgente, respóndenos por WhatsApp.</p><p>Equipo Serviaires</p></div>';
-        $c->AltBody = "Hola $nombre,\n\nRecibimos tu solicitud sobre $servicio. Te contactamos en horario hábil.\n\nEquipo Serviaires";
+            . '<p>Si es urgente, respóndenos por WhatsApp.</p><p>Equipo Servicentro Cold</p></div>';
+        $c->AltBody = "Hola $nombre,\n\nRecibimos tu solicitud sobre $servicio. Te contactamos en horario hábil.\n\nEquipo Servicentro Cold";
         $c->send();
     } catch (MailException $e) {
         error_log('[contacto] confirmación: ' . $e->getMessage());

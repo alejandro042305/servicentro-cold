@@ -1,4 +1,4 @@
-// Post-build SOLO para la vista previa en una subcarpeta (GitHub Pages: /serviaires-web/).
+// Post-build SOLO para la vista previa en una subcarpeta (GitHub Pages: /servicentro-cold/).
 // Los enlaces del contenido son absolutos desde la raíz ("/servicios/…"); aquí se les antepone BASE_PATH.
 // En Hostinger (raíz del dominio) BASE_PATH no se define y el script no hace nada.
 import { readdirSync, readFileSync, writeFileSync, statSync } from 'node:fs';

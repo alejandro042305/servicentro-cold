@@ -1,6 +1,6 @@
 ---
 seo:
-  title: "Chillers industriales en Bogotá | Serviaires"
+  title: "Chillers industriales en Bogotá | Servicentro Cold"
   description: "Dimensionamiento, suministro, instalación y mantenimiento de chillers enfriados por aire o por agua para procesos industriales y edificios."
 hero:
   eyebrow: "Chillers"

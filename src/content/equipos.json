@@ -3,7 +3,7 @@
   "titulo": "¿Qué aire acondicionado va con tu espacio?",
   "intro": "Filtra por tipo de espacio. Los rangos son orientativos; la capacidad exacta sale del cálculo en la visita.",
   "espacios": ["Hogar", "Oficina y consultorio", "Comercio y espacios grandes", "Industria"],
-  "nota": "VRF/VRV: {{PENDIENTE: confirmar si Serviaires ofrece sistemas VRF/VRV}}. La tarjeta está oculta hasta confirmarlo.",
+  "nota": "VRF/VRV: {{PENDIENTE: confirmar si Servicentro Cold ofrece sistemas VRF/VRV}}. La tarjeta está oculta hasta confirmarlo.",
   "items": [
     {
       "slug": "mini-split", "nombre": "Mini split", "rango": "9.000 – 36.000 BTU/h", "foto": "equipo-mini-split",

@@ -1,6 +1,6 @@
 ---
 seo:
-  title: "Reparación de aire acondicionado en Bogotá | Serviaires"
+  title: "Reparación de aire acondicionado Bogotá | Servicentro Cold"
   description: "Reparación y mantenimiento de aire acondicionado, cuartos fríos y chillers en Bogotá. Diagnóstico con mediciones y precio por escrito antes de reparar."
 hero:
   eyebrow: "Urgencias y mantenimiento"

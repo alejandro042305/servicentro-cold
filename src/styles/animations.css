@@ -1,4 +1,4 @@
-/* Serviaires · Animaciones (CSS + IntersectionObserver, sin librerías) */
+/* Servicentro Cold · Animaciones (CSS + IntersectionObserver, sin librerías) */
 
 /* 4.1 fadeTop [CLIENTE] y 4.3 fadeInUp [BTO]: solo se ocultan si hay JS (clase .js en <html>) */
 .js [data-reveal] { opacity: 0; will-change: opacity, transform; }

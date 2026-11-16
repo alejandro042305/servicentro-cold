@@ -3,32 +3,49 @@
     "title": "Aire acondicionado y cuartos fríos Bogotá | Servicentro Cold",
     "description": "Reparación, instalación y mantenimiento de aire acondicionado, cuartos fríos y chillers en Bogotá. Diagnóstico claro antes de cobrar. Escríbenos por WhatsApp."
   },
-  "hero": {
-    "eyebrow": "Aire acondicionado · Cuartos fríos · Chillers",
-    "antes": "Tu",
-    "palabras": [
-      "aire acondicionado",
-      "cuarto frío",
-      "chiller"
-    ],
-    "despues": "funcionando como debe. Hoy.",
-    "subtitulo": "Reparamos, instalamos y diseñamos climatización y refrigeración en Bogotá y alrededores. Te explicamos la falla antes de cobrarte.",
-    "foto": "hero-tecnico",
-    "fotoAlt": "Técnico de Servicentro Cold revisando una unidad de aire acondicionado",
-    "promesas": [
+  "slider": {
+    "label": "Servicios destacados",
+    "slides": [
       {
-        "icon": "lucide:timer",
-        "texto": "Respuesta en {tiempoRespuestaWhatsApp}",
-        "alt": "Atención por WhatsApp y teléfono"
+        "foto": "hero-tecnico",
+        "fotoAlt": "Técnico revisando un aire acondicionado con un manómetro digital",
+        "pos": "center 35%",
+        "titulo": "Tu aire acondicionado funcionando como debe",
+        "subtitulo": "Reparación, instalación y mantenimiento en Bogotá y alrededores.",
+        "cta": "Escríbenos",
+        "tipo": "whatsapp",
+        "servicio": "reparacion-mantenimiento"
       },
       {
-        "icon": "lucide:shield-check",
-        "texto": "Garantía escrita de {garantiaManoObra}",
-        "alt": null
+        "foto": "cuarto-frio-1",
+        "fotoAlt": "Cuarto frío con la puerta abierta y estanterías con verduras",
+        "pos": "center 45%",
+        "titulo": "Cuartos fríos diseñados con ingeniería",
+        "subtitulo": "Conservación y congelación, con cálculo de carga térmica y montaje.",
+        "cta": "Agendar visita de ingeniería",
+        "tipo": "link",
+        "href": "/servicios/cuartos-frios/#proyecto",
+        "icon": "lucide:calendar"
       },
       {
-        "icon": "lucide:message-circle",
-        "texto": "Diagnóstico claro antes de reparar"
+        "foto": "instalacion-1",
+        "fotoAlt": "Aire acondicionado mini split instalado en una oficina",
+        "pos": "center 18%",
+        "titulo": "Instalación con el equipo correcto",
+        "subtitulo": "Calculamos los BTU de tu espacio y lo dejamos funcionando desde el primer día.",
+        "cta": "Cotizar instalación",
+        "tipo": "whatsapp",
+        "servicio": "instalacion"
+      },
+      {
+        "foto": "equipo-mini-split",
+        "fotoAlt": "Aire acondicionado mini split en una pared clara",
+        "pos": "center 40%",
+        "titulo": "Mantenimiento que evita fallas",
+        "subtitulo": "Un mantenimiento preventivo cuesta menos que una reparación mayor.",
+        "cta": "Pedir mantenimiento",
+        "tipo": "whatsapp",
+        "servicio": "reparacion-mantenimiento"
       }
     ]
   },

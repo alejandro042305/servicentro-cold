@@ -34,5 +34,6 @@ inverter:
 galeria:
   eyebrow: "Trabajos reales"
   titulo: "Instalaciones que hemos hecho"
-  prefijo: "instalacion-"
+  # Solo fotos REALES de obras terminadas: obra-instalacion-1.jpg, obra-instalacion-2.jpg…
+  prefijo: "obra-instalacion-"
 ---

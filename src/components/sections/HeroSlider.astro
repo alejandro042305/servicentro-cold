@@ -1,0 +1,131 @@
+---
+// Hero de la Home: banner panorámico tipo slider (≈ 3:1) separado 76 px de los bordes y 16 px del header,
+// esquinas rectas, sin velo de color (legibilidad por sombra de texto), 4 slides con fundido,
+// flechas blancas sin fondo y puntos de paginación. El borde inferior toca la sección siguiente.
+import Photo from '../ui/Photo.astro';
+import Button from '../ui/Button.astro';
+import { SERVICIOS, type ServicioSlug } from '../../config/servicios';
+import { waHref } from '../../lib/data';
+import home from '../../content/home.json';
+
+interface Slide { foto: string; fotoAlt: string; pos?: string; titulo: string; subtitulo: string; cta: string; tipo: string; href?: string; servicio?: string; icon?: string }
+const { label, slides } = home.slider as { label: string; slides: Slide[] };
+const hrefOf = (s: Slide) => (s.tipo === 'whatsapp' ? waHref(SERVICIOS[(s.servicio ?? 'reparacion-mantenimiento') as ServicioSlug].waMsg) : s.href!);
+---
+<section class="hs" aria-roledescription="carrusel" aria-label={label} data-hs>
+  <div class="hs__frame">
+    {slides.map((s, i) => (
+      <div
+        class:list={['hs__slide', { 'is-active': i === 0 }]}
+        role="group" aria-roledescription="diapositiva" aria-label={`${i + 1} de ${slides.length}`}
+        aria-hidden={i === 0 ? undefined : 'true'} inert={i === 0 ? undefined : true}
+        style={`--pos:${s.pos ?? 'center'}`} data-ubicacion="hero" data-servicio={s.servicio}
+      >
+        <div class="hs__bg"><Photo name={s.foto} alt={s.fotoAlt} ratio="3/1" eager={i === 0} sizes="(min-width: 981px) calc(100vw - 152px), 100vw" widths={[640, 960, 1370, 1920, 2740]} /></div>
+        <div class="hs__content">
+          <p class="hs__title">{s.titulo}</p>
+          <p class="hs__sub">{s.subtitulo}</p>
+          <Button href={hrefOf(s)} variant="white" icon={s.tipo === 'whatsapp' ? 'whatsapp' : s.icon ?? 'lucide:arrow-right'}>{s.cta}</Button>
+        </div>
+      </div>
+    ))}
+
+    <button type="button" class="hs__arrow hs__arrow--prev" aria-label="Diapositiva anterior" data-hs-prev>
+      <svg viewBox="0 0 24 48" width="24" height="48" aria-hidden="true"><path d="M20 4 4 24l16 20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    </button>
+    <button type="button" class="hs__arrow hs__arrow--next" aria-label="Diapositiva siguiente" data-hs-next>
+      <svg viewBox="0 0 24 48" width="24" height="48" aria-hidden="true"><path d="m4 4 16 20L4 44" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    </button>
+    <div class="hs__dots">
+      {slides.map((_, i) => <button type="button" class="hs__dot" aria-label={`Ir a la diapositiva ${i + 1}`} aria-current={i === 0 ? 'true' : 'false'} data-hs-dot={i}></button>)}
+    </div>
+  </div>
+</section>
+
+<script>
+  // Fundido entre slides, autoplay cada 6 s (pausa con el mouse encima, el foco o la pestaña oculta).
+  // Con prefers-reduced-motion no hay autoplay.
+  document.querySelectorAll<HTMLElement>('[data-hs]').forEach((root) => {
+    const slides = [...root.querySelectorAll<HTMLElement>('.hs__slide')];
+    const dots = [...root.querySelectorAll<HTMLButtonElement>('[data-hs-dot]')];
+    if (slides.length < 2) return;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let cur = 0;
+    let timer = 0;
+    let paused = false;
+
+    const show = (n: number) => {
+      cur = (n + slides.length) % slides.length;
+      slides.forEach((s, i) => {
+        const on = i === cur;
+        s.classList.toggle('is-active', on);
+        if (on) { s.removeAttribute('aria-hidden'); s.inert = false; } else { s.setAttribute('aria-hidden', 'true'); s.inert = true; }
+      });
+      dots.forEach((d, i) => d.setAttribute('aria-current', String(i === cur)));
+    };
+    const stop = () => { clearInterval(timer); timer = 0; };
+    const start = () => { stop(); if (!reduce && !paused && !document.hidden) timer = window.setInterval(() => show(cur + 1), 6000); };
+    const go = (n: number) => { show(n); start(); };
+
+    root.querySelector('[data-hs-prev]')!.addEventListener('click', () => go(cur - 1));
+    root.querySelector('[data-hs-next]')!.addEventListener('click', () => go(cur + 1));
+    dots.forEach((d, i) => d.addEventListener('click', () => go(i)));
+    root.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') go(cur - 1);
+      else if (e.key === 'ArrowRight') go(cur + 1);
+    });
+    root.addEventListener('mouseenter', () => { paused = true; stop(); });
+    root.addEventListener('mouseleave', () => { paused = false; start(); });
+    root.addEventListener('focusin', () => { paused = true; stop(); });
+    root.addEventListener('focusout', (e) => { if (!root.contains(e.relatedTarget as Node)) { paused = false; start(); } });
+    document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+    start();
+  });
+</script>
+
+<style>
+  .hs { background: #FFF; padding: 16px 16px 0; }
+  @media (min-width: 981px) { .hs { padding: 16px 76px 0; } }
+  .hs__frame { position: relative; overflow: hidden; background: var(--c-primary-900); height: 460px; }
+  @media (min-width: 768px) { .hs__frame { height: auto; aspect-ratio: 1370 / 465; min-height: 380px; } }
+
+  .hs__slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1s ease; }
+  .hs__slide.is-active { opacity: 1; z-index: 1; }
+  .hs__bg { position: absolute; inset: 0; }
+  .hs__bg :global(.photo), .hs__bg :global(picture), .hs__bg :global(img) {
+    width: 100%; height: 100%; aspect-ratio: auto !important; object-fit: cover; object-position: var(--pos, center);
+  }
+  .hs__bg :global(.ph) { display: none; }
+
+  .hs__content {
+    position: relative; height: 100%; display: grid; place-content: center; justify-items: center; gap: 14px;
+    padding: 24px 56px 48px; text-align: center; max-width: 900px; margin-inline: auto;
+  }
+  .hs__title {
+    margin: 0; font-family: var(--font-heading); font-weight: 700; font-size: var(--fs-hero); line-height: 1.15;
+    letter-spacing: -1px; color: #FFF; text-wrap: balance;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, .45), 0 2px 18px rgba(0, 0, 0, .55);
+  }
+  .hs__sub {
+    margin: 0 0 6px; max-width: 640px; font-family: var(--font-heading); font-weight: 600; font-size: var(--fs-hero-sub);
+    line-height: 1.3; color: #FFF; text-shadow: 0 1px 3px rgba(0, 0, 0, .45), 0 2px 14px rgba(0, 0, 0, .55);
+  }
+
+  .hs__arrow {
+    position: absolute; top: 50%; z-index: 2; translate: 0 -50%; display: grid; place-items: center;
+    width: 44px; height: 64px; padding: 0; border: 0; background: none; color: #FFF; cursor: pointer;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, .5)); transition: opacity .3s;
+  }
+  .hs__arrow:hover { opacity: .75; }
+  .hs__arrow--prev { left: 8px; }
+  .hs__arrow--next { right: 8px; }
+  @media (min-width: 981px) { .hs__arrow--prev { left: 22px; } .hs__arrow--next { right: 22px; } }
+
+  .hs__dots { position: absolute; z-index: 2; left: 0; right: 0; bottom: 14px; display: flex; justify-content: center; gap: 2px; }
+  .hs__dot { display: grid; place-items: center; width: 24px; height: 24px; padding: 0; border: 0; background: none; cursor: pointer; }
+  .hs__dot::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, .5); box-shadow: 0 0 3px rgba(0, 0, 0, .4); transition: background-color .3s; }
+  .hs__dot[aria-current="true"]::before { background: #FFF; }
+
+  .hs :focus-visible { outline-color: #FFF; }
+  @media (prefers-reduced-motion: reduce) { .hs__slide { transition: none; } }
+</style>

@@ -1,7 +1,7 @@
 ---
 // 5.1 Home: orden exacto de la guía (02 §4 y 03 §5.1).
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/sections/Hero.astro';
+import HeroSlider from '../components/sections/HeroSlider.astro';
 import IntroForm from '../components/sections/IntroForm.astro';
 import TrustBar from '../components/sections/TrustBar.astro';
 import ServicesGrid from '../components/sections/ServicesGrid.astro';
@@ -23,7 +23,7 @@ import faq from '../content/faq/home.json';
 const casos = await getCasos();
 ---
 <BaseLayout title={home.seo.title} description={home.seo.description}>
-  <Hero />
+  <HeroSlider />
   <IntroForm />
   <TrustBar />
   <ServicesGrid />

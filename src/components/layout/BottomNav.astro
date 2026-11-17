@@ -1,0 +1,46 @@
+---
+// Barra de navegación inferior para celular y tablet (< 981 px), estilo app (como la de Instagram):
+// los 5 servicios con ícono y nombre corto. Reemplaza al menú de tres líneas.
+import Icon from '../ui/Icon.astro';
+import { SERVICIOS, SERVICIOS_ORDEN } from '../../config/servicios';
+const path = Astro.url.pathname;
+---
+<nav class="bn" aria-label="Servicios">
+  <ul class="bn__list">
+    {SERVICIOS_ORDEN.map((s) => {
+      const svc = SERVICIOS[s];
+      const active = path.endsWith(svc.href);
+      return (
+        <li>
+          <a href={svc.href} class:list={['bn__item', { 'is-active': active }]} aria-current={active ? 'page' : undefined}>
+            <Icon name={svc.icon} size={24} />
+            <span class="bn__label">{svc.tab}</span>
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+</nav>
+
+<style>
+  .bn {
+    position: fixed; inset: auto 0 0; z-index: 40; background: #FFF;
+    border-top: 1px solid var(--c-border); box-shadow: 0 -4px 16px rgba(0, 0, 0, .06);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  @media (min-width: 981px) { .bn { display: none; } }
+  .bn__list { display: grid; grid-template-columns: repeat(5, 1fr); list-style: none; height: var(--mab-h); max-width: 640px; margin-inline: auto; }
+  .bn__item {
+    position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; height: 100%;
+    color: var(--c-text-muted); text-decoration: none; -webkit-tap-highlight-color: transparent; transition: color .2s;
+  }
+  .bn__item:hover { color: var(--c-primary-900); }
+  .bn__label { font-family: var(--font-heading); font-weight: 500; font-size: .6875rem; line-height: 1.1; letter-spacing: -.2px; text-align: center; white-space: nowrap; }
+  .bn__item.is-active { color: var(--c-primary-900); }
+  .bn__item.is-active .bn__label { font-weight: 600; }
+  .bn__item.is-active::before {
+    content: ""; position: absolute; top: 0; left: 22%; right: 22%; height: 3px; border-radius: 0 0 3px 3px; background: var(--c-primary-600);
+  }
+  .bn__item:active :global(.icon) { transform: scale(.9); }
+  .bn__item :global(.icon) { transition: transform .15s; }
+</style>

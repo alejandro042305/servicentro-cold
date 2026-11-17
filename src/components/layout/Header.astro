@@ -1,7 +1,8 @@
 ---
 // 3.3 Header [CLIENTE + CONVERSIÓN]: fijo, 112 → 76 px al hacer scroll; móvil 72 px.
 // Se usa position: fixed + espaciador (en vez de sticky) para que el compactado no genere CLS.
-import MobileMenu from './MobileMenu.astro';
+// En celular/tablet (< 981 px) no hay menú de tres líneas: a la derecha van Llamar y WhatsApp,
+// y la navegación de servicios está en la barra inferior (BottomNav).
 import Logo from '../ui/Logo.astro';
 import Icon from '../ui/Icon.astro';
 import Button from '../ui/Button.astro';
@@ -51,14 +52,14 @@ const isActive = (href: string) =>
         <Button href={waHref(waMsg)} variant="primary" size="sm" icon="whatsapp" ubicacion="header" class="header__wa">Escríbenos</Button>
       </div>
 
-      <button type="button" class="burger" aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menú" data-burger>
-        <span></span><span></span><span></span>
-      </button>
+      <div class="header__m">
+        <a href={telHref} class="hm hm--tel" aria-label="Llamar"><Icon name="lucide:phone" size={22} /></a>
+        <a href={waHref(waMsg)} class="hm hm--wa" aria-label="Escribir por WhatsApp" target="_blank" rel="noopener"><Icon name="whatsapp" size={24} /></a>
+      </div>
     </div>
   </header>
 </div>
 <div class="head-spacer" aria-hidden="true"></div>
-<MobileMenu waMsg={waMsg} />
 
 <script>
   const head = document.querySelector<HTMLElement>('[data-site-head]');
@@ -135,10 +136,10 @@ const isActive = (href: string) =>
   .header__tel { display: none; align-items: center; gap: 8px; font-family: var(--font-heading); font-weight: 600; font-size: 1rem; color: var(--c-primary-900); text-decoration: none; white-space: nowrap; }
   @media (min-width: 1280px) { .header__tel { display: inline-flex; } }
 
-  .burger {
-    display: grid; align-content: center; gap: 6px; width: 44px; height: 44px; padding: 0 9px;
-    border: 0; border-radius: 50%; background: var(--c-primary-600);
-  }
-  .burger span { display: block; height: 2px; background: #FFF; border-radius: 2px; }
-  @media (min-width: 981px) { .burger { display: none; } }
+  .header__m { display: flex; gap: 10px; }
+  @media (min-width: 981px) { .header__m { display: none; } }
+  .hm { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; color: #FFF; text-decoration: none; }
+  .hm:hover { color: #FFF; }
+  .hm--tel { background: var(--c-phone-btn); }
+  .hm--wa { background: var(--c-whatsapp-btn); }
 </style>

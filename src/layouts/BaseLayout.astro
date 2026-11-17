@@ -17,6 +17,7 @@ import poppins600 from '@fontsource/poppins/files/poppins-latin-600-normal.woff2
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import MobileActionBar from '../components/layout/MobileActionBar.astro';
+import BottomNav from '../components/layout/BottomNav.astro';
 import WhatsAppFloat from '../components/layout/WhatsAppFloat.astro';
 import ConsentBanner from '../components/layout/ConsentBanner.astro';
 import { SITE } from '../config/site';
@@ -103,7 +104,7 @@ const gtm = GTM_ID
     <slot />
   </main>
   <Footer minimal={landing} />
-  <MobileActionBar waMsg={waMsg} always={landing} />
+  {landing ? <MobileActionBar waMsg={waMsg} always /> : <BottomNav />}
   <WhatsAppFloat waMsg={waMsg} />
   <ConsentBanner />
 

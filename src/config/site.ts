@@ -5,7 +5,7 @@ export const SITE = {
   nombre: "Servicentro Cold",
   razonSocial: "{{PENDIENTE: razón social S.A.S.}}",
   nit: "{{PENDIENTE}}",
-  dominio: "https://{{PENDIENTE: dominio}}.com",
+  dominio: "https://servicentrocold.com",
   ciudad: "Bogotá D.C.",
   direccion: "{{PENDIENTE: dirección física}}",
   geo: { lat: 0, lng: 0 },                         // {{PENDIENTE}}

@@ -22,7 +22,7 @@ const hrefOf = (s: Slide) => (s.tipo === 'whatsapp' ? waHref(SERVICIOS[(s.servic
         aria-hidden={i === 0 ? undefined : 'true'} inert={i === 0 ? undefined : true}
         style={`--pos:${s.pos ?? 'center'}`} data-ubicacion="hero" data-servicio={s.servicio}
       >
-        <div class="hs__bg"><Photo name={s.foto} alt={s.fotoAlt} ratio="3/1" eager={i === 0} sizes="(min-width: 981px) calc(100vw - 152px), 100vw" widths={[640, 960, 1370, 1920, 2740]} /></div>
+        <div class="hs__bg"><Photo name={s.foto} alt={s.fotoAlt} ratio="3/1" eager={i === 0} sizes="(min-width: 981px) calc(100vw - 152px), 100vw" widths={[640, 960, 1370, 1920]} /></div>
         <div class="hs__content">
           {s.palabras && s.titulo.includes('{palabra}') ? (
             <p class="hs__title">

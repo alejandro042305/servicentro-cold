@@ -17,7 +17,7 @@ const fotos = Object.entries(files)
       <SectionHeading id={`${id}-h`} eyebrow={eyebrow} title={titulo} />
       <ul class="gal">
         {fotos.map((f, i) => (
-          <li><Picture src={f.img} alt={`${alt} ${i + 1}`} formats={['avif', 'webp']} widths={[360, 720]} sizes="(min-width: 981px) 340px, 50vw" loading="lazy" class="gal__img" /></li>
+          <li><Picture src={f.img} alt={`${alt} ${i + 1}`} formats={['avif', 'webp']} fallbackFormat="jpg" quality={78} widths={[360, 720]} sizes="(min-width: 981px) 340px, 50vw" loading="lazy" class="gal__img" /></li>
         ))}
       </ul>
     </div>

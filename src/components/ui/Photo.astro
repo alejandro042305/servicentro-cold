@@ -26,6 +26,8 @@ const img = match?.[1].default;
     src={img}
     alt={alt}
     formats={['avif', 'webp']}
+    fallbackFormat="jpg"
+    quality={78}
     widths={widths.filter((w) => w <= img.width)}
     sizes={sizes}
     loading={eager ? 'eager' : 'lazy'}

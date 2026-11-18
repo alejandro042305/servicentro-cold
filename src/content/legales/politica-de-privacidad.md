@@ -11,8 +11,8 @@ actualizado: "22 de octubre de 2026 · PLANTILLA PENDIENTE DE REVISIÓN LEGAL"
 - **Razón social:** [PENDIENTE: razón social S.A.S.]
 - **NIT:** [PENDIENTE]
 - **Dirección:** [PENDIENTE: dirección física], Bogotá D.C., Colombia
-- **Correo para consultas y reclamos:** [PENDIENTE: correo]
-- **Teléfono:** [PENDIENTE]
+- **Correo para consultas y reclamos:** servicentrobogota15@gmail.com
+- **Teléfono y WhatsApp:** 321 425 7027
 
 ## 2. Marco legal
 
@@ -47,7 +47,7 @@ Como titular puedes:
 
 ## 6. Cómo ejercer tus derechos
 
-Escribe a [PENDIENTE: correo] indicando tu nombre, número de identificación, la solicitud y un medio de respuesta.
+Escribe a servicentrobogota15@gmail.com indicando tu nombre, número de identificación, la solicitud y un medio de respuesta.
 
 - **Consultas:** respondemos en máximo 10 días hábiles.
 - **Reclamos:** respondemos en máximo 15 días hábiles.

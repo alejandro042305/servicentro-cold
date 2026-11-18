@@ -23,7 +23,7 @@ export function localBusinessLd(site: URL) {
   };
   if (has(SITE.razonSocial)) ld.legalName = SITE.razonSocial;
   if (has(SITE.nit)) ld.taxID = SITE.nit;
-  if (has(SITE.telefono)) ld.telephone = SITE.telefono.replace(/\s/g, '');
+  if (has(SITE.telefono)) ld.telephone = SITE.telefonoHref.replace('tel:', '');
   if (has(SITE.email)) ld.email = SITE.email;
   if (SITE.geo.lat && SITE.geo.lng) ld.geo = { '@type': 'GeoCoordinates', latitude: SITE.geo.lat, longitude: SITE.geo.lng };
   if (redes.length) ld.sameAs = redes.map(([, u]) => u);

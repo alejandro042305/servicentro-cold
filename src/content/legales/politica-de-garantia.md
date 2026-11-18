@@ -25,7 +25,7 @@ La garantía cubre la **mano de obra** de los trabajos ejecutados por Servicentr
 
 ## 4. Cómo reclamar
 
-1. Escríbenos por WhatsApp o al correo [PENDIENTE: correo] con tu nombre, fecha del servicio y descripción de la falla.
+1. Escríbenos por WhatsApp al 321 425 7027 o al correo servicentrobogota15@gmail.com con tu nombre, fecha del servicio y descripción de la falla.
 2. Agendamos una visita para revisar el equipo.
 3. Si la falla está cubierta, la corregimos sin costo.
 

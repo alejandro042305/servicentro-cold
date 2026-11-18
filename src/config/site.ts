@@ -9,10 +9,10 @@ export const SITE = {
   ciudad: "Bogotá D.C.",
   direccion: "{{PENDIENTE: dirección física}}",
   geo: { lat: 0, lng: 0 },                         // {{PENDIENTE}}
-  telefono: "+57 {{PENDIENTE}}",                    // formato visible: 313 000 0000
-  telefonoHref: "tel:+57{{PENDIENTE}}",
-  whatsapp: "57{{PENDIENTE}}",                      // solo dígitos para wa.me
-  email: "{{PENDIENTE}}@{{dominio}}",
+  telefono: "321 425 7027",                         // formato visible
+  telefonoHref: "tel:+573214257027",
+  whatsapp: "573214257027",                         // solo dígitos para wa.me
+  email: "servicentrobogota15@gmail.com",
   horario: { lunVie: "7:00 a. m. – 6:00 p. m.", sab: "8:00 a. m. – 1:00 p. m.", urgencias: "24/7" }, // confirmar
   tiempoRespuestaWhatsApp: "{{PENDIENTE: ej. 15 minutos}}",
   tiempoVisitaUrgencia: "{{PENDIENTE: ej. el mismo día en Bogotá}}",

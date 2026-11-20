@@ -10,3 +10,6 @@ _insumos/*.zip
 
 # Brief interno (estrategia): no se publica en el repo público
 0[1-3]-*.md
+
+# Paquete para Hostinger: lleva api/config.php con el secreto, nunca a GitHub
+*-hostinger.zip
